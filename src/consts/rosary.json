@@ -1,0 +1,88 @@
+{
+    "pl": [
+        {
+            "id": 1,
+            "name": "Tajemnice radosne",
+            "mysteries": [
+                    {
+                        "title": "Zwiastowanie Najświętszej Maryi Pannie"
+                    },
+                    {
+                        "title": "Nawiedzenie św. Elżbiety przez Najświętszą Maryję Pannę"
+                    },
+                    {
+                        "title": "Narodzenie Pana Jezusa"
+                    },
+                    {
+                        "title": "Ofiarowanie Pana Jezusa w Świątyni"
+                    },
+                    {
+                        "title": "Znalezienie Pana Jezusa w Świątyni"
+                    }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Tajemnice światła",
+            "mysteries": [
+                {
+                    "title": "Chrzest Pana Jezusa w Jordanie"
+                },
+                {
+                    "title": "Objawienie się Pana Jezusa na weselu w Kanie"
+                },
+                {
+                    "title": "Głoszenie Królestwa Bożego i wzywanie do nawrócenia"
+                },
+                {
+                    "title": "Przemienienie się Pana Jezusa na Górze Tabor"
+                },
+                {
+                    "title": "Ustanowienie Eucharystii będącej sakramentalnym wyrazem misterium paschalnego"
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "name": "Tajemnice bolesne",
+            "mysteries": [
+                {
+                    "title": "Modlitwa Pana Jezusa w Ogrójcu"
+                },
+                {
+                    "title": "Biczowanie Pana Jezusa"
+                },
+                {
+                    "title": "Cierniem ukoronowanie Pana Jezusa"
+                },
+                {
+                    "title": "Droga Krzyżowa Pana Jezusa"
+                },
+                {
+                    "title": "Ukrzyżowanie Pana Jezusa"
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "name": "Tajemnice chwalebne",
+            "mysteries": [
+                {
+                    "title": "Zmartwychwstanie Pana Jezusa"
+                },
+                {
+                    "title": "Wniebowstąpienie Pana Jezusa"
+                },
+                {
+                    "title": "Zesłanie Ducha Świętego"
+                },
+                {
+                    "title": "Wniebowzięcie Najświętszej Maryi Panny"
+                },
+                {
+                    "title": "Ukoronowanie Najświętszej Maryi Panny na Królową Nieba i Ziemi"
+                }
+            ]
+        }
+    ]
+}

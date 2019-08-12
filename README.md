@@ -5,7 +5,7 @@ Use json-server to set up the fake API backend
 npm install -g json-server
 ```
 
-Once json-server is isntalled globally, you can fake api
+Once json-server is installed globally, you can run fake api
 ```
-json-server --watch ./api/db.json
+npm run json-server
 ```
