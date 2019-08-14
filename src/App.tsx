@@ -22,7 +22,7 @@ const theme = createMuiTheme({
 
 const App = () => {
     return (
-      <div className="App">
+      <div>
         <CssBaseline />
         <ThemeProvider theme={theme}>
           <Header />
