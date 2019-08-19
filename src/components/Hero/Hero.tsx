@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import Box from '@material-ui/core/Box';
+import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
   heroContent: {
     backgroundColor: theme.palette.background.paper,
     padding: theme.spacing(8, 0, 6)
-  },
+  }
 }));
 
 const Hero = () => {
@@ -64,6 +64,6 @@ const Hero = () => {
       </main>
     </React.Fragment>
   );
-}
+};
 
 export default Hero;

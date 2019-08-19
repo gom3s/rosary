@@ -9,16 +9,16 @@
             "name": "mona"
         }
     ],
-    "intention": [
+    "intentions": [
         {
             "id": "3ab8ef89-8c00-4c1f-b04c-df1ad94374f1",
-            "user_id": "50344cda-71a0-4928-a53c-13a7cc6d61ed",
+            "userId": "50344cda-71a0-4928-a53c-13a7cc6d61ed",
             "title": "pomódl się za mnie",
             "description": "Zapraszam do modlitwy w intencji powodzenia tego projektu :)"
         },
         {
             "id": "30d781bc6-2626-447e-9e95-3d600665f1b4",
-            "user_id": "50344cda-71a0-4928-a53c-13a7cc6d61ed",
+            "userId": "50344cda-71a0-4928-a53c-13a7cc6d61ed",
             "title": "intencje papieskie",
             "description": "Intencje Apostolstwa Modlitwy"
         }
@@ -26,23 +26,23 @@
     "rosaries": [
         {
             "id": "e2444b94-3f37-4b83-9a59-0a3f62c4fe6a",
-            "intention_id": "3ab8ef89-8c00-4c1f-b04c-df1ad94374f1",
+            "intentionId": "3ab8ef89-8c00-4c1f-b04c-df1ad94374f1",
             "mysteries": {
                 "11": {
                     "time": "2019-08-12T12:00:00.419Z",
-                    "prayer_id": "65c0cad5-5558-43ad-82d8-8ebcb6f924ca"
+                    "prayerId": "65c0cad5-5558-43ad-82d8-8ebcb6f924ca"
                 },
                 "12": {
                     "time": "2019-08-12T12:00:00.419Z",
-                    "prayer_id": "cc6d663e-7302-478c-aefa-4add014d252a"                    
+                    "prayerId": "cc6d663e-7302-478c-aefa-4add014d252a"                    
                 },
                 "13": {
                     "time": "2019-08-12T13:00:00.419Z",
-                    "prayer_id": null
+                    "prayerId": null
                 },
                 "14": {
                     "time": "2019-08-12T12:30:00.419Z",
-                    "prayer_id": "819ec68d-98d2-468e-8e13-c9e365982cbc"
+                    "prayerId": "819ec68d-98d2-468e-8e13-c9e365982cbc"
                 },
                 "21": null,
                 "22": null,
@@ -62,18 +62,18 @@
     "prayers": [
         {
             "id": "65c0cad5-5558-43ad-82d8-8ebcb6f924ca",
-            "user_id": "50344cda-71a0-4928-a53c-13a7cc6d61ed",
-            "intention_id": "3ab8ef89-8c00-4c1f-b04c-df1ad94374f1"
+            "userId": "50344cda-71a0-4928-a53c-13a7cc6d61ed",
+            "intentionId": "3ab8ef89-8c00-4c1f-b04c-df1ad94374f1"
         },
         {
             "id": "cc6d663e-7302-478c-aefa-4add014d252a",
-            "user_id": "7e8d683d-7e42-4423-be1e-b865e8aa880d",
-            "intention_id": "3ab8ef89-8c00-4c1f-b04c-df1ad94374f1"
+            "userId": "7e8d683d-7e42-4423-be1e-b865e8aa880d",
+            "intentionId": "3ab8ef89-8c00-4c1f-b04c-df1ad94374f1"
         },
         {
             "id": "819ec68d-98d2-468e-8e13-c9e365982cbc",
-            "user_id": null,
-            "intention_id": "3ab8ef89-8c00-4c1f-b04c-df1ad94374f1"
+            "userId": null,
+            "intentionId": "3ab8ef89-8c00-4c1f-b04c-df1ad94374f1"
         }
     ]
 

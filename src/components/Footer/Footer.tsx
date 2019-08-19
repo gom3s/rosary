@@ -9,19 +9,15 @@ const Copyright = () => {
     <Typography variant="body2" color="textSecondary" align="center">
       {"Copyright © "}
       {new Date().getFullYear()}
-      <Link color="inherit" href="https://github.com/gom3s/rosary">
-        {" gom3s/rosary"}
+      <Link color="inherit" href="https://twitter.com/gmotyl">
+        {" @gmotyl"}
       </Link>{" "}
-      {"Jesteśmy na "}
-      <Link color="inherit" href="https://github.com/gom3s/rosary">
-        GitHub
-      </Link>
     </Typography>
   );
-}
+};
 const useStyles = makeStyles(theme => ({
   footer: {
-    backgroundColor: theme.palette.background.default,
+    backgroundColor: theme.palette.grey[100],
     padding: theme.spacing(6)
   }
 }));
@@ -40,13 +36,13 @@ const Footer = () => {
           align="center"
           color="textSecondary"
           component="p"
-          >
+        >
           GPLv3
         </Typography>
         <Copyright />
       </footer>
     </React.Fragment>
   );
-}
+};
 
 export default Footer;
