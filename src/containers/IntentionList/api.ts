@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
-import { IIntention } from 'src/components/Intention/Interface';
+import { IIntention } from 'src/components/IntentionCard/Interface';
 
 const useRosaryApi = <T>(endpoint: string, initialData: T) => {
     const [data, setData] = useState(initialData);

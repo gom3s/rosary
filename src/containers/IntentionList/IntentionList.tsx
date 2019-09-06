@@ -2,7 +2,7 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import * as React from "react";
-import Intention from "../../components/Intention";
+import IntentionCard from "../../components/IntentionCard";
 import { useInentionsApi } from './api';
 
 const useStyles = makeStyles(theme => ({
@@ -25,7 +25,7 @@ const CardList = (props: any) => {
       <Grid container={true} spacing={4}>
         {data.map(intention => (
           <Grid item={true} key={intention.id} xs={12} sm={6} md={4}>
-            <Intention
+            <IntentionCard
               intention={intention}
             />
           </Grid>

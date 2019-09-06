@@ -30,7 +30,7 @@ interface IProps {
   intention: IIntention;
 }
 
-const Intention: React.ComponentType<IProps> = ({ intention }) => {
+const IntentionCard: React.ComponentType<IProps> = ({ intention }) => {
   const classes = useStyles();
 
   return (
@@ -55,4 +55,4 @@ const Intention: React.ComponentType<IProps> = ({ intention }) => {
   );
 };
 
-export default Intention;
+export default IntentionCard;
