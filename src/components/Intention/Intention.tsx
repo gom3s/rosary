@@ -7,9 +7,9 @@ import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import * as React from "react";
-import { Link as RouterLink } from 'react-router-dom';
 
-import { IIntention } from "./Interface";
+import { RouteComponentProps } from 'react-router-dom';
+import { useInention } from 'src/hooks/useApi';
 
 const image =
   "https://images.unsplash.com/photo-1528357136257-0c25517acfea?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80";
@@ -28,11 +28,13 @@ const useStyles = makeStyles(theme => ({
 }));
 
 interface IProps {
-  intention: IIntention;
+  id: string;
 }
 
-const IntentionCard: React.ComponentType<IProps> = ({ intention }) => {
+const Intention: React.ComponentType<RouteComponentProps<IProps>> = (props) => {
   const classes = useStyles();
+  const { state } = useInention(props.match.params.id);
+  const intention = state.data;
 
   return (
     <Card className={classes.card}>
@@ -49,11 +51,11 @@ const IntentionCard: React.ComponentType<IProps> = ({ intention }) => {
       </CardContent>
       <CardActions>
         <Button size="small" color="primary">
-          <Link component={RouterLink} to={`/intention/${intention.id}`}>Więcej</Link>
+          <Link href="#">Więcej</Link>
         </Button>
       </CardActions>
     </Card>
   );
 };
 
-export default IntentionCard;
+export default Intention;

@@ -10,7 +10,7 @@ const useRosaryApi = <T>(endpoint: string, initialData: T) => {
     );
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
-    const doFetch = (query: string) => setUrl(`http://localhost:3001/${endpoint}?${query}`);
+    const doFetch = (query: string) => setUrl(`http://localhost:3001/${endpoint}${query}`);
   
     useEffect(() => {
       const fetchData = async () => {
@@ -34,5 +34,6 @@ const useRosaryApi = <T>(endpoint: string, initialData: T) => {
     return { state: { data, isLoading, isError }, doFetch };
   }
 
-  export const useInentionsApi = () => useRosaryApi<IIntention[]>('intentions', []);
+  export const useInentionsList = () => useRosaryApi<IIntention[]>('intentions', []);
+  export const useInention = (id: string) => useRosaryApi<Partial<IIntention>>(`intentions/${id}`, {});
   export default useRosaryApi;

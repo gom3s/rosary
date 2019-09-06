@@ -2,8 +2,9 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import * as React from "react";
+import Hero from 'src/components/Hero';
 import IntentionCard from "../../components/IntentionCard";
-import { useInentionsApi } from './api';
+import { useInentionsList } from '../../hooks/useApi';
 
 const useStyles = makeStyles(theme => ({
   cardGrid: {
@@ -16,22 +17,25 @@ const useStyles = makeStyles(theme => ({
 
 const CardList = (props: any) => {
   const classes = useStyles();
-  const { state } = useInentionsApi();
+  const { state } = useInentionsList();
   const { data } = state;
 
   return (
-    <Container className={classes.cardGrid} maxWidth="md">
-      {/* End hero unit */}
-      <Grid container={true} spacing={4}>
-        {data.map(intention => (
-          <Grid item={true} key={intention.id} xs={12} sm={6} md={4}>
-            <IntentionCard
-              intention={intention}
-            />
-          </Grid>
-        ))}
-      </Grid>
-    </Container>
+    <>
+      <Hero />
+      <Container className={classes.cardGrid} maxWidth="md">
+        {/* End hero unit */}
+        <Grid container={true} spacing={4}>
+          {data.map(intention => (
+            <Grid item={true} key={intention.id} xs={12} sm={6} md={4}>
+              <IntentionCard
+                intention={intention}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      </Container>
+      </>
   );
 };
 

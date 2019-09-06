@@ -1,15 +1,13 @@
 import * as React from "react";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
-import Hero from "../../components/Hero";
-import IntentionList from "../IntentionList";
+import AppRouter from '../Router';
 
 const Layout = () => {
   return (
     <React.Fragment>
       <Header />
-      <Hero />
-      <IntentionList />
+      <AppRouter />
       <Footer />
     </React.Fragment>
   );
