@@ -1,6 +1,8 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 
+import { IIntention } from 'src/components/Intention/Interface';
+
 const useRosaryApi = <T>(endpoint: string, initialData: T) => {
     const [data, setData] = useState(initialData);
     const [url, setUrl] = useState(
@@ -32,4 +34,5 @@ const useRosaryApi = <T>(endpoint: string, initialData: T) => {
     return { state: { data, isLoading, isError }, doFetch };
   }
 
+  export const useInentionsApi = () => useRosaryApi<IIntention[]>('intentions', []);
   export default useRosaryApi;
