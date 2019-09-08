@@ -1,16 +1,3 @@
-import * as React from "react";
-import Footer from "../../components/Footer";
-import Header from "../../components/Header";
-import AppRouter from '../Router';
-
-const Layout = () => {
-  return (
-    <React.Fragment>
-      <Header />
-      <AppRouter />
-      <Footer />
-    </React.Fragment>
-  );
-};
+import Layout from './Layout';
 
 export default Layout;

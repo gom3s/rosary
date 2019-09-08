@@ -13,8 +13,6 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-
-
 const CardList = (props: any) => {
   const classes = useStyles();
   const { state } = useInentionsList();

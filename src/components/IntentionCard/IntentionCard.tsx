@@ -28,11 +28,20 @@ const useStyles = makeStyles(theme => ({
 }));
 
 interface IProps {
-  intention: IIntention;
+  intention: Partial<IIntention>;
+  detailed ?: boolean;
 }
 
-const IntentionCard: React.ComponentType<IProps> = ({ intention }) => {
+const IntentionCard: React.ComponentType<IProps> = ({ intention, detailed }) => {
   const classes = useStyles();
+  const description = detailed && <Typography>{intention.description}</Typography>;
+  const actions = !detailed && 
+    <CardActions>
+      <Button size="small" color="primary">
+        <Link component={RouterLink} to={`/intention/${intention.id}`}>Dalej</Link>
+      </Button>
+    </CardActions>
+  ;
 
   return (
     <Card className={classes.card}>
@@ -45,13 +54,9 @@ const IntentionCard: React.ComponentType<IProps> = ({ intention }) => {
         <Typography gutterBottom={true} variant="h5" component="h2">
           {intention.title}
         </Typography>
-        <Typography>{intention.description}</Typography>
+        {description}
       </CardContent>
-      <CardActions>
-        <Button size="small" color="primary">
-          <Link component={RouterLink} to={`/intention/${intention.id}`}>Więcej</Link>
-        </Button>
-      </CardActions>
+      {actions}
     </Card>
   );
 };

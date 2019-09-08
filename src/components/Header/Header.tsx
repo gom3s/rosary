@@ -41,7 +41,7 @@ const Header = () => {
           <Toolbar>
             <MenuIcon className={classes.icon} />
             <Typography variant="h6" color="inherit" noWrap={true}>
-              Rosary
+              ORARE PRO ME
             </Typography>
           </Toolbar>
         </AppBar>
