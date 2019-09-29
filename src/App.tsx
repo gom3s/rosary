@@ -16,6 +16,8 @@ const theme = createMuiTheme({
 });
 
 const App = () => {
+    // tslint:disable-next-line:no-console
+    console.log('process.env', process.env);
     return (
       <div>
         <CssBaseline />
