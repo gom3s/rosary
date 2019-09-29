@@ -1,16 +1,16 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
+import api from '../services/api';
 
 import { IIntention } from 'src/components/IntentionCard/Interface';
 
 const useRosaryApi = <T>(endpoint: string, initialData: T) => {
     const [data, setData] = useState(initialData);
     const [url, setUrl] = useState(
-      `http://localhost:3001/${endpoint}`,
+      `${endpoint}`,
     );
     const [isLoading, setIsLoading] = useState(false);
     const [isError, setIsError] = useState(false);
-    const doFetch = (query: string) => setUrl(`http://localhost:3001/${endpoint}${query}`);
+    const doFetch = (query: string) => setUrl(`${endpoint}${query}`);
   
     useEffect(() => {
       const fetchData = async () => {
@@ -18,7 +18,7 @@ const useRosaryApi = <T>(endpoint: string, initialData: T) => {
         setIsLoading(true);
   
         try {
-          const result = await axios(url);
+          const result = await api(url);
   
           setData(result.data);
         } catch (error) {
