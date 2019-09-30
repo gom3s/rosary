@@ -3,6 +3,7 @@ import Card from "@material-ui/core/Card";
 import CardActions from "@material-ui/core/CardActions";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
+import LinearProgress from '@material-ui/core/LinearProgress';
 import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -29,10 +30,11 @@ const useStyles = makeStyles(theme => ({
 
 interface IProps {
   intention: Partial<IIntention>;
+  isLoading ?: boolean;
   detailed ?: boolean;
 }
 
-const IntentionCard: React.ComponentType<IProps> = ({ intention, detailed }) => {
+const IntentionCard: React.ComponentType<IProps> = ({ intention, detailed, isLoading }) => {
   const classes = useStyles();
   const description = detailed && <Typography>{intention.description}</Typography>;
   const actions = !detailed && 
@@ -52,9 +54,15 @@ const IntentionCard: React.ComponentType<IProps> = ({ intention, detailed }) => 
       />
       <CardContent className={classes.cardContent}>
         <Typography gutterBottom={true} variant="h5" component="h2">
-          {intention.title}
+          { isLoading 
+            ?  <LinearProgress variant="query" />
+            :  intention.title
+          }
         </Typography>
-        {description}
+          { isLoading 
+            ?  <LinearProgress variant="query" />
+            :  description
+          }        
       </CardContent>
       {actions}
     </Card>

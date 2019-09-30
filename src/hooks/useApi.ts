@@ -34,6 +34,13 @@ const useRosaryApi = <T>(endpoint: string, initialData: T) => {
     return { state: { data, isLoading, isError }, doFetch };
   }
 
+  const emptyIntention = {
+    description: 'loading...',
+    id: '',
+    title: 'loading...',
+    userId: ''
+  }
+
   export const useInentionsList = () => useRosaryApi<IIntention[]>('intentions', []);
-  export const useInention = (id: string) => useRosaryApi<Partial<IIntention>>(`intentions/${id}`, {});
+  export const useInention = (id: string) => useRosaryApi<IIntention>(`intentions/${id}`, emptyIntention);
   export default useRosaryApi;

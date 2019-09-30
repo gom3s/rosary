@@ -1,17 +1,12 @@
-// import Button from "@material-ui/core/Button";
-// import Card from "@material-ui/core/Card";
-// import CardActions from "@material-ui/core/CardActions";
-// import CardContent from "@material-ui/core/CardContent";
-// import CardMedia from "@material-ui/core/CardMedia";
-// import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
 import * as React from "react";
 
-import { Container, Grid, Paper } from '@material-ui/core';
+import { Container, Grid } from '@material-ui/core';
 import { RouteComponentProps } from 'react-router-dom';
 import { useInention } from 'src/hooks/useApi';
 import IntentionCard from '../IntentionCard';
+import PrayCard from '../PrayCard';
+
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -19,19 +14,10 @@ const useStyles = makeStyles(theme => ({
     flexDirection: "column",
     height: "100%"
   },  
-  cardContent: {
-    flexGrow: 1
-  },
   cardGrid: {
     paddingBottom: theme.spacing(8),
     paddingTop: theme.spacing(6)
   },
-  cardMedia: {
-    paddingTop: "56.25%" // 16:9
-  },
-  root: {
-    padding: theme.spacing(3, 2),
-  },  
 }));
 
 interface IProps {
@@ -47,17 +33,11 @@ const Intention: React.ComponentType<RouteComponentProps<IProps>> = (props) => {
     <Container className={classes.cardGrid} maxWidth="lg">
       <Grid container={true} spacing={2}>
         <Grid item={true} key={intention.id} xs={12} sm={6} md={6} lg={4}>
-          <IntentionCard intention={intention} detailed={true}/>
+          <IntentionCard intention={intention} detailed={true} isLoading={state.isLoading}/>
         </Grid>
-        <Grid item={true} key={intention.id} xs={12} sm={6} md={6} lg={8}>
-          <Paper className={classes.root}>
-            <Typography variant="h5" component="h3">
-              Orare pro me,
-            </Typography>
-          </Paper>
-
+        <Grid item={true} key={2} xs={12} sm={6} md={6} lg={8}>
+          <PrayCard intention={intention} />
         </Grid>
-
       </Grid>
     </Container>
   );
