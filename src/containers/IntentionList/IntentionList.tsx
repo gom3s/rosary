@@ -4,7 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import * as React from "react";
 import Hero from 'src/components/Hero';
 import IntentionCard from "../../components/IntentionCard";
-import { useInentionsList } from '../../hooks/useApi';
+import { useIntentionList } from '../../hooks/useRosaryApi';
 
 const useStyles = makeStyles(theme => ({
   cardGrid: {
@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
 
 const CardList = (props: any) => {
   const classes = useStyles();
-  const { state } = useInentionsList();
+  const { state } = useIntentionList();
   const { data } = state;
 
   return (

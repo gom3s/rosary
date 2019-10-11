@@ -1,9 +1,7 @@
+import { AxiosInstance } from 'axios';
 import { useEffect, useState } from 'react';
-import api from '../services/api';
 
-import { IIntention } from 'src/components/IntentionCard/Interface';
-
-const useRosaryApi = <T>(endpoint: string, initialData: T) => {
+export const useGetRequest = <T>(api: AxiosInstance, endpoint: string, initialData: T) => {
     const [data, setData] = useState(initialData);
     const [url, setUrl] = useState(
       `${endpoint}`,
@@ -18,7 +16,7 @@ const useRosaryApi = <T>(endpoint: string, initialData: T) => {
         setIsLoading(true);
   
         try {
-          const result = await api(url);
+          const result = await api.get(url);
   
           setData(result.data);
         } catch (error) {
@@ -34,13 +32,4 @@ const useRosaryApi = <T>(endpoint: string, initialData: T) => {
     return { state: { data, isLoading, isError }, doFetch };
   }
 
-  const emptyIntention = {
-    description: 'loading...',
-    id: '',
-    title: 'loading...',
-    userId: ''
-  }
 
-  export const useInentionsList = () => useRosaryApi<IIntention[]>('intentions', []);
-  export const useInention = (id: string) => useRosaryApi<IIntention>(`intentions/${id}`, emptyIntention);
-  export default useRosaryApi;

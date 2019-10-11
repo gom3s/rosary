@@ -3,7 +3,7 @@ import * as React from "react";
 
 import { Container, Grid } from '@material-ui/core';
 import { RouteComponentProps } from 'react-router-dom';
-import { useInention } from 'src/hooks/useApi';
+import { useIntention } from 'src/hooks/useRosaryApi';
 import IntentionCard from '../IntentionCard';
 import PrayCard from '../PrayCard';
 
@@ -26,7 +26,7 @@ interface IProps {
 
 const Intention: React.ComponentType<RouteComponentProps<IProps>> = (props) => {
   const classes = useStyles();
-  const { state } = useInention(props.match.params.id);
+  const { state } = useIntention(props.match.params.id);
   const intention = state.data;
 
   return (
