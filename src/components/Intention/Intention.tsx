@@ -3,7 +3,7 @@ import * as React from "react";
 
 import { Container, Grid } from '@material-ui/core';
 import { RouteComponentProps } from 'react-router-dom';
-import { useIntention } from 'src/hooks/useRosaryApi';
+import { useIntention } from '../../hooks/useRosaryApi';
 import IntentionCard from '../IntentionCard';
 import PrayCard from '../PrayCard';
 

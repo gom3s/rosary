@@ -1,7 +1,7 @@
 import * as React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import Intention from 'src/components/Intention';
+import Intention from '../../components/Intention';
 import IntentionList from '../IntentionList';
 
 const AppRouter = () => {

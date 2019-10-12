@@ -2,7 +2,7 @@ import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
 import * as React from "react";
-import Hero from 'src/components/Hero';
+import Hero from '../../components/Hero';
 import IntentionCard from "../../components/IntentionCard";
 import { useIntentionList } from '../../hooks/useRosaryApi';
 

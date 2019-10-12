@@ -3,6 +3,7 @@ import Button from "@material-ui/core/Button";
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from "@material-ui/core/styles";
 import * as React from "react";
+import { getMystery } from '../../consts/rosary';
 import { usePrayRosaryRequest } from '../../hooks/useRosaryApi';
 import logo from '../../rosary.svg';
 import { IIntention } from '../IntentionCard/Interface';
@@ -40,14 +41,14 @@ interface IPrayCard {
 }
 
 const PrayCard: React.ComponentType<IPrayCard> = (props) => {
-  const classes = useStyles();
-  const { state, doPost } = usePrayRosaryRequest(props.intention.id);
+  const classes = useStyles()
+  const { state, doPost } = usePrayRosaryRequest()
 
   const prayAction = () => {
-    doPost({ test: "hello"});
+    doPost({ intention: props.intention.id})
     
     // tslint:disable-next-line:no-console
-    console.log('state ', state);
+    console.log('state ', state)
   }
 
   return (
@@ -59,7 +60,11 @@ const PrayCard: React.ComponentType<IPrayCard> = (props) => {
       { state.isLoading
           ?  <CircularProgress className={classes.progress} size={18}/>
           :  null
-      }        
+      }
+      { state.data.type > 0
+          ?  getMystery(state.data.type).title
+          :  null
+      }
     </Paper>
   );
 };
