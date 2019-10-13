@@ -1,12 +1,19 @@
-import { Paper } from '@material-ui/core';
+import { Grid, Paper } from '@material-ui/core';
 import Button from "@material-ui/core/Button";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Divider from '@material-ui/core/Divider';
 import { makeStyles } from "@material-ui/core/styles";
 import * as React from "react";
+import { useEffect, useState } from 'react';
 import { getMystery } from '../../consts/rosary';
-import { usePrayRosaryRequest } from '../../hooks/useRosaryApi';
-import logo from '../../rosary.svg';
+import { 
+  usePrayRosaryRequest,
+  useSavePrayer
+} from '../../hooks/useRosaryApi';
+// import logo from '../../rosary.svg';
 import { IIntention } from '../IntentionCard/Interface';
+
+import * as dayjs from 'dayjs';
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -42,30 +49,56 @@ interface IPrayCard {
 
 const PrayCard: React.ComponentType<IPrayCard> = (props) => {
   const classes = useStyles()
-  const { state, doPost } = usePrayRosaryRequest()
-
-  const prayAction = () => {
-    doPost({ intention: props.intention.id})
-    
+  const { state, doRequest } = usePrayRosaryRequest()
+  const prayerApi = useSavePrayer()
+  const [isPraying, setIsPraying] = useState(false)
+  const prayRequestAction = () => {
+    doRequest({ intention: `intentions/${props.intention.id}`}, "")
+    // TODO GM Display remaining lock time indicator
     // tslint:disable-next-line:no-console
     console.log('state ', state)
   }
+  const prayAction = () => {
+    setIsPraying(false)
+    prayerApi.doRequest({
+      type: state.data.type,
+      rosary: state.data.rosary,
+      date: dayjs().toJSON(),
+      lockDate: null,
+    }, state.data.prayer)
+  }
+  useEffect(() => {
+    setIsPraying(state.data.type > 0)
+  }, [state.data.type]);
 
   return (
-    <Paper className={classes.root}>
-      <Button variant="contained" color="primary" onClick={prayAction}>
-        Odmów dziesiątek
-        <img src={logo} className={classes.icon} alt="logo" />
-      </Button>
+    <Grid container={true} spacing={2}>
+      <Grid item={true} xs={12}>
+        { isPraying
+            ?  <Paper>{getMystery(state.data.type).title}</Paper>
+            :  null
+        }
+      </Grid>
+      <Divider />
+      <Grid item={true} xs={12}>
+        {/* TODO display pondering of mystery */}
+      </Grid>
+      <Divider />
+      <Grid item={true} xs={6}>
+        <Button size="small" color="primary" onClick={prayRequestAction} disabled={isPraying}>
+          Pobierz tajemnicę
+        </Button>
+      </Grid>
+      <Grid item={true} xs={6}>
+        <Button size="small" color="primary" onClick={prayAction} disabled={!isPraying}>
+          Gotowe (zapisz)
+        </Button>
+      </Grid>
       { state.isLoading
           ?  <CircularProgress className={classes.progress} size={18}/>
           :  null
       }
-      { state.data.type > 0
-          ?  getMystery(state.data.type).title
-          :  null
-      }
-    </Paper>
+    </Grid>
   );
 };
 

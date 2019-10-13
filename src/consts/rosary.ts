@@ -5,24 +5,23 @@ interface IMystery {
   "title": string;
 }
 
-interface IMysteryGroup {
-  "id": number;
-  "name": string;
-  "mysteries": IMystery[]
-}
-
 export const getMystery = (type: number) => {
-  const mysteryGroup = rosary.find(mysteryGroupByType(type));
-  const mystery = mysteryGroup 
-    ? findMysteryFromGroupByType(mysteryGroup, type)
-    : null;
+  if (type < 1 || type > 20) {
+    return {
+      group: 'Error',
+      title: 'Wystąpił błąd API.'
+    }
+  }
+
+  const mystery = rosary.find(mysteryByType(type)) 
+  
+  // tslint:disable-next-line: no-console
+  console.log('type: ', type)
 
   return {
-      group: mysteryGroup!.name,
+      type,
       title: mystery!.title
   }
 }
 
-const mysteryGroupByType = (type: number) => (mysteryGroup: IMysteryGroup) => (mysteryGroup.id > type - 5)
 const mysteryByType = (type: number) => (mystery: IMystery) => mystery.type === type
-const findMysteryFromGroupByType = (mysteryGroup: IMysteryGroup, type: number) => mysteryGroup.mysteries.find(mysteryByType(type))

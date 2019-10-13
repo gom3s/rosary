@@ -1,7 +1,7 @@
 import { IIntention } from 'src/components/IntentionCard/Interface';
 import api from '../services/api';
 import { useGetRequest } from './useGetRequest';
-import { usePostRequest } from './usePostRequest';
+import { useRequest } from './useRequest';
 
 const emptyIntention = {
   description: 'loading...',
@@ -10,7 +10,7 @@ const emptyIntention = {
   userId: ''
 }
 
-const emptyPrayer = {
+const emptyPrayRequest = {
   id: null,
   intention: null,
   prayer: null,
@@ -19,4 +19,5 @@ const emptyPrayer = {
 
 export const useIntentionList = () => useGetRequest<IIntention[]>(api, 'intentions', []);
 export const useIntention = (id: string) => useGetRequest<IIntention>(api, `intentions/${id}`, emptyIntention);
-export const usePrayRosaryRequest = () => usePostRequest(api, `pray_rosary_requests`, emptyPrayer)
+export const usePrayRosaryRequest = () => useRequest(api.post, `pray_rosary_requests`, emptyPrayRequest)
+export const useSavePrayer = () => useRequest(api.put, `prayers`, {})

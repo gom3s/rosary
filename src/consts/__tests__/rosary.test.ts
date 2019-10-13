@@ -1,15 +1,11 @@
 import { getMystery } from '../rosary';
 
 test('Rosary helper', () => {
-    const mystery11 = getMystery(11);
-    const mystery12 = getMystery(12);
-    const mystery24 = getMystery(24);
+    const mystery1 = getMystery(1);
+    const mystery7 = getMystery(7);
+    const mystery18 = getMystery(18);
     
-    expect(mystery11.title).toMatch('Zwiastowanie')
-    expect(mystery12.title).toMatch('Nawiedzenie')
-    expect(mystery11.group).toMatch('radosne')
-    
-    expect(mystery24.title).toMatch('Tabor')
-    expect(mystery24.group).toMatch('światła')
+    expect(mystery1.title).toMatch('Zwiastowanie')
+    expect(mystery7.title).toMatch('Objawienie')
+    expect(mystery18.title).toMatch('Zesłanie Ducha Świętegoexit')
   })
-

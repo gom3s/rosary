@@ -13,11 +13,12 @@ import { Link as RouterLink } from 'react-router-dom';
 import { IIntention } from "./Interface";
 
 const image =
-  "https://images.unsplash.com/photo-1528357136257-0c25517acfea?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80";
+  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSs0Q8FdKF0hQMurDCnu0sR9A7yUIZ6lgddZREsY_xbtWz5b_HN9w";
 const useStyles = makeStyles(theme => ({
   card: {
     display: "flex",
     flexDirection: "column",
+    width: "100%",
     height: "100%"
   },
   cardContent: {
