@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { useEffect, useState } from 'react';
 
-export const useGetRequest = <T>(api: AxiosInstance, endpoint: string, initialData: T) => {
+export const useGetRequest = <T>(api: AxiosInstance, endpoint: string | undefined, initialData: T) => {
     const [data, setData] = useState(initialData);
     const [url, setUrl] = useState(
       `${endpoint}`,

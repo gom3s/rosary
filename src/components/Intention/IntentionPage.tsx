@@ -16,10 +16,10 @@ import * as React from "react";
 import { useState } from "react";
 import { RouteComponentProps } from "react-router-dom";
 
+import Prayer from 'src/containers/Prayer';
 import { useIntention } from "../../hooks/useRosaryApi";
 import rosarySVG from '../../rosary2.svg';
 import IntentionCard from "../IntentionCard";
-import PrayCard from "../PrayCard";
 
 // tslint:disable-next-line: object-literal-sort-keys
 const useStyles = makeStyles(theme => ({
@@ -53,17 +53,19 @@ const ExpansionPanelDetails = withStyles(theme => ({
 
 interface IProps {
   id: string;
+  prayerId: string;
 }
 
 const IntentionPage: React.ComponentType<RouteComponentProps<IProps>> = props => {
+  const { id, prayerId } = props.match.params;
   const classes = useStyles();
-  const { state } = useIntention(props.match.params.id);
+  const { state } = useIntention(id);
   const intention = state.data;
   const [intentionPanel, setIntentionPanel] = useState({
     expanded: true
   })
   const [prayPanel, setPrayPanel] = useState({
-    expanded: false
+    expanded: Boolean(prayerId)
   })  
   const toggleIntentionPanel = (event: object, expanded: boolean) => {
     setIntentionPanel({
@@ -80,6 +82,13 @@ const IntentionPage: React.ComponentType<RouteComponentProps<IProps>> = props =>
   const startPray = () => {
     closeIntentionPanel()
     openPrayPanel()
+  }
+  const setPrayerIdInRoute = (prayer: string) => {
+    if (prayer){
+      props.history.push(`/intention/${id}${prayer}`);
+    } else {
+      props.history.push(`/intention/${id}`);
+    }
   }
 
   return (
@@ -128,7 +137,7 @@ const IntentionPage: React.ComponentType<RouteComponentProps<IProps>> = props =>
                 </Typography>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
-                <PrayCard intention={intention} />
+                <Prayer intention={intention} onPrayerChanged={setPrayerIdInRoute} prayerId={prayerId}/>
               </ExpansionPanelDetails>
             </ExpansionPanel>
           </div>

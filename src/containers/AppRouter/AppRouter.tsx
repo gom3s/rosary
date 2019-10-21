@@ -10,7 +10,7 @@ const AppRouter = () => {
     <Router>
       <Header />
       <Route path="/" exact={true} component={IntentionList} />
-      <Route path="/intention/:id" component={IntentionPage} />
+      <Route path="/intention/:id/(prayers)?/:prayerId?" component={IntentionPage} />
     </Router>
   );
 };

@@ -1,6 +1,6 @@
 import { rosary } from './rosary_pl'
 
-interface IMystery {
+export interface IMystery {
   "type": number;
   "title": string;
 }
@@ -8,8 +8,8 @@ interface IMystery {
 export const getMystery = (type: number) => {
   if (type < 1 || type > 20) {
     return {
-      group: 'Error',
-      title: 'Wystąpił błąd API.'
+      type: 0,
+      title: 'loading...'
     }
   }
 
