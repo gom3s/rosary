@@ -39,11 +39,12 @@ const Prayer: React.ComponentType<IPrayer> = (props) => {
   const getPrayerApi = usePrayer(props.prayerId)
   const [isPraying, setIsPraying] = useState(Boolean(props.prayerId))
   const prayRequestAction = () => {
-    // setState({
-    //   type: 0, // to reset displayed mystery
-    //   ...state,
-    // })
+    setState({
+      ...state,
+      type: 0, // reset displayed mystery
+    })
     prayRequestApi.doRequest({ intention: `intentions/${props.intention.id}`}, "")
+    setIsPraying(true)    
     // TODO GM Display remaining lock time indicator
   }
   const prayAction = () => {
@@ -64,7 +65,6 @@ const Prayer: React.ComponentType<IPrayer> = (props) => {
   
   useEffect(() => {
     const {type, rosary, prayer} = prayRequestApi.state.data;
-    setIsPraying(true)
     setState({
       id: props.prayerId,
       type,
