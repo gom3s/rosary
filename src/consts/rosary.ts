@@ -3,13 +3,15 @@ import { rosary } from './rosary_pl'
 export interface IMystery {
   "type": number;
   "title": string;
+  "description": string;
 }
 
 export const getMystery = (type: number) => {
   if (type < 1 || type > 20) {
     return {
       type: 0,
-      title: 'loading...'
+      title: 'loading...',
+      description: ''
     }
   }
 
@@ -20,7 +22,8 @@ export const getMystery = (type: number) => {
 
   return {
       type,
-      title: mystery!.title
+      title: mystery!.title,
+      description: mystery!.description
   }
 }
 

@@ -20,6 +20,7 @@ import Prayer from 'src/containers/Prayer';
 import { useIntention } from "../../hooks/useRosaryApi";
 import rosarySVG from '../../rosary2.svg';
 import IntentionCard from "../IntentionCard";
+import PrayDisclaimerCard from '../PrayDisclaimerCard';
 
 // tslint:disable-next-line: object-literal-sort-keys
 const useStyles = makeStyles(theme => ({
@@ -66,7 +67,10 @@ const IntentionPage: React.ComponentType<RouteComponentProps<IProps>> = props =>
   })
   const [prayPanel, setPrayPanel] = useState({
     expanded: Boolean(prayerId)
-  })  
+  })
+  const [helpPanel, setHelpPanel] = useState({
+    expanded: false
+  })    
   const toggleIntentionPanel = (event: object, expanded: boolean) => {
     setIntentionPanel({
       expanded
@@ -77,6 +81,11 @@ const IntentionPage: React.ComponentType<RouteComponentProps<IProps>> = props =>
       expanded
     })
   }
+  const toggleHelpPanel = (event: object, expanded: boolean) => {
+    setHelpPanel({
+      expanded
+    })
+  }  
   const openPrayPanel = () => togglePrayPanel({}, true)
   const closeIntentionPanel = () => toggleIntentionPanel({}, false)
   const startPray = () => {
@@ -117,7 +126,6 @@ const IntentionPage: React.ComponentType<RouteComponentProps<IProps>> = props =>
                 />
               </ExpansionPanelDetails>
               <ExpansionPanelActions>
-                <Button size="small">Jak to działa?</Button>
                 <Button size="small" color="primary" onClick={startPray}>
                   Odmów dziesiątek
                 </Button>
@@ -143,10 +151,27 @@ const IntentionPage: React.ComponentType<RouteComponentProps<IProps>> = props =>
           </div>
         </Grid>
         <Grid item={true} key={2} xs={12} sm={6} md={6} lg={8}>
-          <Paper className={classes.root}>
+          <ExpansionPanel 
+              expanded={helpPanel.expanded}
+              onChange={toggleHelpPanel}
+            >
+              <ExpansionPanelSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel2a-content"
+                id="panel2a-header"
+              >
+                <Typography className={classes.heading}>
+                  Jak to działa ?
+                </Typography>
+              </ExpansionPanelSummary>
+              <ExpansionPanelDetails>
+                <PrayDisclaimerCard />
+              </ExpansionPanelDetails>
+            </ExpansionPanel>
+            <Paper className={classes.root}>
             {/* TODO add statistics and current rosary progress indicator */}
             <img src={rosarySVG} className={classes.icon} alt="rosary" />
-          </Paper>
+          </Paper>            
         </Grid>
       </Grid>
     </Container>

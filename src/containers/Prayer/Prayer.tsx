@@ -6,6 +6,7 @@ import * as React from "react";
 import { useEffect, useState } from 'react';
 
 import PrayCard from 'src/components/PrayCard';
+// import PrayDisclaimerCard from 'src/components/PrayDisclaimerCard';
 import { IIntention } from '../../components/IntentionCard/Interface';
 import { getMystery } from '../../consts/rosary';
 import { 
