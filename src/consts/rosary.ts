@@ -4,6 +4,7 @@ export interface IMystery {
   "type": number;
   "title": string;
   "description": string;
+  "image": string;
 }
 
 export const getMystery = (type: number) => {
@@ -11,7 +12,8 @@ export const getMystery = (type: number) => {
     return {
       type: 0,
       title: 'loading...',
-      description: ''
+      description: '',
+      image: '/img/rosary1.jpeg'
     }
   }
 
@@ -23,7 +25,8 @@ export const getMystery = (type: number) => {
   return {
       type,
       title: mystery!.title,
-      description: mystery!.description
+      description: mystery!.description,
+      image: `/img/${type}.jpg`
   }
 }
 

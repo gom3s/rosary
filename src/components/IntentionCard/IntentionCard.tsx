@@ -12,8 +12,7 @@ import { Link as RouterLink } from 'react-router-dom';
 
 import { IIntention } from "./Interface";
 
-const image =
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSs0Q8FdKF0hQMurDCnu0sR9A7yUIZ6lgddZREsY_xbtWz5b_HN9w";
+const image = "/img/rosary1.jpeg";
 const useStyles = makeStyles(theme => ({
   card: {
     display: "flex",

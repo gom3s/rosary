@@ -36,7 +36,6 @@ interface IPrayCard {
 
 const PrayCard: React.ComponentType<IPrayCard> = (props) => {
   const { isPraying, mystery } = props;
-  const image = `/img/${mystery.type}.jpg`
   const classes = useStyles();
   const actions =
     <CardActions>
@@ -52,7 +51,7 @@ const PrayCard: React.ComponentType<IPrayCard> = (props) => {
   return (
     <Card className={classes.card}>
       <Grid container={true} justify="center" alignItems="center">
-        <Avatar alt="loading..." src={image} className={classes.bigAvatar} />
+        <Avatar alt="..." src={mystery.image} className={classes.bigAvatar} />
       </Grid>
       <CardContent className={classes.cardContent}>
         <Typography gutterBottom={true} variant="h5" component="h2">
