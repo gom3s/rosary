@@ -19,9 +19,6 @@ export const getMystery = (type: number) => {
 
   const mystery = rosary.find(mysteryByType(type))
 
-  // tslint:disable-next-line: no-console
-  console.log('type: ', type)
-
   return {
     type,
     title: mystery!.title,

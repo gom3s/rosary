@@ -1,7 +1,7 @@
 import {Grid} from '@material-ui/core'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import {makeStyles} from '@material-ui/core/styles'
-import * as dayjs from 'dayjs'
+import dayjs from 'dayjs'
 import * as React from 'react'
 import {useEffect, useState} from 'react'
 
@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
 
 interface PrayerProps {
   intention: IIntention
-  onPrayerChanged: (prayerId?: string) => void
+  onPrayerChanged: (prayerId: string) => void
   prayerId?: string
 }
 
@@ -59,6 +59,7 @@ const Prayer: React.ComponentType<PrayerProps> = props => {
         date: dayjs().toJSON(),
         lockDate: null,
       },
+
       state.prayer,
     )
   }

@@ -1,6 +1,7 @@
 {
   "extends": [
     "plugin:@typescript-eslint/recommended",
+    "prettier",
     "plugin:react/recommended", // uses react-specific linting rules
     "plugin:prettier/recommended", // enables eslint-plugin-prettier and eslint-config-prettier
     "prettier/react" // disables react-specific linting rules that conflict with prettier

@@ -8,20 +8,23 @@
     "axios": "0.19.0",
     "clsx": "1.0.4",
     "dayjs": "1.8.16",
-    "react": "^16.9.0",
-    "react-dom": "^16.9.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
     "react-router-dom": "5.0.1",
-    "react-scripts-ts": "4.0.8"
+    "react-scripts": "3.2.0"
   },
   "scripts": {
-    "start": "concurrently --kill-others \"cross-env NODE_PATH=src react-scripts-ts start\" \"npm run json-server\"",
-    "build": "react-scripts-ts build",
-    "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject",
+    "start": "concurrently --kill-others \"cross-env NODE_PATH=src react-scripts start\" \"npm run json-server\"",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
     "json-server": "json-server --port 3001 --watch ./api/db.json",
     "format": "prettier",
     "lint": "eslint \"src/**/*.{ts,tsx}\" --quiet",
     "lint:fix": "eslint \"src/**/*.{ts,tsx}\" --fix"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
   },
   "devDependencies": {
     "@types/jest": "24.0.17",
@@ -40,10 +43,16 @@
     "prettier": "1.18.2",
     "typescript": "3.5.3"
   },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ]
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
 }
