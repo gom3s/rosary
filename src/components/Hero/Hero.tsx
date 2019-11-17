@@ -1,24 +1,24 @@
-import * as React from "react";
+import * as React from 'react'
 
-import Box from "@material-ui/core/Box";
-import Button from "@material-ui/core/Button";
-import Container from "@material-ui/core/Container";
-import Grid from "@material-ui/core/Grid";
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
+import Box from '@material-ui/core/Box'
+import Button from '@material-ui/core/Button'
+import Container from '@material-ui/core/Container'
+import Grid from '@material-ui/core/Grid'
+import {makeStyles} from '@material-ui/core/styles'
+import Typography from '@material-ui/core/Typography'
 
 const useStyles = makeStyles(theme => ({
   heroButtons: {
-    marginTop: theme.spacing(4)
+    marginTop: theme.spacing(4),
   },
   heroContent: {
     backgroundColor: theme.palette.background.paper,
-    padding: theme.spacing(8, 0, 6)
-  }
-}));
+    padding: theme.spacing(8, 0, 6),
+  },
+}))
 
 const Hero = () => {
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
     <React.Fragment>
@@ -63,7 +63,7 @@ const Hero = () => {
         </div>
       </main>
     </React.Fragment>
-  );
-};
+  )
+}
 
-export default Hero;
+export default Hero

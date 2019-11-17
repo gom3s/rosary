@@ -1,9 +1,10 @@
 {
   "extends": ["tslint:recommended", "tslint-react", "tslint-config-prettier"],
   "rules": {
-    "object-literal-sort-keys": false
-  },  
-  "jsRules":{
+    "object-literal-sort-keys": false,
+    "interface-name": [true, "never-prefix"]
+  },
+  "jsRules": {
     "object-literal-sort-keys": false
   },
   "linterOptions": {

@@ -1,3 +1,3 @@
-import IntentionList from './IntentionList';
+import IntentionList from './IntentionList'
 
-export default IntentionList;
+export default IntentionList

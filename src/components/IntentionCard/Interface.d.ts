@@ -1,6 +1,6 @@
 export interface IIntention {
-  id: string;
-  userId: string;
-  title: string;
-  description: string;
+  id: string
+  userId: string
+  title: string
+  description: string
 }

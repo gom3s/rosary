@@ -1,9 +1,9 @@
-import axios from 'axios';
+import axios from 'axios'
 
 const api = axios.create({
   baseURL: process.env.REACT_APP_ROSARY_API,
-  headers: {'accept': 'application/json'},
+  headers: {accept: 'application/json'},
   timeout: 5000,
-});
+})
 
-export default api;
+export default api

@@ -1,10 +1,10 @@
-import { rosary } from './rosary_pl'
+import {rosary} from './rosary_pl'
 
-export interface IMystery {
-  "type": number;
-  "title": string;
-  "description": string;
-  "image": string;
+export interface Mystery {
+  type: number
+  title: string
+  description: string
+  image: string
 }
 
 export const getMystery = (type: number) => {
@@ -13,21 +13,22 @@ export const getMystery = (type: number) => {
       type: 0,
       title: 'loading...',
       description: '',
-      image: '/img/rosary1.jpeg'
+      image: '/img/rosary1.jpeg',
     }
   }
 
-  const mystery = rosary.find(mysteryByType(type)) 
-  
+  const mystery = rosary.find(mysteryByType(type))
+
   // tslint:disable-next-line: no-console
   console.log('type: ', type)
 
   return {
-      type,
-      title: mystery!.title,
-      description: mystery!.description,
-      image: `/img/${type}.jpg`
+    type,
+    title: mystery!.title,
+    description: mystery!.description,
+    image: `/img/${type}.jpg`,
   }
 }
 
-const mysteryByType = (type: number) => (mystery: IMystery) => mystery.type === type
+const mysteryByType = (type: number) => (mystery: Mystery) =>
+  mystery.type === type

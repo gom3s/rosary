@@ -7,85 +7,87 @@ import {
   ExpansionPanelSummary,
   Grid,
   Paper,
-  Typography
-} from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
-import { withStyles } from '@material-ui/core/styles';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import * as React from "react";
-import { useState } from "react";
-import { RouteComponentProps } from "react-router-dom";
+  Typography,
+} from '@material-ui/core'
+import {makeStyles} from '@material-ui/core/styles'
+import {withStyles} from '@material-ui/core/styles'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import * as React from 'react'
+import {useState} from 'react'
+import {RouteComponentProps} from 'react-router-dom'
 
-import Prayer from 'src/containers/Prayer';
-import { useIntention } from "../../hooks/useRosaryApi";
-import rosarySVG from '../../rosary2.svg';
-import IntentionCard from "../IntentionCard";
-import PrayDisclaimerCard from '../PrayDisclaimerCard';
+import Prayer from 'src/containers/Prayer'
+import {useIntention} from '../../hooks/useRosaryApi'
+import rosarySVG from '../../rosary2.svg'
+import IntentionCard from '../IntentionCard'
+import PrayDisclaimerCard from '../PrayDisclaimerCard'
 
 // tslint:disable-next-line: object-literal-sort-keys
 const useStyles = makeStyles(theme => ({
   card: {
-    display: "flex",
-    flexDirection: "column",
-    height: "100%"
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
   },
   cardGrid: {
     paddingBottom: theme.spacing(8),
-    paddingTop: theme.spacing(6)
+    paddingTop: theme.spacing(6),
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
-    fontWeight: theme.typography.fontWeightRegular
+    fontWeight: theme.typography.fontWeightRegular,
   },
   root: {
-    width: "100%",
+    width: '100%',
   },
   icon: {
     marginLeft: theme.spacing(1),
-    width: 30
-  },  
-}));
+    width: 30,
+  },
+}))
 
 const ExpansionPanelDetails = withStyles(theme => ({
   root: {
     padding: theme.spacing(1),
   },
-}))(MuiExpansionPanelDetails);
+}))(MuiExpansionPanelDetails)
 
-interface IProps {
-  id: string;
-  prayerId: string;
+interface IntentionPageProps {
+  id: string
+  prayerId: string
 }
 
-const IntentionPage: React.ComponentType<RouteComponentProps<IProps>> = props => {
-  const { id, prayerId } = props.match.params;
-  const classes = useStyles();
-  const { state } = useIntention(id);
-  const intention = state.data;
+const IntentionPage: React.ComponentType<
+  RouteComponentProps<IntentionPageProps>
+> = props => {
+  const {id, prayerId} = props.match.params
+  const classes = useStyles()
+  const {state} = useIntention(id)
+  const intention = state.data
   const [intentionPanel, setIntentionPanel] = useState({
-    expanded: true
+    expanded: true,
   })
   const [prayPanel, setPrayPanel] = useState({
-    expanded: Boolean(prayerId)
+    expanded: Boolean(prayerId),
   })
   const [helpPanel, setHelpPanel] = useState({
-    expanded: false
-  })    
+    expanded: false,
+  })
   const toggleIntentionPanel = (event: object, expanded: boolean) => {
     setIntentionPanel({
-      expanded
+      expanded,
     })
   }
   const togglePrayPanel = (event: object, expanded: boolean) => {
     setPrayPanel({
-      expanded
+      expanded,
     })
   }
   const toggleHelpPanel = (event: object, expanded: boolean) => {
     setHelpPanel({
-      expanded
+      expanded,
     })
-  }  
+  }
   const openPrayPanel = () => togglePrayPanel({}, true)
   const closeIntentionPanel = () => toggleIntentionPanel({}, false)
   const startPray = () => {
@@ -93,10 +95,10 @@ const IntentionPage: React.ComponentType<RouteComponentProps<IProps>> = props =>
     openPrayPanel()
   }
   const setPrayerIdInRoute = (prayer: string) => {
-    if (prayer){
-      props.history.push(`/intention/${id}${prayer}`);
+    if (prayer) {
+      props.history.push(`/intention/${id}${prayer}`)
     } else {
-      props.history.push(`/intention/${id}`);
+      props.history.push(`/intention/${id}`)
     }
   }
 
@@ -105,7 +107,7 @@ const IntentionPage: React.ComponentType<RouteComponentProps<IProps>> = props =>
       <Grid container={true} spacing={2}>
         <Grid item={true} key={intention.id} xs={12} sm={6} md={6} lg={4}>
           <div className={classes.root}>
-            <ExpansionPanel 
+            <ExpansionPanel
               expanded={intentionPanel.expanded}
               onChange={toggleIntentionPanel}
             >
@@ -115,7 +117,7 @@ const IntentionPage: React.ComponentType<RouteComponentProps<IProps>> = props =>
                 id="panel1a-header"
               >
                 <Typography className={classes.heading}>
-                  {intentionPanel.expanded ? 'Intencja' : intention.title }
+                  {intentionPanel.expanded ? 'Intencja' : intention.title}
                 </Typography>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails className={classes.root}>
@@ -129,9 +131,9 @@ const IntentionPage: React.ComponentType<RouteComponentProps<IProps>> = props =>
                 <Button size="small" color="primary" onClick={startPray}>
                   Odmów dziesiątek
                 </Button>
-              </ExpansionPanelActions>              
+              </ExpansionPanelActions>
             </ExpansionPanel>
-            <ExpansionPanel 
+            <ExpansionPanel
               expanded={prayPanel.expanded}
               onChange={togglePrayPanel}
             >
@@ -140,42 +142,44 @@ const IntentionPage: React.ComponentType<RouteComponentProps<IProps>> = props =>
                 aria-controls="panel2a-content"
                 id="panel2a-header"
               >
-                <Typography className={classes.heading}>
-                  Modlitwa
-                </Typography>
+                <Typography className={classes.heading}>Modlitwa</Typography>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
-                <Prayer intention={intention} onPrayerChanged={setPrayerIdInRoute} prayerId={prayerId}/>
+                <Prayer
+                  intention={intention}
+                  onPrayerChanged={setPrayerIdInRoute}
+                  prayerId={prayerId}
+                />
               </ExpansionPanelDetails>
             </ExpansionPanel>
           </div>
         </Grid>
         <Grid item={true} key={2} xs={12} sm={6} md={6} lg={8}>
-          <ExpansionPanel 
-              expanded={helpPanel.expanded}
-              onChange={toggleHelpPanel}
+          <ExpansionPanel
+            expanded={helpPanel.expanded}
+            onChange={toggleHelpPanel}
+          >
+            <ExpansionPanelSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel2a-content"
+              id="panel2a-header"
             >
-              <ExpansionPanelSummary
-                expandIcon={<ExpandMoreIcon />}
-                aria-controls="panel2a-content"
-                id="panel2a-header"
-              >
-                <Typography className={classes.heading}>
-                  Jak to działa ?
-                </Typography>
-              </ExpansionPanelSummary>
-              <ExpansionPanelDetails>
-                <PrayDisclaimerCard />
-              </ExpansionPanelDetails>
-            </ExpansionPanel>
-            <Paper className={classes.root}>
+              <Typography className={classes.heading}>
+                Jak to działa ?
+              </Typography>
+            </ExpansionPanelSummary>
+            <ExpansionPanelDetails>
+              <PrayDisclaimerCard />
+            </ExpansionPanelDetails>
+          </ExpansionPanel>
+          <Paper className={classes.root}>
             {/* TODO add statistics and current rosary progress indicator */}
             <img src={rosarySVG} className={classes.icon} alt="rosary" />
-          </Paper>            
+          </Paper>
         </Grid>
       </Grid>
     </Container>
-  );
-};
+  )
+}
 
-export default IntentionPage;
+export default IntentionPage

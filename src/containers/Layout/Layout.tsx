@@ -1,6 +1,6 @@
-import * as React from "react";
-import Footer from "../../components/Footer";
-import AppRouter from '../AppRouter';
+import * as React from 'react'
+import Footer from '../../components/Footer'
+import AppRouter from '../AppRouter'
 
 const Layout = () => {
   return (
@@ -8,7 +8,7 @@ const Layout = () => {
       <AppRouter />
       <Footer />
     </React.Fragment>
-  );
-};
+  )
+}
 
-export default Layout;
+export default Layout

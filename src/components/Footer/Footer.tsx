@@ -1,29 +1,29 @@
-import * as React from "react";
+import * as React from 'react'
 
-import Link from "@material-ui/core/Link";
-import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
+import Link from '@material-ui/core/Link'
+import {makeStyles} from '@material-ui/core/styles'
+import Typography from '@material-ui/core/Typography'
 
 const Copyright = () => {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
+      {'Copyright © '}
       {new Date().getFullYear()}
       <Link color="inherit" href="https://twitter.com/gmotyl">
-        {" @gmotyl"}
-      </Link>{" "}
+        {' @gmotyl'}
+      </Link>{' '}
     </Typography>
-  );
-};
+  )
+}
 const useStyles = makeStyles(theme => ({
   footer: {
     backgroundColor: theme.palette.grey[100],
-    padding: theme.spacing(6)
-  }
-}));
+    padding: theme.spacing(6),
+  },
+}))
 
 const Footer = () => {
-  const classes = useStyles();
+  const classes = useStyles()
 
   return (
     <React.Fragment>
@@ -42,7 +42,7 @@ const Footer = () => {
         <Copyright />
       </footer>
     </React.Fragment>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer

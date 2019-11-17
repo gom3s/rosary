@@ -1,3 +1,3 @@
-import PrayDisclaimerCard from './PrayDisclaimerCard';
+import PrayDisclaimerCard from './PrayDisclaimerCard'
 
-export default PrayDisclaimerCard;
+export default PrayDisclaimerCard

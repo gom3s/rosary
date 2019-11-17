@@ -1,3 +1,3 @@
-import Prayer from './Prayer';
+import Prayer from './Prayer'
 
-export default Prayer;
+export default Prayer

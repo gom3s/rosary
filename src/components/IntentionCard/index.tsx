@@ -1,3 +1,3 @@
-import IntentionCard from './IntentionCard';
+import IntentionCard from './IntentionCard'
 
-export default IntentionCard;
+export default IntentionCard

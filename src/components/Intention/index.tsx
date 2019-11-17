@@ -1,3 +1,3 @@
-import IntentionPage from './IntentionPage';
+import IntentionPage from './IntentionPage'
 
-export default IntentionPage;
+export default IntentionPage
