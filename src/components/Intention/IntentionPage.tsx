@@ -1,6 +1,5 @@
 import {
   Button,
-  Container,
   ExpansionPanel,
   ExpansionPanelActions,
   ExpansionPanelDetails as MuiExpansionPanelDetails,
@@ -28,10 +27,6 @@ const useStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
-  },
-  cardGrid: {
-    paddingBottom: theme.spacing(8),
-    paddingTop: theme.spacing(6),
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
@@ -103,7 +98,7 @@ const IntentionPage: React.ComponentType<
   }
 
   return (
-    <Container className={classes.cardGrid} maxWidth="lg">
+    <>
       <Grid container={true} spacing={2}>
         <Grid item={true} key={intention.id} xs={12} sm={6} md={6} lg={4}>
           <div className={classes.root}>
@@ -178,7 +173,7 @@ const IntentionPage: React.ComponentType<
           </Paper>
         </Grid>
       </Grid>
-    </Container>
+    </>
   )
 }
 

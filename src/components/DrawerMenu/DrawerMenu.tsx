@@ -41,12 +41,12 @@ const DrawerMenu = () => {
       onKeyDown={e => setOpen(false)}
     >
       <List>
-        <Link to="/">
+        <Link to="/login">
           <ListItem button key={'login'}>
             <ListItemIcon>
               <AccountCircleIcon />
             </ListItemIcon>
-            <ListItemText primary={'Login...'} />
+            <ListItemText primary={'Zaloguj'} />
           </ListItem>
         </Link>
       </List>
