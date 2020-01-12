@@ -23,7 +23,7 @@ export const useIntentionList = () =>
 export const useIntention = (id: string) =>
   useGetRequest<IIntention>(api, `intentions/${id}`, emptyIntention)
 export const usePrayer = (id: string | undefined) =>
-  useGetRequest<Prayer>(api, id ? `prayers/${id}` : undefined, emptyPrayer)
+  useGetRequest<Prayer>(api, `prayers/${id}`, emptyPrayer)
 export const usePrayRosaryRequest = () =>
   useRequest(api.post, `pray_rosary_requests`, emptyPrayRequest)
 export const useSavePrayer = () => useRequest(api.put, `prayers`, {})

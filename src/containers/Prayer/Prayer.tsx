@@ -24,7 +24,7 @@ const useStyles = makeStyles(theme => ({
 interface PrayerProps {
   intention: IIntention
   onPrayerChanged: (prayerId: string) => void
-  prayerId?: string
+  prayerId: string
 }
 
 const Prayer: React.ComponentType<PrayerProps> = props => {
@@ -69,7 +69,7 @@ const Prayer: React.ComponentType<PrayerProps> = props => {
       prayer: `prayers/${props.prayerId}`,
       ...getPrayerApi.state.data,
     })
-  }, [getPrayerApi.state.data])
+  }, [props.prayerId])
 
   useEffect(() => {
     const {type, rosary, prayer} = prayRequestApi.state.data

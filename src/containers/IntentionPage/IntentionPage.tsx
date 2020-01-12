@@ -18,8 +18,8 @@ import {RouteComponentProps} from 'react-router-dom'
 import Prayer from 'src/containers/Prayer'
 import {useIntention} from '../../hooks/useRosaryApi'
 import rosarySVG from '../../rosary2.svg'
-import IntentionCard from '../IntentionCard'
-import PrayDisclaimerCard from '../PrayDisclaimerCard'
+import IntentionCard from '../../components/IntentionCard'
+import PrayDisclaimerCard from '../../components/PrayDisclaimerCard'
 
 // tslint:disable-next-line: object-literal-sort-keys
 const useStyles = makeStyles(theme => ({

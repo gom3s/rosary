@@ -3,7 +3,7 @@ import {useEffect, useState} from 'react'
 
 export const useGetRequest = <T>(
   api: AxiosInstance,
-  endpoint: string | undefined,
+  endpoint: string,
   initialData: T,
 ) => {
   const [data, setData] = useState(initialData)

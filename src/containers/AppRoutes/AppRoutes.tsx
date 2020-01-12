@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {Route} from 'react-router-dom'
 
-import IntentionPage from '../../components/Intention'
+import IntentionPage from '../IntentionPage'
 import IntentionList from '../IntentionList'
 import LoginForm from '../../components/LoginForm'
 
