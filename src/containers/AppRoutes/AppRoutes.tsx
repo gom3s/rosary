@@ -3,13 +3,13 @@ import {Route} from 'react-router-dom'
 
 import IntentionPage from '../IntentionPage'
 import IntentionList from '../IntentionList'
-import LoginForm from '../../components/LoginForm'
+import LoginPage from '../LoginPage'
 
 const AppRoutes = () => {
   return (
     <>
       <Route path="/" exact={true} component={IntentionList} />
-      <Route path="/login" exact={true} component={LoginForm} />
+      <Route path="/login" exact={true} component={LoginPage} />
       <Route
         path="/intention/:id/(prayers)?/:prayerId?"
         component={IntentionPage}
