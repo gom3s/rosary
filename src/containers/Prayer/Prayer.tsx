@@ -9,11 +9,7 @@ import PrayCard from 'src/components/PrayCard'
 // import PrayDisclaimerCard from 'src/components/PrayDisclaimerCard';
 import {IIntention} from '../../components/IntentionCard/Interface'
 import {getMystery} from '../../consts/rosary'
-import {
-  usePrayer,
-  usePrayRosaryRequest,
-  useSavePrayer,
-} from '../../hooks/useRosaryApi'
+import {usePrayRosaryRequest, useSavePrayer} from '../../hooks/useRosaryApi'
 
 const useStyles = makeStyles(theme => ({
   progress: {
@@ -29,21 +25,16 @@ interface PrayerProps {
 
 const Prayer: React.ComponentType<PrayerProps> = props => {
   const classes = useStyles()
-
-  // TODO: rozbić state na poszczegolne zmienne
   const [type, setType] = useState(0)
   const [rosary, setRosary] = useState('')
-  const [state, setState] = useState({
-    id: props.prayerId,
-    prayer: 'prayers/',
-  })
-  // const prayRequestApi = usePrayRosaryRequest()
   const {
     state: {data: prayRequestData, isLoading: isPrayRequestLoading},
     doRequest: doPrayRequest,
   } = usePrayRosaryRequest()
-  const savePrayerApi = useSavePrayer()
-  const getPrayerApi = usePrayer(props.prayerId)
+  const {
+    state: {isLoading: isSavePrayerPending},
+    doRequest: savePrayerRequest,
+  } = useSavePrayer()
   const [isPraying, setIsPraying] = useState(Boolean(props.prayerId))
   const prayRequestAction = () => {
     setType(0) // TODO: remove magic number
@@ -52,44 +43,30 @@ const Prayer: React.ComponentType<PrayerProps> = props => {
   }
   const prayAction = () => {
     setIsPraying(false)
-    savePrayerApi.doRequest(
-      {
-        ...state,
-        rosary,
-        type,
-        date: dayjs().toJSON(),
-        lockDate: null,
-      },
-
-      state.prayer,
-    )
+    const payload = {
+      id: props.prayerId,
+      rosary,
+      type,
+      date: dayjs().toJSON(),
+      lockDate: null,
+    }
+    savePrayerRequest(payload, `prayers/${props.prayerId}`)
   }
 
-  useEffect(() => {
-    setState({
-      prayer: `prayers/${props.prayerId}`,
-      ...getPrayerApi.state.data,
-    })
-  }, [props.prayerId])
   useEffect(() => {
     const {type, rosary, prayer} = prayRequestData
     setType(type)
     setRosary(rosary)
-    setState({
-      id: props.prayerId,
-      prayer,
-    })
 
-    if (prayer) {
-      props.onPrayerChanged(prayer)
-    }
+    props.onPrayerChanged(prayer)
   }, [isPrayRequestLoading])
 
   return (
     <Grid container={true} spacing={2}>
       <PrayCard
-        mystery={getMystery(type)}
-        isPraying={isPraying}
+        mystery={isPrayRequestLoading ? getMystery(0) : getMystery(type)}
+        getPrayerButtonDisabled={isPraying || isSavePrayerPending}
+        savePrayerButtonDisabled={!isPraying || isPrayRequestLoading}
         onPrayAction={prayAction}
         onPrayRequestAction={prayRequestAction}
       />

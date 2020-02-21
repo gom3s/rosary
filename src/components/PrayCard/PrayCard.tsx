@@ -27,14 +27,15 @@ const useStyles = makeStyles(theme => ({
 }))
 
 interface PrayCardProps {
-  isPraying: boolean
+  getPrayerButtonDisabled: boolean
+  savePrayerButtonDisabled: boolean
   mystery: Mystery
   onPrayRequestAction: () => void
   onPrayAction: () => void
 }
 
 const PrayCard: React.ComponentType<PrayCardProps> = props => {
-  const {isPraying, mystery} = props
+  const {getPrayerButtonDisabled, savePrayerButtonDisabled, mystery} = props
 
   const classes = useStyles()
   const actions = (
@@ -43,7 +44,7 @@ const PrayCard: React.ComponentType<PrayCardProps> = props => {
         size="small"
         color="primary"
         onClick={props.onPrayRequestAction}
-        disabled={isPraying}
+        disabled={getPrayerButtonDisabled}
       >
         Pobierz tajemnicę
       </Button>
@@ -51,7 +52,7 @@ const PrayCard: React.ComponentType<PrayCardProps> = props => {
         size="small"
         color="primary"
         onClick={props.onPrayAction}
-        disabled={!isPraying}
+        disabled={savePrayerButtonDisabled}
       >
         Gotowe (zapisz)
       </Button>
@@ -65,9 +66,11 @@ const PrayCard: React.ComponentType<PrayCardProps> = props => {
       </Grid>
       <CardContent className={classes.cardContent}>
         <Typography gutterBottom={true} variant="h5" component="h2">
-          {isPraying ? mystery.title : null}
+          {getPrayerButtonDisabled ? mystery.title : null}
         </Typography>
-        <Typography>{isPraying ? mystery.description : null}</Typography>
+        <Typography>
+          {getPrayerButtonDisabled ? mystery.description : null}
+        </Typography>
         {/* TODO display pondering of mystery */}
       </CardContent>
       {actions}
