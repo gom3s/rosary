@@ -8,7 +8,7 @@ export interface Mystery {
 }
 
 export const getMystery = (type: number) => {
-  if (type < 1 || type > 20) {
+  if (!type || type < 1 || type > 20) {
     return {
       type: 0,
       title: 'loading...',

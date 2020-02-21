@@ -18,7 +18,7 @@ export const useGetRequest = <T>(
       setIsLoading(true)
 
       try {
-        const result = await api.get(url)
+        const result = url ? await api.get(url) : {data: null}
 
         setData(result.data)
       } catch (error) {
