@@ -29,27 +29,26 @@ interface PrayerProps {
 
 const Prayer: React.ComponentType<PrayerProps> = props => {
   const classes = useStyles()
+
+  // TODO: rozbić state na poszczegolne zmienne
+  const [type, setType] = useState(0)
   const [state, setState] = useState({
-    type: 0,
     id: props.prayerId,
     rosary: '',
     prayer: 'prayers/',
   })
-  const prayRequestApi = usePrayRosaryRequest()
+  // const prayRequestApi = usePrayRosaryRequest()
+  const {
+    state: {data: prayRequestData, isLoading: isPrayRequestLoading},
+    doRequest: doPrayRequest,
+  } = usePrayRosaryRequest()
   const savePrayerApi = useSavePrayer()
   const getPrayerApi = usePrayer(props.prayerId)
   const [isPraying, setIsPraying] = useState(Boolean(props.prayerId))
   const prayRequestAction = () => {
-    setState({
-      ...state,
-      type: 0, // reset displayed mystery
-    })
-    prayRequestApi.doRequest(
-      {intention: `intentions/${props.intention.id}`},
-      '',
-    )
+    setType(0) // TODO: remove magic number
+    doPrayRequest({intention: `intentions/${props.intention.id}`}, '')
     setIsPraying(true)
-    // TODO GM Display remaining lock time indicator
   }
   const prayAction = () => {
     setIsPraying(false)
@@ -70,12 +69,11 @@ const Prayer: React.ComponentType<PrayerProps> = props => {
       ...getPrayerApi.state.data,
     })
   }, [props.prayerId])
-
   useEffect(() => {
-    const {type, rosary, prayer} = prayRequestApi.state.data
+    const {type, rosary, prayer} = prayRequestData
+    setType(type)
     setState({
       id: props.prayerId,
-      type,
       rosary,
       prayer,
     })
@@ -83,17 +81,17 @@ const Prayer: React.ComponentType<PrayerProps> = props => {
     if (prayer) {
       props.onPrayerChanged(prayer)
     }
-  }, [prayRequestApi.state.data.type])
+  }, [isPrayRequestLoading])
 
   return (
     <Grid container={true} spacing={2}>
       <PrayCard
-        mystery={getMystery(state.type)}
+        mystery={getMystery(type)}
         isPraying={isPraying}
         onPrayAction={prayAction}
         onPrayRequestAction={prayRequestAction}
       />
-      {prayRequestApi.state.isLoading ? (
+      {isPrayRequestLoading ? (
         <CircularProgress className={classes.progress} size={18} />
       ) : null}
     </Grid>
