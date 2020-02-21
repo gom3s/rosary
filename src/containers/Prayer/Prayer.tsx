@@ -32,9 +32,9 @@ const Prayer: React.ComponentType<PrayerProps> = props => {
 
   // TODO: rozbić state na poszczegolne zmienne
   const [type, setType] = useState(0)
+  const [rosary, setRosary] = useState('')
   const [state, setState] = useState({
     id: props.prayerId,
-    rosary: '',
     prayer: 'prayers/',
   })
   // const prayRequestApi = usePrayRosaryRequest()
@@ -55,6 +55,8 @@ const Prayer: React.ComponentType<PrayerProps> = props => {
     savePrayerApi.doRequest(
       {
         ...state,
+        rosary,
+        type,
         date: dayjs().toJSON(),
         lockDate: null,
       },
@@ -72,9 +74,9 @@ const Prayer: React.ComponentType<PrayerProps> = props => {
   useEffect(() => {
     const {type, rosary, prayer} = prayRequestData
     setType(type)
+    setRosary(rosary)
     setState({
       id: props.prayerId,
-      rosary,
       prayer,
     })
 
