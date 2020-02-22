@@ -9,6 +9,7 @@ import PrayCard from 'src/components/PrayCard'
 // import PrayDisclaimerCard from 'src/components/PrayDisclaimerCard';
 import {IIntention} from '../../components/IntentionCard/Interface'
 import {getMystery} from '../../consts/rosary'
+import {MysteryTypes} from '../../consts/MysteryTypes'
 import {usePrayRosaryRequest, useSavePrayer} from '../../hooks/useRosaryApi'
 
 const useStyles = makeStyles(theme => ({
@@ -25,7 +26,7 @@ interface PrayerProps {
 
 const Prayer: React.ComponentType<PrayerProps> = props => {
   const classes = useStyles()
-  const [type, setType] = useState(0)
+  const [type, setType] = useState(MysteryTypes.none)
   const [rosary, setRosary] = useState('')
   const {
     state: {data: prayRequestData, isLoading: isPrayRequestLoading},
@@ -37,7 +38,7 @@ const Prayer: React.ComponentType<PrayerProps> = props => {
   } = useSavePrayer()
   const [isPraying, setIsPraying] = useState(Boolean(props.prayerId))
   const prayRequestAction = () => {
-    setType(0) // TODO: remove magic number
+    setType(MysteryTypes.none)
     doPrayRequest({intention: `intentions/${props.intention.id}`}, '')
     setIsPraying(true)
   }
