@@ -111,35 +111,35 @@ export const rosary = [
       'J 19,25-30: A obok krzyża Jezusowego stały: Matka Jego i siostra Matki Jego, Maria, żona Kleofasa, i Maria Magdalena. Kiedy więc Jezus ujrzał Matkę i stojącego obok Niej ucznia, którego miłował, rzekł do Matki: "Niewiasto, oto syn Twój". Następnie rzekł do ucznia: "Oto Matka twoja". I od tej godziny uczeń wziął Ją do siebie. Potem Jezus świadom, że już wszystko się dokonało, aby się wypełniło Pismo, rzekł: "Pragnę". Stało tam naczynie pełne octu. Nałożono więc na hizop gąbkę pełną octu i do ust Mu podano. A gdy Jezus skosztował octu, rzekł: "Wykonało się!" I skłoniwszy głowę oddał ducha.',
   },
   {
-    type: MysteryTypes.Glorius1,
+    type: MysteryTypes.Glorious1,
     image: '',
     title: '1 tajemnica chwalebna: Zmartwychwstanie Pana Jezusa',
     description:
       'J 20,1-18: A pierwszego dnia po szabacie, wczesnym rankiem, gdy jeszcze było ciemno, Maria Magdalena udała się do grobu i zobaczyła kamień odsunięty od grobu. Pobiegła więc i przybyła do Szymona Piotra i do drugiego ucznia, którego Jezus kochał, i rzekła do nich: "Zabrano Pana z grobu i nie wiemy, gdzie Go położono".',
   },
   {
-    type: MysteryTypes.Glorius2,
+    type: MysteryTypes.Glorious2,
     image: '',
     title: '2 tajemnica chwalebna: Wniebowstąpienie Pana Jezusa',
     description:
       'Łk 24,44-53: Potem rzekł do nich: "To właśnie znaczyły słowa, które mówiłem do was, gdy byłem jeszcze z wami: Musi się wypełnić wszystko, co napisane jest o Mnie w Prawie Mojżesza, u Proroków i w Psalmach".',
   },
   {
-    type: MysteryTypes.Glorius3,
+    type: MysteryTypes.Glorious3,
     image: '',
     title: '3 tajemnica chwalebna: Zesłanie Ducha Świętego',
     description:
       'Dz 2,1-13: Kiedy nadszedł wreszcie dzień Pięćdziesiątnicy, znajdowali się wszyscy razem na tym samym miejscu. Nagle dał się słyszeć z nieba szum, jakby uderzenie gwałtownego wiatru, i napełnił cały dom, w którym przebywali. Ukazały się im też języki jakby z ognia, które się rozdzieliły, i na każdym z nich spoczął jeden. I wszyscy zostali napełnieni Duchem Świętym, i zaczęli mówić obcymi językami, tak jak im Duch pozwalał mówić.',
   },
   {
-    type: MysteryTypes.Glorius4,
+    type: MysteryTypes.Glorious4,
     image: '',
     title: '4 tajemnica chwalebna: Wniebowzięcie Najświętszej Maryi Panny',
     description:
       'k 1,46-56: Wtedy Maryja rzekła: Wielbi dusza moja Pana, i raduje się duch mój w Bogu, moim Zbawcy. Bo wejrzał na uniżenie Służebnicy swojej. Oto bowiem błogosławić mnie będą odtąd wszystkie pokolenia, gdyż wielkie rzeczy uczynił mi Wszechmocny. Święte jest Jego imię - a swoje miłosierdzie na pokolenia i pokolenia zachowuje dla tych, co się Go boją. ',
   },
   {
-    type: MysteryTypes.Glorius5,
+    type: MysteryTypes.Glorious5,
     image: '',
     title:
       '5 tajemnica chwalebna: Ukoronowanie Najświętszej Maryi Panny na Królową Nieba i Ziemi',

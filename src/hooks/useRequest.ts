@@ -9,7 +9,7 @@ export const useRequest = <T>(
   const [data, setData] = useState(initialData)
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
-  const doRequest = async (payload: {}, endpoint: string) => {
+  const doRequest = async (payload: {}, endpoint?: string) => {
     setIsError(false)
     setIsLoading(true)
     endpoint = endpoint ? endpoint : defaultEndpoint

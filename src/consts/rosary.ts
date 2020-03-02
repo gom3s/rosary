@@ -1,13 +1,14 @@
 import {rosary} from './rosary_pl'
+import {MysteryTypes} from './MysteryTypes'
 
 export interface Mystery {
-  type: number
+  type: MysteryTypes
   title: string
   description: string
   image: string
 }
 
-export const getMystery = (type: number) => {
+export const getMystery = (type: MysteryTypes) => {
   if (!type || type < 1 || type > 20) {
     return {
       type: 0,

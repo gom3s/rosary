@@ -13,10 +13,10 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const CardList = (props: any) => {
+const IntentionList = (props: any) => {
   const classes = useStyles()
   const {state} = useIntentionList()
-  const {data} = state
+  const {data: intentions} = state
 
   return (
     <>
@@ -24,7 +24,7 @@ const CardList = (props: any) => {
       <Container className={classes.cardGrid} maxWidth="md">
         {/* End hero unit */}
         <Grid container={true} spacing={4}>
-          {data.map(intention => (
+          {intentions.map(intention => (
             <Grid item={true} key={intention.id} xs={12} sm={6} md={4}>
               <IntentionCard intention={intention} />
             </Grid>
@@ -35,4 +35,4 @@ const CardList = (props: any) => {
   )
 }
 
-export default CardList
+export default IntentionList
