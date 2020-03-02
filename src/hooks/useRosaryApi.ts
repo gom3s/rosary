@@ -25,6 +25,8 @@ export const useIntention = (id: string) =>
 export const usePrayRosaryRequest = () =>
   useRequest(api.post, `pray_rosary_requests`, emptyPrayRequest)
 export const useSavePrayer = () => useRequest(api.put, `prayers`, {})
+export const useAuthenticationToken = () =>
+  useRequest(api.post, `authentication_token`, {})
 
 export const usePrayer = (id: string | undefined) => {
   const url = id ? `prayers/${id}` : ''

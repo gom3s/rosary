@@ -1,16 +1,17 @@
 import * as React from 'react'
-import {Grid, Card, Typography} from '@material-ui/core'
-import {makeStyles} from '@material-ui/core/styles'
 
+import {Card, Typography} from '@material-ui/core'
+import {makeStyles} from '@material-ui/core/styles'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import TextField from '@material-ui/core/TextField'
 import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
-import Link from '@material-ui/core/Link'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Container from '@material-ui/core/Container'
+
+import {useAuthenticationToken} from '../../hooks/useRosaryApi'
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -41,8 +42,19 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const LoginCard = () => {
+interface LoginCardProps {}
+
+const LoginCard = (props: LoginCardProps) => {
   const classes = useStyles()
+  const {state, doRequest: getAuthenticationToken} = useAuthenticationToken()
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const {email, password} = e.target['elements']
+    if (!state.isLoading) {
+      getAuthenticationToken({email: email.value, password: password.value})
+    }
+  }
+
   return (
     <>
       <Card className={classes.card}>
@@ -55,7 +67,11 @@ const LoginCard = () => {
             <Typography component="h1" variant="h5">
               Zaloguj się
             </Typography>
-            <form className={classes.form} noValidate>
+            <form
+              className={classes.form}
+              noValidate={true}
+              onSubmit={handleSubmit}
+            >
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -91,18 +107,18 @@ const LoginCard = () => {
               >
                 Zaloguj
               </Button>
-              <Grid container>
-                <Grid item xs>
-                  <Link href="#" variant="body2">
-                    {/* Nie pamiętasz hasła? */}
-                  </Link>
-                </Grid>
-                <Grid item>
-                  <Link href="#" variant="body2">
-                    {/* {'Nie masz konta? Rejestracja'} */}
-                  </Link>
-                </Grid>
-              </Grid>
+              {/* <Grid container> */}
+              {/* <Grid item xs> */}
+              {/* <Link href="#" variant="body2"> */}
+              {/* Nie pamiętasz hasła? */}
+              {/* </Link> */}
+              {/* </Grid> */}
+              {/* <Grid item> */}
+              {/* <Link href="#" variant="body2"> */}
+              {/* {'Nie masz konta? Rejestracja'} */}
+              {/* </Link> */}
+              {/* </Grid> */}
+              {/* </Grid> */}
             </form>
           </div>
         </Container>
