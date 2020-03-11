@@ -28,6 +28,7 @@
     "extends": "react-app"
   },
   "devDependencies": {
+    "@testing-library/react": "9.4.1",
     "@types/jest": "24.0.17",
     "@types/node": "12.7.1",
     "@types/react": "16.9.1",
@@ -43,6 +44,7 @@
     "eslint-plugin-react-hooks": "2.3.0",
     "json-server": "^0.15.0",
     "prettier": "1.18.2",
+    "react-testing-library": "8.0.1",
     "typescript": "3.5.3"
   },
   "browserslist": {
