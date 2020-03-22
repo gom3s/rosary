@@ -10,7 +10,7 @@ const LoginPage = () => {
         <Grid item={true} key="login" xs={12} sm={6} md={12} lg={5}>
           <LoginCard />
         </Grid>
-        <Grid item={true} key="login" xs={12} sm={6} md={12} lg={7}>
+        <Grid item={true} key="register" xs={12} sm={6} md={12} lg={7}>
           {/* Register */}
         </Grid>
       </Grid>
