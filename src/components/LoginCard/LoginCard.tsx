@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, {useContext, useEffect} from 'react'
 
 import {Card, Typography} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
@@ -11,7 +11,8 @@ import Checkbox from '@material-ui/core/Checkbox'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Container from '@material-ui/core/Container'
 
-import {useAuthenticationToken} from '../../hooks/useRosaryApi'
+import {AuthContext} from '../../context/AuthProvider'
+import {useAuthTokenRequest} from '../../hooks/useRosaryApi'
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -46,14 +47,18 @@ interface LoginCardProps {}
 
 const LoginCard = (props: LoginCardProps) => {
   const classes = useStyles()
-  const {state, doRequest: getAuthenticationToken} = useAuthenticationToken()
+  const {setAuthToken} = useContext(AuthContext)
+  const {state, doRequest: fetchAuthToken} = useAuthTokenRequest()
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const {email, password} = e.target['elements']
     if (!state.isLoading) {
-      getAuthenticationToken({email: email.value, password: password.value})
+      fetchAuthToken({email: email.value, password: password.value})
     }
   }
+  useEffect(() => {
+    state.data.token && setAuthToken(state.data.token)
+  }, [setAuthToken, state.data.token])
 
   return (
     <>
