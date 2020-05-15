@@ -48,17 +48,18 @@ interface LoginCardProps {}
 const LoginCard = (props: LoginCardProps) => {
   const classes = useStyles()
   const {setAuthToken} = useContext(AuthContext)
-  const {state, doRequest: fetchAuthToken} = useAuthTokenRequest()
+  const {token, requestAuthToken, isLoading} = useAuthTokenRequest()
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const {email, password} = e.target['elements']
-    if (!state.isLoading) {
-      fetchAuthToken({email: email.value, password: password.value})
+    if (!isLoading) {
+      requestAuthToken({email: email.value, password: password.value})
     }
   }
   useEffect(() => {
-    state.data.token && setAuthToken(state.data.token)
-  }, [setAuthToken, state.data.token])
+    token && setAuthToken(token)
+    console.log('token: ', token)
+  }, [setAuthToken, token])
 
   return (
     <>

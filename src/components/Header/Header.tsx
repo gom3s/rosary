@@ -10,13 +10,17 @@ import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 
 import DrawerMenu from '../DrawerMenu'
 import Link from '../Link'
+import {AuthContext} from 'src/context/AuthProvider'
 
 const useStyles = makeStyles(theme => ({
   box: {
     paddingBottom: theme.spacing(5),
   },
-  icon: {
+  login: {
     marginRight: theme.spacing(2),
+  },
+  icon: {
+    float: 'right',
   },
   home: {
     '&:hover': {
@@ -40,7 +44,9 @@ function HideOnScroll(props: HideOnScrollProps) {
 
 const Header = () => {
   const classes = useStyles()
+  const {payload} = React.useContext(AuthContext)
 
+  const title = 'ORARE PRO ME'
   return (
     <React.Fragment>
       <HideOnScroll>
@@ -49,9 +55,16 @@ const Header = () => {
             <DrawerMenu></DrawerMenu>
             <Link to={`/`}>
               <Typography variant="h6" color="inherit" noWrap={true}>
-                ORARE PRO ME
+                {title}
               </Typography>
             </Link>
+            <Typography
+              variant="subtitle2"
+              className={classes.login}
+              noWrap={true}
+            >
+              {payload.email}
+            </Typography>
           </Toolbar>
         </AppBar>
       </HideOnScroll>
