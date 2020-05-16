@@ -25,8 +25,16 @@ export const useIntention = (id: string) =>
 export const usePrayRosaryRequest = () =>
   useRequest(api.post, `pray_rosary_requests`, emptyPrayRequest)
 export const useSavePrayer = () => useRequest(api.put, `prayers`, {})
-export const useAuthenticationToken = () =>
-  useRequest(api.post, `authentication_token`, {})
+export const useAuthTokenRequest = () => {
+  const {state, doRequest: requestAuthToken} = useRequest(
+    api.post,
+    `authentication_token`,
+    {},
+  )
+  const token = state.data.token
+
+  return {token, requestAuthToken, isLoading: state.isLoading}
+}
 
 export const usePrayer = (id: string | undefined) => {
   const url = id ? `prayers/${id}` : ''

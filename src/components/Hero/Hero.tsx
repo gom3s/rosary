@@ -23,7 +23,7 @@ const Hero = () => {
   return (
     <React.Fragment>
       <main>
-        <div className={classes.heroContent}>
+        <span className={classes.heroContent}>
           <Container maxWidth="sm">
             <Typography
               component="h1"
@@ -34,18 +34,25 @@ const Hero = () => {
             >
               Pomódl się za mnie
             </Typography>
+            <Box fontStyle="italic" color="textPrimary">
+              <Typography
+                variant="h6"
+                align="center"
+                color="textSecondary"
+                paragraph={true}
+              >
+                "O cokolwiek przez różaniec prosić będziesz - otrzymasz."
+              </Typography>
+            </Box>
             <Typography
               variant="h6"
               align="center"
               color="textSecondary"
               paragraph={true}
             >
-              <Box fontStyle="italic" color="textPrimary">
-                "O cokolwiek przez różaniec prosić będziesz - otrzymasz."
-              </Box>
               Nasza internetowa wspólnota modli się w Twojej intencji.
             </Typography>
-            <div className={classes.heroButtons}>
+            <span className={classes.heroButtons}>
               <Grid container={true} spacing={2} justify="center">
                 <Grid item={true}>
                   <Button variant="contained" color="primary">
@@ -58,9 +65,9 @@ const Hero = () => {
                   </Button>
                 </Grid>
               </Grid>
-            </div>
+            </span>
           </Container>
-        </div>
+        </span>
       </main>
     </React.Fragment>
   )

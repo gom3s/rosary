@@ -2,9 +2,14 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import LoginCard from '../LoginCard'
 
-jest.mock('../../../hooks/useRosaryApi')
+const mockRequest = jest.fn()
 
-import {useAuthenticationToken} from '../../../hooks/useRosaryApi'
+jest.mock('../../../hooks/useRosaryApi', () => ({
+  useAuthTokenRequest: () => ({
+    state: {isLoading: false, data: {token: ''}},
+    requestAuthToken: mockRequest,
+  }),
+}))
 
 test('calls submit with the username and password when submitted', async () => {
   const container = document.createElement('div')
@@ -17,8 +22,8 @@ test('calls submit with the username and password when submitted', async () => {
   password.value = 'secret'
   form.dispatchEvent(submit)
 
-  expect(useAuthenticationToken().doRequest).toHaveBeenCalledTimes(1)
-  expect(useAuthenticationToken().doRequest).toHaveBeenCalledWith({
+  expect(mockRequest).toHaveBeenCalledTimes(1)
+  expect(mockRequest).toHaveBeenCalledWith({
     email: 'test@test.pl',
     password: 'secret',
   })

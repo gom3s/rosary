@@ -7,16 +7,21 @@ import {makeStyles} from '@material-ui/core/styles'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
+import VerifiedUser from '@material-ui/icons/VerifiedUser'
 
 import DrawerMenu from '../DrawerMenu'
 import Link from '../Link'
+import {AuthContext} from 'src/context/AuthProvider'
 
 const useStyles = makeStyles(theme => ({
   box: {
     paddingBottom: theme.spacing(5),
   },
-  icon: {
+  login: {
     marginRight: theme.spacing(2),
+  },
+  icon: {
+    float: 'right',
   },
   home: {
     '&:hover': {
@@ -40,7 +45,12 @@ function HideOnScroll(props: HideOnScrollProps) {
 
 const Header = () => {
   const classes = useStyles()
+  const {isLoggedIn} = React.useContext(AuthContext)
 
+  const title = 'ORARE PRO ME'
+  const topMenu = isLoggedIn ? (
+    <VerifiedUser data-testid="logged-user" className={classes.icon} />
+  ) : null
   return (
     <React.Fragment>
       <HideOnScroll>
@@ -49,9 +59,16 @@ const Header = () => {
             <DrawerMenu></DrawerMenu>
             <Link to={`/`}>
               <Typography variant="h6" color="inherit" noWrap={true}>
-                ORARE PRO ME
+                {title}
               </Typography>
             </Link>
+            <Typography
+              variant="subtitle2"
+              className={classes.login}
+              noWrap={true}
+            >
+              {topMenu}
+            </Typography>
           </Toolbar>
         </AppBar>
       </HideOnScroll>
