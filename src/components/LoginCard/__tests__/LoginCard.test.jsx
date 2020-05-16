@@ -7,7 +7,7 @@ const mockRequest = jest.fn()
 jest.mock('../../../hooks/useRosaryApi', () => ({
   useAuthTokenRequest: () => ({
     state: {isLoading: false, data: {token: ''}},
-    doRequest: mockRequest,
+    requestAuthToken: mockRequest,
   }),
 }))
 

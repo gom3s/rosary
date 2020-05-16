@@ -1,17 +1,23 @@
 import React from 'react'
-import {render} from '@testing-library/react'
+import {render, wait} from '@testing-library/react'
 
-import AuthProvider, {AuthContext} from '../AuthProvider'
+import AuthProvider, {AuthContext, IAuthRole} from '../AuthProvider'
 
-let payloadProbe = {}
+let isLoggedInProbe = false
+let payloadProbe = {
+  id: '',
+  roles: [IAuthRole.ROLE_UNAUTHORIZED],
+  username: '',
+}
 const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEyMzQ1Njc4OTAiLCJlbWFpbCI6InRlc3RAdGVzdC5wbCIsInJvbGUiOiJST0xFX1VTRVIifQ.qfKooWSjhJsB94ijsvWOpjNcDuS5nJIJaCfNW-rl97k'
+  'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjEyMzQsImV4cCI6MTU4OTUyODUyOCwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6InRlc3RAb3JhcmVwcm9tZS5jb20iLCJpZCI6IjExYWFhMWExLTIzNDUtNjc4OS05OWFhLWEwZWUwMGQwMGFhMCIsImp0aSI6IjI4NzY0NWI3LTU1YmUtNDI3ZS1hMzhkLTQ4MGM3MmE4MzIyMCJ9.VUFJdGqdLvY5Xl-u9dRVggmGAOgm2EnSmIMVwobJpG8'
 
 const TestComponent = () => {
-  const {setAuthToken, payload} = React.useContext(AuthContext)
+  const {setAuthToken, payload, isLoggedIn} = React.useContext(AuthContext)
   setAuthToken(token)
   React.useEffect(() => {
     payloadProbe = payload
+    isLoggedInProbe = isLoggedIn
   }, [payload])
 
   return <>test</>
@@ -25,12 +31,17 @@ const Wrapper = (
 
 it('should decode token and set payload on seAuthToken', () => {
   const payload = {
-    id: '1234567890',
-    email: 'test@test.pl',
-    role: 'ROLE_USER',
+    iat: 1234,
+    exp: 1589528528,
+    roles: [IAuthRole.ROLE_ADMIN, IAuthRole.ROLE_USER],
+    username: 'test@orareprome.com',
+    id: '11aaa1a1-2345-6789-99aa-a0ee00d00aa0',
   }
 
-  const {container} = render(Wrapper)
+  render(Wrapper)
 
-  expect(payloadProbe).toEqual(payload)
+  expect(payloadProbe.id).toEqual(payload.id)
+  expect(payloadProbe.roles).toEqual(payload.roles)
+  expect(payloadProbe.username).toEqual(payload.username)
+  // expect(isLoggedInProbe).toBeTruthy()
 })

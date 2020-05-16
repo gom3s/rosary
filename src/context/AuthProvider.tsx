@@ -1,16 +1,16 @@
 import React, {createContext, useState, useEffect} from 'react'
-import decodeJWT from '../tools/decodeJWT'
+import {decodeJWT, isUserLoggedIn} from '../tools/auth'
 
 export interface IAuthContext {
+  isLoggedIn: boolean
   payload: IAuthPayload
-  authToken: string
   setAuthToken: (authToken: string) => void
 }
 
 export interface IAuthPayload {
   id: string
-  email: string
-  role: IAuthRole[]
+  username: string
+  roles: IAuthRole[]
 }
 
 export enum IAuthRole {
@@ -20,11 +20,11 @@ export enum IAuthRole {
 }
 
 const defaultValue = {
-  authToken: '',
+  isLoggedIn: false,
   payload: {
     id: '',
-    email: '',
-    role: [IAuthRole.ROLE_UNAUTHORIZED],
+    username: '',
+    roles: [IAuthRole.ROLE_UNAUTHORIZED],
   },
   setAuthToken: (authToken: string) =>
     console.error(
@@ -37,14 +37,17 @@ export const AuthContext = createContext<IAuthContext>(defaultValue)
 const AuthProvider: React.FunctionComponent = ({children}) => {
   const [authToken, setAuthToken] = useState('')
   const [payload, setPayload] = useState<IAuthPayload>(defaultValue.payload)
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   useEffect(() => {
-    authToken && setPayload(decodeJWT(authToken))
-  }, [setPayload, authToken])
+    const payload = authToken ? decodeJWT(authToken) : defaultValue.payload
+    authToken && setPayload(payload)
+    authToken && setIsLoggedIn(isUserLoggedIn(payload))
+  }, [setPayload, setIsLoggedIn, authToken])
 
   const value = {
     payload,
-    authToken,
+    isLoggedIn,
     setAuthToken,
   }
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
