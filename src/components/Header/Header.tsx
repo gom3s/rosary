@@ -14,6 +14,9 @@ import Link from '../Link'
 import {AuthContext} from 'src/context/AuthProvider'
 
 const useStyles = makeStyles(theme => ({
+  grow: {
+    flexGrow: 1,
+  },
   box: {
     paddingBottom: theme.spacing(5),
   },
@@ -52,7 +55,7 @@ const Header = () => {
     <VerifiedUser data-testid="logged-user" className={classes.icon} />
   ) : null
   return (
-    <React.Fragment>
+    <div className={classes.grow}>
       <HideOnScroll>
         <AppBar>
           <Toolbar>
@@ -64,16 +67,17 @@ const Header = () => {
             </Link>
             <Typography
               variant="subtitle2"
-              className={classes.login}
+              className={classes.grow}
               noWrap={true}
             >
+              <div className={classes.grow} />
               {topMenu}
             </Typography>
           </Toolbar>
         </AppBar>
       </HideOnScroll>
       <Box className={classes.box} />
-    </React.Fragment>
+    </div>
   )
 }
 
