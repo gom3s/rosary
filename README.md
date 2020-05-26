@@ -1,7 +1,7 @@
 # rosary project
 
-This is implementation of https://orareprome.com It's open source Progressive
-Web App (PWA) that helps to connect connect people on holy rosary prayer. You
+It's implementation open source Progressive
+Web App (PWA) that helps to connect people on holy rosary prayer. You
 can add intention and Orare Pro Me community will pray on Holy Rosary for you.
 
 Production App consumes backend service, that allows to connect prayers together
