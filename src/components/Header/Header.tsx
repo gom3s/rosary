@@ -7,11 +7,11 @@ import {makeStyles} from '@material-ui/core/styles'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
-import VerifiedUser from '@material-ui/icons/VerifiedUser'
 
 import DrawerMenu from '../DrawerMenu'
 import Link from '../Link'
 import {AuthContext} from 'src/context/AuthProvider'
+import {TopMenu} from '../TopMenu'
 
 const useStyles = makeStyles(theme => ({
   grow: {
@@ -22,9 +22,6 @@ const useStyles = makeStyles(theme => ({
   },
   login: {
     marginRight: theme.spacing(2),
-  },
-  icon: {
-    float: 'right',
   },
   home: {
     '&:hover': {
@@ -51,9 +48,6 @@ const Header = () => {
   const {isLoggedIn} = React.useContext(AuthContext)
 
   const title = 'ORARE PRO ME'
-  const topMenu = isLoggedIn ? (
-    <VerifiedUser data-testid="logged-user" className={classes.icon} />
-  ) : null
   return (
     <div className={classes.grow}>
       <HideOnScroll>
@@ -65,14 +59,8 @@ const Header = () => {
                 {title}
               </Typography>
             </Link>
-            <Typography
-              variant="subtitle2"
-              className={classes.grow}
-              noWrap={true}
-            >
-              <div className={classes.grow} />
-              {topMenu}
-            </Typography>
+            <div className={classes.grow} />
+            <TopMenu isLoggedIn={isLoggedIn} />
           </Toolbar>
         </AppBar>
       </HideOnScroll>
