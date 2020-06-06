@@ -21,7 +21,11 @@ const IntentionList = (props: any) => {
   return (
     <>
       <Hero />
-      <Container className={classes.cardGrid} maxWidth="md">
+      <Container
+        className={classes.cardGrid}
+        maxWidth="md"
+        data-testid="intention-list"
+      >
         {/* End hero unit */}
         <Grid container={true} spacing={4}>
           {intentions.map(intention => (

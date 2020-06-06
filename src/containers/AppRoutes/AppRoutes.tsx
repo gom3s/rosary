@@ -5,7 +5,7 @@ import IntentionPage from '../IntentionPage'
 import IntentionList from '../IntentionList'
 import LoginPage from '../LoginPage'
 
-const AppRoutes = () => {
+export const AppRoutes = () => {
   return (
     <>
       <Route path="/" exact={true} component={IntentionList} />
