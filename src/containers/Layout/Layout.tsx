@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const Layout = () => {
+export const Layout = () => {
   const classes = useStyles()
   return (
     <React.Fragment>

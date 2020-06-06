@@ -2,6 +2,8 @@ import React from 'react'
 import {Typography, makeStyles} from '@material-ui/core'
 import VerifiedUser from '@material-ui/icons/VerifiedUser'
 
+import Link from '../Link'
+
 interface ITopMenuProps {
   isLoggedIn?: boolean
 }
@@ -19,7 +21,7 @@ export const TopMenu: React.FunctionComponent<ITopMenuProps> = ({
   const userLink = isLoggedIn ? (
     <VerifiedUser data-testid="logged-user" className={classes.icon} />
   ) : (
-    'Login'
+    <Link to="/login">Login</Link>
   )
   return (
     <>
