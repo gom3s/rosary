@@ -58,7 +58,7 @@ const LoginCard = (props: LoginCardProps) => {
   }
   useEffect(() => {
     token && setAuthToken(token)
-    console.log('token: ', token)
+    // TODO: #27 implement redirect logic
   }, [setAuthToken, token])
 
   return (
