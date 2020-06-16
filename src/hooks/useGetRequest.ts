@@ -29,7 +29,7 @@ export const useGetRequest = <T>(
     }
 
     fetchData()
-  }, [url])
+  }, [url, api])
 
   return {state: {data, isLoading, isError}, doFetch}
 }

@@ -24,7 +24,11 @@ interface PrayerProps {
   prayerId: string
 }
 
-const Prayer: React.ComponentType<PrayerProps> = props => {
+const Prayer: React.ComponentType<PrayerProps> = ({
+  onPrayerChanged,
+  prayerId,
+  intention,
+}) => {
   const classes = useStyles()
   const [type, setType] = useState(MysteryTypes.none)
   const [rosary, setRosary] = useState('')
@@ -36,22 +40,22 @@ const Prayer: React.ComponentType<PrayerProps> = props => {
     state: {isLoading: isSavePrayerPending},
     doRequest: savePrayerRequest,
   } = useSavePrayer()
-  const [isPraying, setIsPraying] = useState(Boolean(props.prayerId))
+  const [isPraying, setIsPraying] = useState(Boolean(prayerId))
   const prayRequestAction = () => {
     setType(MysteryTypes.none)
-    doPrayRequest({intention: `intentions/${props.intention.id}`}, '')
+    doPrayRequest({intention: `intentions/${intention.id}`}, '')
     setIsPraying(true)
   }
   const prayAction = () => {
     setIsPraying(false)
     const payload = {
-      id: props.prayerId,
+      id: prayerId,
       rosary,
       type,
       date: dayjs().toJSON(),
       lockDate: null,
     }
-    savePrayerRequest(payload, `prayers/${props.prayerId}`)
+    savePrayerRequest(payload, `prayers/${prayerId}`)
   }
 
   useEffect(() => {
@@ -59,7 +63,7 @@ const Prayer: React.ComponentType<PrayerProps> = props => {
     setType(type)
     setRosary(rosary)
 
-    props.onPrayerChanged(prayer)
+    onPrayerChanged(prayer)
   }, [isPrayRequestLoading])
 
   return (
