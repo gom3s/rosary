@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 
 import {Card, Typography} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
@@ -10,6 +10,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Container from '@material-ui/core/Container'
+import {useHistory, useLocation} from 'react-router-dom'
+import {Redirect} from 'react-router'
 
 import {AuthContext} from '../../context/AuthProvider'
 import {useAuthTokenRequest} from '../../hooks/useRosaryApi'
@@ -44,11 +46,18 @@ const useStyles = makeStyles(theme => ({
 }))
 
 interface LoginCardProps {}
+type LocationState = {
+  from: Location
+}
 
 const LoginCard = (props: LoginCardProps) => {
+  let history = useHistory()
+  let location = useLocation<LocationState>()
+  const [redirectTo, setRedirectTo] = useState('')
   const classes = useStyles()
   const {setAuthToken} = useContext(AuthContext)
   const {token, requestAuthToken, isLoading} = useAuthTokenRequest()
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const {email, password} = e.target['elements']
@@ -56,10 +65,20 @@ const LoginCard = (props: LoginCardProps) => {
       requestAuthToken({email: email.value, password: password.value})
     }
   }
+
   useEffect(() => {
-    token && setAuthToken(token)
-    // TODO: #27 implement redirect logic
-  }, [setAuthToken, token])
+    if (token) {
+      setAuthToken(token)
+      const {from} = location.state || {from: null}
+      if (from) {
+        setRedirectTo(from.pathname)
+      } else history.goBack()
+    }
+  }, [setAuthToken, token, setRedirectTo])
+
+  if (redirectTo) {
+    return <Redirect to="add-intention" />
+  }
 
   return (
     <>

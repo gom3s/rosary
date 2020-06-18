@@ -56,7 +56,7 @@ export const Hero = () => {
             <span className={classes.heroButtons}>
               <Grid container={true} spacing={2} justify="center">
                 <Grid item={true}>
-                  <Link to={`/login`}>
+                  <Link to={`/add-intention`}>
                     <Button
                       variant="contained"
                       color="primary"
