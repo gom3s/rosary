@@ -89,13 +89,6 @@ const IntentionPage: React.ComponentType<
     closeIntentionPanel()
     openPrayPanel()
   }
-  const setPrayerIdInRoute = (prayer: string) => {
-    if (prayer) {
-      props.history.push(`/intention/${id}${prayer}`)
-    } else {
-      props.history.push(`/intention/${id}`)
-    }
-  }
 
   return (
     <>
@@ -140,11 +133,7 @@ const IntentionPage: React.ComponentType<
                 <Typography className={classes.heading}>Modlitwa</Typography>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
-                <Prayer
-                  intention={intention}
-                  onPrayerChanged={setPrayerIdInRoute}
-                  prayerId={prayerId}
-                />
+                <Prayer intention={intention} prayerId={prayerId} />
               </ExpansionPanelDetails>
             </ExpansionPanel>
           </div>

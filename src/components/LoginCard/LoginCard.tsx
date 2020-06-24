@@ -74,7 +74,7 @@ const LoginCard = (props: LoginCardProps) => {
         setRedirectTo(from.pathname)
       } else history.goBack()
     }
-  }, [setAuthToken, token, setRedirectTo])
+  }, [setAuthToken, token, setRedirectTo, location, history])
 
   if (redirectTo) {
     return <Redirect to="add-intention" />

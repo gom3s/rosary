@@ -3,13 +3,11 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import {makeStyles} from '@material-ui/core/styles'
 import dayjs from 'dayjs'
 import * as React from 'react'
-import {useEffect, useState} from 'react'
+import {useState} from 'react'
 
 import PrayCard from 'src/components/PrayCard'
-// import PrayDisclaimerCard from 'src/components/PrayDisclaimerCard';
 import {IIntention} from '../../components/IntentionCard/Interface'
 import {getMystery} from '../../consts/rosary'
-import {MysteryTypes} from '../../consts/MysteryTypes'
 import {usePrayRosaryRequest, useSavePrayer} from '../../hooks/useRosaryApi'
 
 const useStyles = makeStyles(theme => ({
@@ -20,20 +18,16 @@ const useStyles = makeStyles(theme => ({
 
 interface PrayerProps {
   intention: IIntention
-  onPrayerChanged: (prayerId: string) => void
   prayerId: string
 }
 
-const Prayer: React.ComponentType<PrayerProps> = ({
-  onPrayerChanged,
-  prayerId,
-  intention,
-}) => {
+const Prayer: React.ComponentType<PrayerProps> = ({prayerId, intention}) => {
   const classes = useStyles()
-  const [type, setType] = useState(MysteryTypes.none)
-  const [rosary, setRosary] = useState('')
   const {
-    state: {data: prayRequestData, isLoading: isPrayRequestLoading},
+    state: {
+      data: {type, rosary},
+      isLoading: isPrayRequestLoading,
+    },
     doRequest: doPrayRequest,
   } = usePrayRosaryRequest()
   const {
@@ -42,7 +36,6 @@ const Prayer: React.ComponentType<PrayerProps> = ({
   } = useSavePrayer()
   const [isPraying, setIsPraying] = useState(Boolean(prayerId))
   const prayRequestAction = () => {
-    setType(MysteryTypes.none)
     doPrayRequest({intention: `intentions/${intention.id}`}, '')
     setIsPraying(true)
   }
@@ -57,14 +50,6 @@ const Prayer: React.ComponentType<PrayerProps> = ({
     }
     savePrayerRequest(payload, `prayers/${prayerId}`)
   }
-
-  useEffect(() => {
-    const {type, rosary, prayer} = prayRequestData
-    setType(type)
-    setRosary(rosary)
-
-    onPrayerChanged(prayer)
-  }, [isPrayRequestLoading])
 
   return (
     <Grid container={true} spacing={2}>
