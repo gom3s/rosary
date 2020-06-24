@@ -43,7 +43,7 @@ function HideOnScroll(props: HideOnScrollProps) {
   )
 }
 
-const Header = () => {
+export const Header = () => {
   const classes = useStyles()
   const {isLoggedIn} = React.useContext(AuthContext)
 

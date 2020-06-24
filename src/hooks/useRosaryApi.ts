@@ -3,6 +3,7 @@ import {emptyPrayer, Prayer} from 'src/types/Prayer'
 import api from '../services/api'
 import {useGetRequest} from './useGetRequest'
 import {useRequest} from './useRequest'
+import {MysteryTypes} from 'src/consts/MysteryTypes'
 
 const emptyIntention = {
   description: 'loading...',
@@ -15,7 +16,7 @@ const emptyPrayRequest = {
   id: null,
   intention: null,
   prayer: null,
-  type: 0,
+  type: MysteryTypes.none,
 }
 
 export const useIntentionList = () =>

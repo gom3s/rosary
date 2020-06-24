@@ -1,11 +1,12 @@
 import * as React from 'react'
-
 import Box from '@material-ui/core/Box'
 import Button from '@material-ui/core/Button'
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import {makeStyles} from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
+
+import Link from '../Link'
 
 const useStyles = makeStyles(theme => ({
   heroButtons: {
@@ -17,7 +18,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const Hero = () => {
+export const Hero = () => {
   const classes = useStyles()
 
   return (
@@ -55,14 +56,22 @@ const Hero = () => {
             <span className={classes.heroButtons}>
               <Grid container={true} spacing={2} justify="center">
                 <Grid item={true}>
-                  <Button variant="contained" color="primary">
-                    Dodaj intencję
-                  </Button>
+                  <Link to={`/add-intention`}>
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      data-testid="add-intention"
+                    >
+                      Dodaj intencję
+                    </Button>
+                  </Link>
                 </Grid>
                 <Grid item={true}>
-                  <Button variant="outlined" color="primary">
-                    Jak to działa?
-                  </Button>
+                  <Link to={`/`}>
+                    <Button variant="outlined" color="primary">
+                      Jak to działa?
+                    </Button>
+                  </Link>
                 </Grid>
               </Grid>
             </span>
