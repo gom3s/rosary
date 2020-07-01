@@ -5,8 +5,6 @@ import {AuthContext} from 'src/context/AuthProvider'
 export const PrivateRoute: React.FC<RouteProps> = ({children, ...rest}) => {
   const {isLoggedIn} = useContext(AuthContext)
 
-  console.log('isLoggedIn:', isLoggedIn)
-
   return (
     <Route
       {...rest}
