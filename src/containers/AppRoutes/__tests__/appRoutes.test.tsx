@@ -6,7 +6,7 @@ import '@testing-library/jest-dom/extend-expect'
 
 import {AppRoutes} from '../AppRoutes'
 import Hero from '../../../components/Hero'
-import {} from '../../../context/AuthProvider'
+import {LoginWrapper} from 'src/tools/LoginWrapper'
 
 jest.mock('../../IntentionList', () => () => <div>Intention list</div>)
 jest.mock('../../LoginPage', () => () => <div>Login page</div>)
@@ -14,29 +14,18 @@ jest.mock('../../AddIntentionPage', () => ({
   AddIntentionPage: () => <div>Add intention page</div>,
 }))
 
-let realUseContext: any
-let useContextMock: any
-
 beforeEach(() => {
   jest.clearAllMocks()
-  // Setup useContext mock
-  realUseContext = React.useContext
-  useContextMock = React.useContext = jest.fn()
-  useContextMock.mockReturnValue({
-    isLoggedIn: false,
-  })
-})
-afterEach(() => {
-  // Cleanup mock
-  React.useContext = realUseContext
 })
 
 it('should open login form on login link click', () => {
   const history = createMemoryHistory()
   const {container} = render(
-    <Router history={history}>
-      <AppRoutes />
-    </Router>,
+    <LoginWrapper>
+      <Router history={history}>
+        <AppRoutes />
+      </Router>
+    </LoginWrapper>,
   )
 
   expect(container.innerHTML).toMatch('Intention list')
@@ -45,10 +34,12 @@ it('should open login form on login link click', () => {
 it('For not logged user: should open login form on add intention button click', () => {
   const history = createMemoryHistory()
   const {container, getByTestId} = render(
-    <Router history={history}>
-      <Hero />
-      <AppRoutes />
-    </Router>,
+    <LoginWrapper>
+      <Router history={history}>
+        <Hero />
+        <AppRoutes />
+      </Router>
+    </LoginWrapper>,
   )
 
   expect(container.innerHTML).toMatch('Intention list')
@@ -59,16 +50,18 @@ it('For not logged user: should open login form on add intention button click', 
 })
 
 it('For logged user: should open add intention page on add intention button click', () => {
-  useContextMock.mockReturnValue({
-    isLoggedIn: true,
-  })
   const history = createMemoryHistory()
-  const {container, getByTestId} = render(
-    <Router history={history}>
-      <Hero />
-      <AppRoutes />
-    </Router>,
+  const Component = (
+    <LoginWrapper>
+      <Router history={history}>
+        <Hero />
+        <AppRoutes />
+      </Router>
+    </LoginWrapper>
   )
+  const {container, getByTestId} = render(Component)
+
+  fireEvent.click(getByTestId('login'))
 
   expect(container.innerHTML).toMatch('Intention list')
 

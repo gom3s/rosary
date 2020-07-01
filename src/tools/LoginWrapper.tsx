@@ -1,0 +1,27 @@
+import React, {FC} from 'react'
+import AuthProvider, {AuthContext} from 'src/context/AuthProvider'
+
+const token =
+  'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjEyMzQsImV4cCI6MTU4OTUyODUyOCwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6InRlc3RAb3JhcmVwcm9tZS5jb20iLCJpZCI6IjExYWFhMWExLTIzNDUtNjc4OS05OWFhLWEwZWUwMGQwMGFhMCIsImp0aSI6IjI4NzY0NWI3LTU1YmUtNDI3ZS1hMzhkLTQ4MGM3MmE4MzIyMCJ9.VUFJdGqdLvY5Xl-u9dRVggmGAOgm2EnSmIMVwobJpG8'
+
+beforeEach(() => {
+  jest.clearAllMocks()
+})
+
+export const TestComponent: FC = ({children}) => {
+  const {setAuthToken} = React.useContext(AuthContext)
+
+  return (
+    <>
+      {children}
+      <button data-testid="login" onClick={() => setAuthToken(token)} />
+    </>
+  )
+}
+export const LoginWrapper: FC = ({children}) => {
+  return (
+    <AuthProvider>
+      <TestComponent>{children}</TestComponent>
+    </AuthProvider>
+  )
+}
