@@ -35,9 +35,14 @@ it('should render icon for logged in user', () => {
 
   expect(getByTestId('logged-user')).toBeTruthy()
 })
-
 it('should not render icon for not logged user', () => {
-  const {queryByTestId} = render(Wrapper(<Header />))
+  const {queryByTestId} = render(
+    <AuthProvider>
+      <Router>
+        <Header />
+      </Router>
+    </AuthProvider>,
+  )
 
   expect(queryByTestId('logged-user')).toBeNull()
 })
