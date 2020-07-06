@@ -35,12 +35,20 @@ const defaultValue = {
 export const AuthContext = createContext<IAuthContext>(defaultValue)
 
 const AuthProvider: React.FunctionComponent = ({children}) => {
-  const [authToken, setAuthToken] = useState('')
-  const [payload, setPayload] = useState<IAuthPayload>(defaultValue.payload)
+  const savedPayload = localStorage.getItem('payload')
+  const initialPayload = savedPayload
+    ? JSON.parse(savedPayload)
+    : defaultValue.payload
+  const [authToken, setAuthToken] = useState(
+    localStorage.getItem('authToken') || '',
+  )
+  const [payload, setPayload] = useState<IAuthPayload>(initialPayload)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   useEffect(() => {
-    const payload = authToken ? decodeJWT(authToken) : defaultValue.payload
+    const payload = authToken ? decodeJWT(authToken) : initialPayload
+    localStorage.setItem('authToken', authToken)
+    localStorage.setItem('payload', JSON.stringify(payload))
     authToken && setPayload(payload)
     authToken && setIsLoggedIn(isUserLoggedIn(payload))
   }, [setPayload, setIsLoggedIn, authToken])
