@@ -53,7 +53,7 @@ type LocationState = {
 const LoginCard = (props: LoginCardProps) => {
   let history = useHistory()
   let location = useLocation<LocationState>()
-  const [redirectTo, setRedirectTo] = useState('')
+  const [redirectOnLogin, setRedirectOnLogin] = useState('')
   const classes = useStyles()
   const {setAuthToken} = useContext(AuthContext)
   const {token, requestAuthToken, isLoading} = useAuthTokenRequest()
@@ -71,13 +71,13 @@ const LoginCard = (props: LoginCardProps) => {
       setAuthToken(token)
       const {from} = location.state || {from: null}
       if (from) {
-        setRedirectTo(from.pathname)
+        setRedirectOnLogin(from.pathname)
       } else history.goBack()
     }
-  }, [setAuthToken, token, setRedirectTo, location, history])
+  }, [setAuthToken, token, setRedirectOnLogin, location, history])
 
-  if (redirectTo) {
-    return <Redirect to="add-intention" />
+  if (redirectOnLogin) {
+    return <Redirect to={redirectOnLogin} />
   }
 
   return (
