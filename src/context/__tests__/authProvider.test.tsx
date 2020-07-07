@@ -3,7 +3,7 @@ import {render, wait} from '@testing-library/react'
 
 import AuthProvider, {AuthContext, IAuthRole} from '../AuthProvider'
 
-let isLoggedInProbe = false
+let isAuthenticatedProbe = false
 let payloadProbe = {
   id: '',
   roles: [IAuthRole.ROLE_UNAUTHORIZED],
@@ -13,11 +13,11 @@ const token =
   'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjEyMzQsImV4cCI6MTU4OTUyODUyOCwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6InRlc3RAb3JhcmVwcm9tZS5jb20iLCJpZCI6IjExYWFhMWExLTIzNDUtNjc4OS05OWFhLWEwZWUwMGQwMGFhMCIsImp0aSI6IjI4NzY0NWI3LTU1YmUtNDI3ZS1hMzhkLTQ4MGM3MmE4MzIyMCJ9.VUFJdGqdLvY5Xl-u9dRVggmGAOgm2EnSmIMVwobJpG8'
 
 const TestComponent = () => {
-  const {setAuthToken, payload, isLoggedIn} = React.useContext(AuthContext)
+  const {setAuthToken, payload, isAuthenticated} = React.useContext(AuthContext)
   setAuthToken(token)
   React.useEffect(() => {
     payloadProbe = payload
-    isLoggedInProbe = isLoggedIn
+    isAuthenticatedProbe = isAuthenticated
   }, [payload])
 
   return <>test</>
@@ -43,5 +43,5 @@ it('should decode token and set payload on seAuthToken', () => {
   expect(payloadProbe.id).toEqual(payload.id)
   expect(payloadProbe.roles).toEqual(payload.roles)
   expect(payloadProbe.username).toEqual(payload.username)
-  // expect(isLoggedInProbe).toBeTruthy()
+  // expect(isAuthenticatedProbe).toBeTruthy()
 })

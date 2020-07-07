@@ -3,13 +3,13 @@ import {Route, Redirect, RouteProps} from 'react-router-dom'
 import {AuthContext} from 'src/context/AuthProvider'
 
 export const PrivateRoute: React.FC<RouteProps> = ({children, ...rest}) => {
-  const {isLoggedIn} = useContext(AuthContext)
+  const {isAuthenticated} = useContext(AuthContext)
 
   return (
     <Route
       {...rest}
       render={({location}) =>
-        isLoggedIn ? (
+        isAuthenticated ? (
           children
         ) : (
           // <div>{location.pathname}</div>

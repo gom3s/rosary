@@ -45,7 +45,7 @@ function HideOnScroll(props: HideOnScrollProps) {
 
 export const Header = () => {
   const classes = useStyles()
-  const {isLoggedIn} = React.useContext(AuthContext)
+  const {isAuthenticated} = React.useContext(AuthContext)
 
   const title = 'ORARE PRO ME'
   return (
@@ -60,7 +60,7 @@ export const Header = () => {
               </Typography>
             </Link>
             <div className={classes.grow} />
-            <TopMenu isLoggedIn={isLoggedIn} />
+            <TopMenu isAuthenticated={isAuthenticated} />
           </Toolbar>
         </AppBar>
       </HideOnScroll>

@@ -1,8 +1,8 @@
 import React, {createContext, useState, useEffect} from 'react'
-import {decodeJWT, isUserLoggedIn} from '../tools/auth'
+import {decodeJWT, isUserAuthenticated} from '../tools/auth'
 
 export interface IAuthContext {
-  isLoggedIn: boolean
+  isAuthenticated: boolean
   payload: IAuthPayload
   setAuthToken: (authToken: string) => void
 }
@@ -20,7 +20,7 @@ export enum IAuthRole {
 }
 
 const defaultValue = {
-  isLoggedIn: false,
+  isAuthenticated: false,
   payload: {
     id: '',
     username: '',
@@ -43,19 +43,19 @@ const AuthProvider: React.FunctionComponent = ({children}) => {
     localStorage.getItem('authToken') || '',
   )
   const [payload, setPayload] = useState<IAuthPayload>(initialPayload)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isAuthenticated, setAuthenticated] = useState(false)
 
   useEffect(() => {
     const payload = authToken ? decodeJWT(authToken) : initialPayload
     localStorage.setItem('authToken', authToken)
     localStorage.setItem('payload', JSON.stringify(payload))
     authToken && setPayload(payload)
-    authToken && setIsLoggedIn(isUserLoggedIn(payload))
-  }, [setPayload, setIsLoggedIn, authToken])
+    authToken && setAuthenticated(isUserAuthenticated(payload))
+  }, [setPayload, setAuthenticated, authToken])
 
   const value = {
     payload,
-    isLoggedIn,
+    isAuthenticated,
     setAuthToken,
   }
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
