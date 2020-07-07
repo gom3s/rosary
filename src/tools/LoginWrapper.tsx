@@ -9,12 +9,13 @@ beforeEach(() => {
 })
 
 export const TestComponent: FC = ({children}) => {
-  const {setAuthToken} = React.useContext(AuthContext)
+  const {setAuthToken, logout} = React.useContext(AuthContext)
 
   return (
     <>
       {children}
       <button data-testid="login" onClick={() => setAuthToken(token)} />
+      <button data-testid="logout" onClick={logout} />
     </>
   )
 }

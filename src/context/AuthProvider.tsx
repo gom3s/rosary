@@ -5,6 +5,7 @@ export interface IAuthContext {
   isAuthenticated: boolean
   payload: IAuthPayload
   setAuthToken: (authToken: string) => void
+  logout: () => void
 }
 
 export interface IAuthPayload {
@@ -27,6 +28,10 @@ const defaultValue = {
     roles: [IAuthRole.ROLE_UNAUTHORIZED],
   },
   setAuthToken: (authToken: string) =>
+    console.error(
+      'You attempt to use AuthContext but forgot to wrap component in AuthProvider!',
+    ),
+  logout: () =>
     console.error(
       'You attempt to use AuthContext but forgot to wrap component in AuthProvider!',
     ),
@@ -53,10 +58,19 @@ const AuthProvider: React.FunctionComponent = ({children}) => {
     authToken && setAuthenticated(isUserAuthenticated(payload))
   }, [setPayload, setAuthenticated, authToken])
 
+  const logout = () => {
+    localStorage.removeItem('authToken')
+    localStorage.removeItem('payload')
+    setAuthToken('')
+    setPayload(initialPayload)
+    setAuthenticated(false)
+  }
+
   const value = {
     payload,
     isAuthenticated,
     setAuthToken,
+    logout,
   }
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
