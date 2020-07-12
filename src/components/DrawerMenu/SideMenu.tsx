@@ -19,6 +19,17 @@ interface SideMenuProps {
   setOpen: (state: boolean) => void
 }
 
+// const navItems = [
+//   {
+//     key: 'login',
+//     label: 'Zaloguj',
+//     path: '/login',
+//     icon: AccountCircleIcon,
+//     allowedRoles: [IAuthRole.ROLE_UNAUTHORIZED, IAuthRole.ROLE_USER],
+//   },
+// ]
+// TODO: #29 map navItems array to SideMenu ListItems
+
 export const SideMenu: React.FC<SideMenuProps> = ({setOpen}) => {
   const classes = useStyles()
   const {isAuthenticated, logout} = useContext(AuthContext)
