@@ -35,7 +35,10 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export const AddIntentionCard: FC<{}> = () => {
+interface AddIntentionCardProps {
+  onSubmit: () => void
+}
+export const AddIntentionCard: FC<AddIntentionCardProps> = ({onSubmit}) => {
   const classes = useStyles()
   return (
     <>
@@ -50,8 +53,22 @@ export const AddIntentionCard: FC<{}> = () => {
             <form
               className={classes.form}
               noValidate={true}
-              onSubmit={() => {}}
+              onSubmit={onSubmit}
             >
+              <TextField
+                variant="outlined"
+                margin="normal"
+                multiline
+                rows={2}
+                required
+                fullWidth
+                id="intention"
+                label="Moja intencja"
+                name="intention"
+                autoComplete=""
+                placeholder="Intencja, w której będziemy się modlić"
+                autoFocus
+              />
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -59,10 +76,11 @@ export const AddIntentionCard: FC<{}> = () => {
                 rows={6}
                 required
                 fullWidth
-                id="intention"
-                label="Moja intencja"
-                name="intention"
+                id="description"
+                label="Opi (opcjonalnie)s"
+                name="description"
                 autoComplete=""
+                placeholder="Tutaj możesz dodać bardziej rozbudowany opis"
                 autoFocus
               />
               <Button
