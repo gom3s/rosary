@@ -58,6 +58,7 @@ const LoginCard = (props: LoginCardProps) => {
   const {setAuthToken} = useContext(AuthContext)
   const {token, requestAuthToken, isLoading} = useAuthTokenRequest()
 
+  // TODO: #30 move handleSubmit from LoginCard to container
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const {email, password} = e.target['elements']
