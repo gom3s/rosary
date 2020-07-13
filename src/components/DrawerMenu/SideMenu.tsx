@@ -1,13 +1,16 @@
 import React, {useContext} from 'react'
 import {makeStyles} from '@material-ui/core/styles'
+import Divider from '@material-ui/core/Divider'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
+import HomeIcon from '@material-ui/icons/Home'
 
 import Link from '../Link'
 import {AuthContext} from 'src/context/AuthProvider'
+import {RosaryIcon} from '../Icons'
 
 const useStyles = makeStyles(theme => ({
   list: {
@@ -58,6 +61,24 @@ export const SideMenu: React.FC<SideMenuProps> = ({setOpen}) => {
       onClick={e => setOpen(false)}
       onKeyDown={e => setOpen(false)}
     >
+      {' '}
+      <List>
+        <Link to="/">
+          <ListItem button key={'home'} onClick={e => setOpen(false)}>
+            <ListItemIcon>
+              <HomeIcon />
+            </ListItemIcon>
+            <ListItemText primary={'ORARE PRO ME'} />
+          </ListItem>
+        </Link>
+        <Link to="/add-intention">
+          <ListItem button key={'add-intention'}>
+            <RosaryIcon />
+            <ListItemText primary={'Dodaj intencję'} />
+          </ListItem>
+        </Link>
+      </List>
+      <Divider />
       <List>{isAuthenticated ? logoutItem : loginItem}</List>
     </div>
   )

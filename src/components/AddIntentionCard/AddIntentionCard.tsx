@@ -43,7 +43,7 @@ export const AddIntentionCard: FC<{}> = () => {
         <Container component="main" maxWidth="xs">
           <CssBaseline />
           <div className={classes.paper}>
-            <RosaryIcon />
+            <RosaryIcon avatar />
             <Typography component="h1" variant="h5">
               Dodaj intencję
             </Typography>
