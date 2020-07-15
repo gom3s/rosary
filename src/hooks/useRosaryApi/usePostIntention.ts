@@ -1,17 +1,17 @@
 import {useRequest} from '../useRequest'
 import {IIntention} from 'src/components/IntentionCard/Interface'
-import api from '../../services/api'
+import {authApi} from '../../services/api'
 
 export const emptyIntention: Partial<IIntention> = {
   title: '',
   description: '',
 }
 
-export const usePostIntention = () => {
+export const usePostIntention = (authToken: string) => {
   const {
     state: {isLoading},
     doRequest: postIntention,
-  } = useRequest(api.post, 'intentions', emptyIntention)
+  } = useRequest(authApi(authToken).post, 'intentions', emptyIntention)
 
   return {isLoading, postIntention}
 }

@@ -3,6 +3,7 @@ import {decodeJWT, isUserAuthenticated} from '../tools/auth'
 
 export interface IAuthContext {
   isAuthenticated: boolean
+  authToken: string
   payload: IAuthPayload
   setAuthToken: (authToken: string) => void
   logout: () => void
@@ -22,6 +23,7 @@ export enum IAuthRole {
 
 const defaultValue = {
   isAuthenticated: false,
+  authToken: '',
   payload: {
     id: '',
     username: '',
@@ -71,6 +73,7 @@ const AuthProvider: React.FunctionComponent = ({children}) => {
     isAuthenticated,
     setAuthToken,
     logout,
+    authToken,
   }
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
