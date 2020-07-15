@@ -1,4 +1,4 @@
-import {decodeJWT, isUserLoggedIn} from '../auth'
+import {decodeJWT, isUserAuthenticated} from '../auth'
 import {ExpansionPanelActions} from '@material-ui/core'
 import {IAuthRole} from 'src/context/AuthProvider'
 
@@ -32,6 +32,6 @@ it('should determine if user is logged in based on payload', () => {
     id: '11aaa1a1-2345-6789-99aa-a0ee00d00aa0',
   }
 
-  expect(isUserLoggedIn(payloadFalse)).toBeFalsy()
-  expect(isUserLoggedIn(payloadTrue)).toBeTruthy()
+  expect(isUserAuthenticated(payloadFalse)).toBeFalsy()
+  expect(isUserAuthenticated(payloadTrue)).toBeTruthy()
 })

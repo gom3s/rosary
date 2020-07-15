@@ -5,6 +5,7 @@ import {PrivateRoute} from './PrivateRoute'
 import IntentionPage from '../IntentionPage'
 import IntentionList from '../IntentionList'
 import LoginPage from '../LoginPage'
+import {AddIntentionPage} from '../AddIntentionPage'
 
 export const AppRoutes = () => {
   return (
@@ -12,7 +13,7 @@ export const AppRoutes = () => {
       <Route path="/" exact={true} component={IntentionList} />
       <Route path="/login" exact={true} component={LoginPage} />
       <PrivateRoute path="/add-intention">
-        <DummyComponent />
+        <AddIntentionPage />
       </PrivateRoute>
       <Route
         path="/intention/:id/(prayers)?/:prayerId?"
@@ -21,7 +22,5 @@ export const AppRoutes = () => {
     </>
   )
 }
-
-const DummyComponent = () => <>work in progress...</>
 
 export default AppRoutes

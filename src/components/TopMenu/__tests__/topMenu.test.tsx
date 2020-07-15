@@ -11,7 +11,7 @@ it('should render login button', () => {
 })
 
 it('should not render login button for logged in user', () => {
-  const {queryByText} = renderWithRouter(<TopMenu isLoggedIn={true} />)
+  const {queryByText} = renderWithRouter(<TopMenu isAuthenticated={true} />)
 
   expect(queryByText('Login')).toBeNull()
 })

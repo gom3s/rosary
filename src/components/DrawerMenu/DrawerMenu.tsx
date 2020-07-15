@@ -1,22 +1,12 @@
-import * as React from 'react'
+import React from 'react'
 import {makeStyles} from '@material-ui/core/styles'
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
-import List from '@material-ui/core/List'
-import Divider from '@material-ui/core/Divider'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
-import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
-import HomeIcon from '@material-ui/icons/Home'
 
-import Link from '../Link'
+import {SideMenu} from './SideMenu'
 
 const useStyles = makeStyles(theme => ({
-  list: {
-    width: 250,
-  },
   fullList: {
     width: 'auto',
   },
@@ -29,29 +19,9 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const DrawerMenu = () => {
+export const DrawerMenu: React.FC = () => {
   const classes = useStyles()
   const [open, setOpen] = React.useState(false)
-
-  const sideList = () => (
-    <div
-      className={classes.list}
-      role="presentation"
-      onClick={e => setOpen(false)}
-      onKeyDown={e => setOpen(false)}
-    >
-      <List>
-        <Link to="/login">
-          <ListItem button key={'login'}>
-            <ListItemIcon>
-              <AccountCircleIcon />
-            </ListItemIcon>
-            <ListItemText primary={'Zaloguj'} />
-          </ListItem>
-        </Link>
-      </List>
-    </div>
-  )
 
   return (
     <div>
@@ -64,18 +34,7 @@ const DrawerMenu = () => {
         onClose={e => setOpen(false)}
         onOpen={e => setOpen(true)}
       >
-        <List>
-          <Link to="/">
-            <ListItem button key={'home'} onClick={e => setOpen(false)}>
-              <ListItemIcon>
-                <HomeIcon />
-              </ListItemIcon>
-              <ListItemText primary={'ORARE PRO ME'} />
-            </ListItem>
-          </Link>
-        </List>
-        <Divider />
-        {sideList()}
+        <SideMenu setOpen={setOpen} />
       </SwipeableDrawer>
     </div>
   )

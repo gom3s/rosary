@@ -1,10 +1,12 @@
 import React, {createContext, useState, useEffect} from 'react'
-import {decodeJWT, isUserLoggedIn} from '../tools/auth'
+import {decodeJWT, isUserAuthenticated} from '../tools/auth'
 
 export interface IAuthContext {
-  isLoggedIn: boolean
+  isAuthenticated: boolean
+  authToken: string
   payload: IAuthPayload
   setAuthToken: (authToken: string) => void
+  logout: () => void
 }
 
 export interface IAuthPayload {
@@ -19,8 +21,9 @@ export enum IAuthRole {
   ROLE_ADMIN = 'ROLE_ADMIN',
 }
 
-const defaultValue = {
-  isLoggedIn: false,
+export const defaultValue = {
+  isAuthenticated: false,
+  authToken: '',
   payload: {
     id: '',
     username: '',
@@ -30,25 +33,47 @@ const defaultValue = {
     console.error(
       'You attempt to use AuthContext but forgot to wrap component in AuthProvider!',
     ),
+  logout: () =>
+    console.error(
+      'You attempt to use AuthContext but forgot to wrap component in AuthProvider!',
+    ),
 }
 
 export const AuthContext = createContext<IAuthContext>(defaultValue)
 
 const AuthProvider: React.FunctionComponent = ({children}) => {
-  const [authToken, setAuthToken] = useState('')
-  const [payload, setPayload] = useState<IAuthPayload>(defaultValue.payload)
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const savedPayload = localStorage.getItem('payload')
+  const initialPayload = savedPayload
+    ? JSON.parse(savedPayload)
+    : defaultValue.payload
+  const [authToken, setAuthToken] = useState(
+    localStorage.getItem('authToken') || '',
+  )
+  const [payload, setPayload] = useState<IAuthPayload>(initialPayload)
+  const [isAuthenticated, setAuthenticated] = useState(false)
 
   useEffect(() => {
-    const payload = authToken ? decodeJWT(authToken) : defaultValue.payload
+    const payload = decodeJWT(authToken)
+    localStorage.setItem('authToken', authToken)
+    localStorage.setItem('payload', JSON.stringify(payload))
     authToken && setPayload(payload)
-    authToken && setIsLoggedIn(isUserLoggedIn(payload))
-  }, [setPayload, setIsLoggedIn, authToken])
+    authToken && setAuthenticated(isUserAuthenticated(payload))
+  }, [setPayload, setAuthenticated, authToken])
+
+  const logout = () => {
+    localStorage.removeItem('authToken')
+    localStorage.removeItem('payload')
+    setAuthToken('')
+    setPayload(initialPayload)
+    setAuthenticated(false)
+  }
 
   const value = {
     payload,
-    isLoggedIn,
+    isAuthenticated,
     setAuthToken,
+    logout,
+    authToken,
   }
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }

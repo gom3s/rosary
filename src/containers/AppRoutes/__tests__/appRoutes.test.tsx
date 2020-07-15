@@ -6,16 +6,26 @@ import '@testing-library/jest-dom/extend-expect'
 
 import {AppRoutes} from '../AppRoutes'
 import Hero from '../../../components/Hero'
+import {LoginWrapper} from 'src/tools/LoginWrapper'
 
 jest.mock('../../IntentionList', () => () => <div>Intention list</div>)
 jest.mock('../../LoginPage', () => () => <div>Login page</div>)
+jest.mock('../../AddIntentionPage', () => ({
+  AddIntentionPage: () => <div>Add intention page</div>,
+}))
+
+beforeEach(() => {
+  jest.clearAllMocks()
+})
 
 it('should open login form on login link click', () => {
   const history = createMemoryHistory()
   const {container} = render(
-    <Router history={history}>
-      <AppRoutes />
-    </Router>,
+    <LoginWrapper>
+      <Router history={history}>
+        <AppRoutes />
+      </Router>
+    </LoginWrapper>,
   )
 
   expect(container.innerHTML).toMatch('Intention list')
@@ -23,11 +33,13 @@ it('should open login form on login link click', () => {
 
 it('For not logged user: should open login form on add intention button click', () => {
   const history = createMemoryHistory()
-  const {container, getByText, getByTestId} = render(
-    <Router history={history}>
-      <Hero />
-      <AppRoutes />
-    </Router>,
+  const {container, getByTestId} = render(
+    <LoginWrapper>
+      <Router history={history}>
+        <Hero />
+        <AppRoutes />
+      </Router>
+    </LoginWrapper>,
   )
 
   expect(container.innerHTML).toMatch('Intention list')
@@ -35,4 +47,25 @@ it('For not logged user: should open login form on add intention button click', 
   fireEvent.click(getByTestId('add-intention'))
 
   expect(container.innerHTML).toMatch('Login page')
+})
+
+it('For logged user: should open add intention page on add intention button click', () => {
+  const history = createMemoryHistory()
+  const Component = (
+    <LoginWrapper>
+      <Router history={history}>
+        <Hero />
+        <AppRoutes />
+      </Router>
+    </LoginWrapper>
+  )
+  const {container, getByTestId} = render(Component)
+
+  fireEvent.click(getByTestId('login'))
+
+  expect(container.innerHTML).toMatch('Intention list')
+
+  fireEvent.click(getByTestId('add-intention'))
+
+  expect(container.innerHTML).toMatch('Add intention page')
 })
