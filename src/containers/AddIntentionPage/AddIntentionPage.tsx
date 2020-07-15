@@ -13,7 +13,6 @@ export const AddIntentionPage: React.FC = () => {
       description: {value: description},
     } = e.target['elements']
     postIntention({title, description})
-    console.log('submitIntention')
   }
 
   return (
