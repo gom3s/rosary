@@ -21,7 +21,7 @@ export enum IAuthRole {
   ROLE_ADMIN = 'ROLE_ADMIN',
 }
 
-const defaultValue = {
+export const defaultValue = {
   isAuthenticated: false,
   authToken: '',
   payload: {
@@ -53,7 +53,7 @@ const AuthProvider: React.FunctionComponent = ({children}) => {
   const [isAuthenticated, setAuthenticated] = useState(false)
 
   useEffect(() => {
-    const payload = authToken ? decodeJWT(authToken) : initialPayload
+    const payload = decodeJWT(authToken)
     localStorage.setItem('authToken', authToken)
     localStorage.setItem('payload', JSON.stringify(payload))
     authToken && setPayload(payload)
