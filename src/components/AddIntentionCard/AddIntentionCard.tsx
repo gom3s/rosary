@@ -1,4 +1,4 @@
-import React, {FC} from 'react'
+import React, {FC, SyntheticEvent} from 'react'
 import {
   Card,
   Container,
@@ -36,7 +36,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 interface AddIntentionCardProps {
-  onSubmit: () => void
+  onSubmit: (e: SyntheticEvent) => void
 }
 export const AddIntentionCard: FC<AddIntentionCardProps> = ({onSubmit}) => {
   const classes = useStyles()
@@ -62,7 +62,7 @@ export const AddIntentionCard: FC<AddIntentionCardProps> = ({onSubmit}) => {
                 rows={2}
                 required
                 fullWidth
-                id="intention"
+                id="title"
                 label="Moja intencja"
                 name="intention"
                 autoComplete=""
@@ -74,14 +74,12 @@ export const AddIntentionCard: FC<AddIntentionCardProps> = ({onSubmit}) => {
                 margin="normal"
                 multiline
                 rows={6}
-                required
                 fullWidth
                 id="description"
-                label="Opi (opcjonalnie)s"
+                label="Opis (opcjonalnie)"
                 name="description"
                 autoComplete=""
                 placeholder="Tutaj możesz dodać bardziej rozbudowany opis"
-                autoFocus
               />
               <Button
                 type="submit"

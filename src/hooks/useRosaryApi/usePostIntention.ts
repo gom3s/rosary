@@ -7,5 +7,11 @@ export const emptyIntention: Partial<IIntention> = {
   description: '',
 }
 
-export const usePostIntention = () =>
-  useRequest(api.post, 'intentions', emptyIntention)
+export const usePostIntention = () => {
+  const {
+    state: {isLoading},
+    doRequest: postIntention,
+  } = useRequest(api.post, 'intentions', emptyIntention)
+
+  return {isLoading, postIntention}
+}
