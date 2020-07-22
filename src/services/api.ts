@@ -6,7 +6,7 @@ const config = {
   timeout: 5000,
 }
 
-const api = axios.create(config)
+export const api = axios.create(config)
 
 export const authApi = (authToken: string) =>
   axios.create({

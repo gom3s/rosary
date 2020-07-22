@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import LoginCard from '../LoginCard'
+import LoginCard from '../RegisterCard'
 import {MemoryRouter as Router} from 'react-router-dom'
 
 const mockRequest = jest.fn()
@@ -12,7 +12,7 @@ jest.mock('../../../hooks/useRosaryApi', () => ({
   }),
 }))
 
-test('calls submit with the username and password when submitted', async () => {
+test.skip('calls submit with the username and password when submitted', async () => {
   const container = document.createElement('div')
   ReactDOM.render(
     <Router>
@@ -35,4 +35,6 @@ test('calls submit with the username and password when submitted', async () => {
   })
 })
 
+// shows loader on pending request
+// shows sucess page after register
 // shows error message
