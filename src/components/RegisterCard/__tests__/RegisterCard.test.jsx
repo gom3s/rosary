@@ -1,40 +1,53 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import LoginCard from '../RegisterCard'
+// import ReactDOM from 'react-dom'
+import {RegisterCard} from '../RegisterCard'
 import {MemoryRouter as Router} from 'react-router-dom'
+import {render, fireEvent, act} from '@testing-library/react'
+import '@testing-library/jest-dom/extend-expect'
+import {usePostUser} from '../../../hooks/useRosaryApi/usePostUser'
 
 const mockRequest = jest.fn()
-
-jest.mock('../../../hooks/useRosaryApi', () => ({
-  useAuthTokenRequest: () => ({
-    state: {isLoading: false, data: {token: ''}},
-    requestAuthToken: mockRequest,
-  }),
+jest.mock('../../../hooks/useRosaryApi/usePostUser', () => ({
+  usePostUser: jest.fn(),
 }))
+const Component = (
+  <Router>
+    <RegisterCard />
+  </Router>
+)
 
-test.skip('calls submit with the username and password when submitted', async () => {
-  const container = document.createElement('div')
-  ReactDOM.render(
-    <Router>
-      <LoginCard />
-    </Router>,
-    container,
-  )
+test('calls submit with the username and password when submitted', () => {
+  usePostUser.mockImplementation(() => ({
+    isLoading: false,
+    postUser: mockRequest,
+  }))
+  const {container, getByTestId, rerender} = render(Component)
   const form = container.querySelector('form')
   const {email, password} = form.elements
   const submit = new Event('submit')
-
   email.value = 'test@test.pl'
   password.value = 'secret'
-  form.dispatchEvent(submit)
+
+  fireEvent.submit(form)
 
   expect(mockRequest).toHaveBeenCalledTimes(1)
   expect(mockRequest).toHaveBeenCalledWith({
     email: 'test@test.pl',
     password: 'secret',
   })
+  rerender(Component)
 })
 
-// shows loader on pending request
+it('should render progress bar', () => {
+  usePostUser.mockImplementation(() => ({
+    isLoading: true,
+    postUser: jest.fn(),
+  }))
+
+  const {getByTestId} = render(Component)
+
+  expect(getByTestId('progressbar')).toBeTruthy()
+})
+
 // shows sucess page after register
 // shows error message

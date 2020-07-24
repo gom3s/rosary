@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Card, Typography} from '@material-ui/core'
+import {Card, Typography, LinearProgress} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
@@ -105,15 +105,23 @@ export const RegisterCard = () => {
                 id="password2"
                 autoComplete="Powtórz hasło"
               />
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                Zarejestruj
-              </Button>
+              {isLoading ? (
+                <LinearProgress
+                  variant="query"
+                  data-testid="progressbar"
+                  className={classes.submit}
+                />
+              ) : (
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  Zarejestruj
+                </Button>
+              )}
             </form>
           </div>
         </Container>
