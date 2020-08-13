@@ -1,5 +1,6 @@
 import {AxiosResponse} from 'axios'
 import {useState} from 'react'
+// import {handleErrors} from 'src/services/api'
 
 export const useRequest = <T>(
   reqInstance: (url: string, data?: any) => Promise<AxiosResponse<T>>,
@@ -8,9 +9,9 @@ export const useRequest = <T>(
 ) => {
   const [data, setData] = useState(initialData)
   const [isLoading, setIsLoading] = useState(false)
-  const [isError, setIsError] = useState(false)
+  const [error, setError] = useState('')
   const doRequest = async (payload: {}, endpoint?: string) => {
-    setIsError(false)
+    setError('')
     setIsLoading(true)
     endpoint = endpoint ? endpoint : defaultEndpoint
 
@@ -18,11 +19,11 @@ export const useRequest = <T>(
       const result = await reqInstance(endpoint, payload)
       setData(result.data)
     } catch (error) {
-      setIsError(true)
+      setError(error)
     }
 
     setIsLoading(false)
   }
 
-  return {state: {data, isLoading, isError}, doRequest}
+  return {state: {data, isLoading, error}, doRequest}
 }

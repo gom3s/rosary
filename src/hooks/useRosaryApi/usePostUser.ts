@@ -8,9 +8,9 @@ export const emptyUser = {
 
 export const usePostUser = () => {
   const {
-    state: {isLoading},
+    state: {isLoading, error},
     doRequest: postUser,
   } = useRequest(api.post, 'api_users', emptyUser)
 
-  return {isLoading, postUser}
+  return {isLoading, error, postUser}
 }
