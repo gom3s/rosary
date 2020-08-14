@@ -68,9 +68,12 @@ const AuthProvider: React.FunctionComponent = ({children}) => {
     setAuthenticated(false)
   }
 
+  const hasRole = (role: IAuthRole) => payload.roles.includes(role)
+
   const value = {
     payload,
     isAuthenticated,
+    hasRole,
     setAuthToken,
     logout,
     authToken,

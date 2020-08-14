@@ -9,14 +9,18 @@ let payloadProbe = {
   roles: [IAuthRole.ROLE_UNAUTHORIZED],
   username: '',
 }
+let hasRoleSpy
 const token =
   'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjEyMzQsImV4cCI6MTU4OTUyODUyOCwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6InRlc3RAb3JhcmVwcm9tZS5jb20iLCJpZCI6IjExYWFhMWExLTIzNDUtNjc4OS05OWFhLWEwZWUwMGQwMGFhMCIsImp0aSI6IjI4NzY0NWI3LTU1YmUtNDI3ZS1hMzhkLTQ4MGM3MmE4MzIyMCJ9.VUFJdGqdLvY5Xl-u9dRVggmGAOgm2EnSmIMVwobJpG8'
 
 const TestComponent = () => {
-  const {setAuthToken, payload, isAuthenticated} = React.useContext(AuthContext)
+  const {setAuthToken, payload, isAuthenticated, hasRole} = React.useContext(
+    AuthContext,
+  )
   setAuthToken(token)
   React.useEffect(() => {
     payloadProbe = payload
+    hasRoleSpy = hasRole
     isAuthenticatedProbe = isAuthenticated
   }, [payload])
 
@@ -43,5 +47,7 @@ it('should decode token and set payload on seAuthToken', () => {
   expect(payloadProbe.id).toEqual(payload.id)
   expect(payloadProbe.roles).toEqual(payload.roles)
   expect(payloadProbe.username).toEqual(payload.username)
-  // expect(isAuthenticatedProbe).toBeTruthy()
+  // should chek if user has role
+  expect(hasRoleSpy(IAuthRole.ROLE_ADMIN)).toBeTruthy()
+  expect(hasRoleSpy(IAuthRole.ROLE_UNAUTHORIZED)).toBeFalsy()
 })
