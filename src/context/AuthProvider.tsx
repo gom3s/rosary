@@ -7,6 +7,7 @@ export interface IAuthContext {
   payload: IAuthPayload
   setAuthToken: (authToken: string) => void
   logout: () => void
+  hasRole: (role: IAuthRole) => boolean
 }
 
 export interface IAuthPayload {
@@ -21,6 +22,11 @@ export enum IAuthRole {
   ROLE_ADMIN = 'ROLE_ADMIN',
 }
 
+const methodNotImplementedWarning = () =>
+  console.error(
+    'You attempt to use AuthContext but forgot to wrap component in AuthProvider!',
+  )
+
 export const defaultValue = {
   isAuthenticated: false,
   authToken: '',
@@ -29,14 +35,12 @@ export const defaultValue = {
     username: '',
     roles: [IAuthRole.ROLE_UNAUTHORIZED],
   },
-  setAuthToken: (authToken: string) =>
-    console.error(
-      'You attempt to use AuthContext but forgot to wrap component in AuthProvider!',
-    ),
-  logout: () =>
-    console.error(
-      'You attempt to use AuthContext but forgot to wrap component in AuthProvider!',
-    ),
+  setAuthToken: (authToken: string) => methodNotImplementedWarning,
+  logout: () => methodNotImplementedWarning,
+  hasRole: (role: IAuthRole) => {
+    methodNotImplementedWarning()
+    return false
+  },
 }
 
 export const AuthContext = createContext<IAuthContext>(defaultValue)
