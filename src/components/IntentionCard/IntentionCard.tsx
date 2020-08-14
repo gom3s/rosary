@@ -47,7 +47,7 @@ const IntentionCard: React.ComponentType<IntentionCardProps> = ({
   )
   const deleteAction = showDeleteAction && (
     <div data-testid="delete-intention">
-      <DeleteIcon />
+      <DeleteIcon color="secondary" />
     </div>
   )
   const actions = !detailed && (
