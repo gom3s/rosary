@@ -7,6 +7,7 @@ import LinearProgress from '@material-ui/core/LinearProgress'
 import {makeStyles} from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import * as React from 'react'
+import DeleteIcon from '@material-ui/icons/Delete'
 
 import {IIntention} from './Interface'
 import Link from '../Link'
@@ -31,22 +32,30 @@ interface IntentionCardProps {
   intention: Partial<IIntention>
   isLoading?: boolean
   detailed?: boolean
+  showDeleteAction?: boolean
 }
 
 const IntentionCard: React.ComponentType<IntentionCardProps> = ({
   intention,
   detailed,
+  showDeleteAction,
   isLoading,
 }) => {
   const classes = useStyles()
   const description = detailed && (
     <Typography>{intention.description}</Typography>
   )
+  const deleteAction = showDeleteAction && (
+    <div data-testid="delete-intention">
+      <DeleteIcon />
+    </div>
+  )
   const actions = !detailed && (
     <CardActions>
       <Button size="small" color="primary">
         <Link to={`/intention/${intention.id}`}>Dalej</Link>
       </Button>
+      {deleteAction}
     </CardActions>
   )
 
