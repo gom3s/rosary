@@ -34,3 +34,5 @@ test('calls submit with the username and password when submitted', async () => {
     password: 'secret',
   })
 })
+
+// shows error message

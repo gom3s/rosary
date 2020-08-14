@@ -1,21 +1,16 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React from 'react'
 
-import {Card, Typography} from '@material-ui/core'
+import {Card, Typography, LinearProgress} from '@material-ui/core'
 import MuiAlert from '@material-ui/lab/Alert'
 import {makeStyles} from '@material-ui/core/styles'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import TextField from '@material-ui/core/TextField'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Checkbox from '@material-ui/core/Checkbox'
-import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
+import AccountCircle from '@material-ui/icons/AccountCircle'
 import Container from '@material-ui/core/Container'
-import {useHistory, useLocation} from 'react-router-dom'
-import {Redirect} from 'react-router'
 
-import {AuthContext} from '../../context/AuthProvider'
-import {useAuthTokenRequest} from '../../hooks/useRosaryApi'
+import {usePostUser} from 'src/hooks/useRosaryApi/usePostUser'
 
 const useStyles = makeStyles(theme => ({
   paper: {
@@ -46,40 +41,17 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-interface LoginCardProps {}
-type LocationState = {
-  from: Location
-}
-
-const LoginCard = (props: LoginCardProps) => {
-  let history = useHistory()
-  let location = useLocation<LocationState>()
-  const [redirectOnLogin, setRedirectOnLogin] = useState('')
+export const RegisterCard = () => {
   const classes = useStyles()
-  const {setAuthToken} = useContext(AuthContext)
-  const {token, requestAuthToken, isLoading, error} = useAuthTokenRequest()
+  const {postUser, isLoading, error} = usePostUser()
 
   // TODO: #30 move handleSubmit from LoginCard to container
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const {email, password} = e.target['elements']
     if (!isLoading) {
-      requestAuthToken({email: email.value, password: password.value})
+      postUser({email: email.value, password: password.value})
     }
-  }
-
-  useEffect(() => {
-    if (token) {
-      setAuthToken(token)
-      const {from} = location.state || {from: null}
-      if (from) {
-        setRedirectOnLogin(from.pathname)
-      } else history.goBack()
-    }
-  }, [setAuthToken, token, setRedirectOnLogin, location, history])
-
-  if (redirectOnLogin) {
-    return <Redirect to={redirectOnLogin} />
   }
 
   return (
@@ -89,10 +61,13 @@ const LoginCard = (props: LoginCardProps) => {
           <CssBaseline />
           <div className={classes.paper}>
             <Avatar className={classes.avatar}>
-              <LockOutlinedIcon />
+              <AccountCircle />
             </Avatar>
+            <Typography component="h1" variant="subtitle1">
+              Nie masz konta ?
+            </Typography>
             <Typography component="h1" variant="h5">
-              Zaloguj się
+              Rejestracja:
             </Typography>
             <form
               className={classes.form}
@@ -108,7 +83,6 @@ const LoginCard = (props: LoginCardProps) => {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
-                autoFocus
               />
               <TextField
                 variant="outlined"
@@ -116,41 +90,44 @@ const LoginCard = (props: LoginCardProps) => {
                 required
                 fullWidth
                 name="password"
-                label="Password"
+                label="Hasło"
                 type="password"
                 id="password"
-                autoComplete="current-password"
+                autoComplete="Nowe hasło"
               />
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Zapamiętaj mnie"
+              <TextField
+                variant="outlined"
+                margin="normal"
+                required
+                fullWidth
+                name="password2"
+                label="Powtórz hasło"
+                type="password"
+                id="password2"
+                autoComplete="Powtórz hasło"
               />
               {error ? (
                 <MuiAlert elevation={6} variant="filled" severity="error">
-                  Nieprawidłowy email lub hasło.
+                  {error}
                 </MuiAlert>
               ) : null}
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-              >
-                Zaloguj
-              </Button>
-              {/* <Grid container> */}
-              {/* <Grid item xs> */}
-              {/* <Link href="#" variant="body2"> */}
-              {/* Nie pamiętasz hasła? */}
-              {/* </Link> */}
-              {/* </Grid> */}
-              {/* <Grid item> */}
-              {/* <Link href="#" variant="body2"> */}
-              {/* {'Nie masz konta? Rejestracja'} */}
-              {/* </Link> */}
-              {/* </Grid> */}
-              {/* </Grid> */}
+              {isLoading ? (
+                <LinearProgress
+                  variant="query"
+                  data-testid="progressbar"
+                  className={classes.submit}
+                />
+              ) : (
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                >
+                  Zarejestruj
+                </Button>
+              )}
             </form>
           </div>
         </Container>
@@ -158,5 +135,3 @@ const LoginCard = (props: LoginCardProps) => {
     </>
   )
 }
-
-export default LoginCard

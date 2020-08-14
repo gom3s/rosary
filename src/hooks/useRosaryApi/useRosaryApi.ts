@@ -34,7 +34,12 @@ export const useAuthTokenRequest = () => {
   )
   const token = state.data.token
 
-  return {token, requestAuthToken, isLoading: state.isLoading}
+  return {
+    token,
+    requestAuthToken,
+    isLoading: state.isLoading,
+    error: state.error,
+  }
 }
 
 export const usePrayer = (id: string | undefined) => {
