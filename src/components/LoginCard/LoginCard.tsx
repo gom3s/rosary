@@ -1,6 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react'
 
 import {Card, Typography} from '@material-ui/core'
+import MuiAlert from '@material-ui/lab/Alert'
 import {makeStyles} from '@material-ui/core/styles'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
@@ -56,7 +57,7 @@ const LoginCard = (props: LoginCardProps) => {
   const [redirectOnLogin, setRedirectOnLogin] = useState('')
   const classes = useStyles()
   const {setAuthToken} = useContext(AuthContext)
-  const {token, requestAuthToken, isLoading} = useAuthTokenRequest()
+  const {token, requestAuthToken, isLoading, error} = useAuthTokenRequest()
 
   // TODO: #30 move handleSubmit from LoginCard to container
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -124,6 +125,11 @@ const LoginCard = (props: LoginCardProps) => {
                 control={<Checkbox value="remember" color="primary" />}
                 label="Zapamiętaj mnie"
               />
+              {error ? (
+                <MuiAlert elevation={6} variant="filled" severity="error">
+                  Nieprawidłowy email lub hasło.
+                </MuiAlert>
+              ) : null}
               <Button
                 type="submit"
                 fullWidth
