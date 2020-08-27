@@ -32,23 +32,27 @@ interface IntentionCardProps {
   intention: Partial<IIntention>
   isLoading?: boolean
   detailed?: boolean
-  showDeleteAction?: boolean
+  onDeleteAction?: () => void
 }
 
 const IntentionCard: React.ComponentType<IntentionCardProps> = ({
   intention,
   detailed,
-  showDeleteAction,
+  onDeleteAction,
   isLoading,
 }) => {
   const classes = useStyles()
   const description = detailed && (
     <Typography>{intention.description}</Typography>
   )
-  const deleteAction = showDeleteAction && (
-    <div data-testid="delete-intention">
+  const deleteAction = onDeleteAction && (
+    <Button
+      size="small"
+      onClick={onDeleteAction}
+      data-testid="delete-intention"
+    >
       <DeleteIcon color="secondary" />
-    </div>
+    </Button>
   )
   const actions = !detailed && (
     <CardActions>

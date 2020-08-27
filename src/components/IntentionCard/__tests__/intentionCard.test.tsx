@@ -1,6 +1,7 @@
 import React from 'react'
 import IntentionCard from '../IntentionCard'
 import {renderWithRouter} from 'src/tools/renderWithRouter'
+import {fireEvent} from '@testing-library/react'
 
 it('should display delete icon for ADMIN user in detailed view', () => {
   const intention = {
@@ -8,9 +9,12 @@ it('should display delete icon for ADMIN user in detailed view', () => {
     userId: '456',
     title: 'title',
   }
+  const onDeleteAction = jest.fn()
   const {getByTestId} = renderWithRouter(
-    <IntentionCard intention={intention} showDeleteAction={true} />,
+    <IntentionCard intention={intention} onDeleteAction={onDeleteAction} />,
   )
+  fireEvent.click(getByTestId('delete-intention'))
 
   expect(getByTestId('delete-intention')).not.toBeNull()
+  expect(onDeleteAction).toHaveBeenCalledTimes(1)
 })
