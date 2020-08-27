@@ -19,8 +19,12 @@ const emptyPrayRequest = {
   type: MysteryTypes.none,
 }
 
-export const useIntentionList = () =>
-  useGetRequest<IIntention[]>(api, 'intentions', [])
+export const useIntentionList = () => {
+  const {state} = useGetRequest<IIntention[]>(api, 'intentions', [])
+  const {data: intentions} = state
+
+  return {intentions}
+}
 export const useIntention = (id: string) =>
   useGetRequest<IIntention>(api, `intentions/${id}`, emptyIntention)
 export const usePrayRosaryRequest = () =>
