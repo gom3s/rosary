@@ -27,6 +27,17 @@ export const useIntentionList = () => {
 }
 export const useIntention = (id: string) =>
   useGetRequest<IIntention>(api, `intentions/${id}`, emptyIntention)
+
+export const useDeleteIntention = () => {
+  const {
+    doRequest,
+    state: {isLoading},
+  } = useRequest(api.delete, `intentions`, {})
+  const deleteIntention = (id: string) => doRequest({}, `intentions/${id}`)
+
+  return {deleteIntention, isLoading}
+}
+
 export const usePrayRosaryRequest = () =>
   useRequest(api.post, `pray_rosary_requests`, emptyPrayRequest)
 export const useSavePrayer = () => useRequest(api.put, `prayers`, {})

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React from 'react'
 import {AuthContext, IAuthRole} from '../context/AuthProvider'
 
 interface AuthProviderStubProps {

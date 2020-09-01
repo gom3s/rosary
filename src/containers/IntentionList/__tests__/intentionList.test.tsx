@@ -15,17 +15,21 @@ jest.mock('../../../hooks/useRosaryApi', () => ({
       },
     ],
   }),
+  useDeleteIntention: () => ({deleteIntention: jest.fn()}),
 }))
 
-it('should handle opening Delete dialog for logged in user', () => {
-  const {getByTestId, getByText, debug} = renderWithRouter(
+const Component = () => {
+  return (
     <AuthProviderStub isAuthenticated={true}>
       <IntentionList />
-    </AuthProviderStub>,
+    </AuthProviderStub>
   )
+}
+
+it('should handle opening Delete dialog for logged in user', () => {
+  const {getByTestId, getByText} = renderWithRouter(<Component />)
 
   fireEvent.click(getByTestId('delete-intention'))
-  
   expect(getByText('Delete intention?')).not.toBeNull()
 })
 it('should not render delete action for unathorised user', () => {
@@ -34,6 +38,6 @@ it('should not render delete action for unathorised user', () => {
       <IntentionList />
     </AuthProviderStub>,
   )
-  
+
   expect(queryByTestId('delete-intention')).toBeNull()
 })
