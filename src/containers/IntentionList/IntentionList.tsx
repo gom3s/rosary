@@ -1,10 +1,12 @@
 import Container from '@material-ui/core/Container'
 import Grid from '@material-ui/core/Grid'
 import {makeStyles} from '@material-ui/core/styles'
-import * as React from 'react'
+import React, {FC, useState} from 'react'
 import Hero from '../../components/Hero'
 import IntentionCard from '../../components/IntentionCard'
-import {useIntentionList} from '../../hooks/useRosaryApi'
+import {useIntentionList, useDeleteIntention} from '../../hooks/useRosaryApi'
+import {IAuthRole, AuthContext} from 'src/context/AuthProvider'
+import {DeleteIntentionDialog} from 'src/components/DeleteIntentionDialog'
 
 const useStyles = makeStyles(theme => ({
   cardGrid: {
@@ -13,10 +15,29 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const IntentionList = (props: any) => {
+interface IntentionListProps {}
+
+const IntentionList: FC<IntentionListProps> = () => {
+  const [deleteDialogOpen, setDeleteDialogOpen] = useState(false)
+  const [deleteIntentionId, setDeleteIntentionId] = useState('')
   const classes = useStyles()
-  const {state} = useIntentionList()
-  const {data: intentions} = state
+  const {intentions} = useIntentionList()
+  const {hasRole} = React.useContext(AuthContext)
+  const isAdmin = hasRole(IAuthRole.ROLE_ADMIN)
+  const openDeleteIntentionDialog = isAdmin
+    ? (intentionId: string) => {
+        setDeleteIntentionId(intentionId)
+        setDeleteDialogOpen(true)
+      }
+    : undefined
+  const {deleteIntention, isLoading} = useDeleteIntention()
+  const handleDeleteIntention = () => {
+    deleteIntention(deleteIntentionId)
+  }
+
+  React.useEffect(() => {
+    setDeleteDialogOpen(isLoading)
+  }, [isLoading])
 
   return (
     <>
@@ -30,10 +51,18 @@ const IntentionList = (props: any) => {
         <Grid container={true} spacing={4}>
           {intentions.map(intention => (
             <Grid item={true} key={intention.id} xs={12} sm={6} md={4}>
-              <IntentionCard intention={intention} />
+              <IntentionCard
+                intention={intention}
+                onDeleteAction={openDeleteIntentionDialog}
+              />
             </Grid>
           ))}
         </Grid>
+        <DeleteIntentionDialog
+          open={deleteDialogOpen}
+          handleClose={() => setDeleteDialogOpen(false)}
+          onDelete={handleDeleteIntention}
+        />
       </Container>
     </>
   )
