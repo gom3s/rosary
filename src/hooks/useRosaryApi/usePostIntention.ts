@@ -9,9 +9,9 @@ export const emptyIntention: Partial<IIntention> = {
 
 export const usePostIntention = (authToken: string) => {
   const {
-    state: {isLoading},
+    state: {isLoading, success},
     doRequest: postIntention,
   } = useRequest(authApi(authToken).post, 'intentions', emptyIntention)
 
-  return {isLoading, postIntention}
+  return {isLoading, success, postIntention}
 }
