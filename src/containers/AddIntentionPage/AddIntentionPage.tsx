@@ -20,7 +20,7 @@ export const AddIntentionPage: React.FC = () => {
 
   useEffect(() => {
     success && history.goBack()
-  }, [success])
+  }, [success, history])
 
   return (
     <>
