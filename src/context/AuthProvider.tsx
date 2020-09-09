@@ -60,8 +60,10 @@ const AuthProvider: React.FunctionComponent = ({children}) => {
     const payload = decodeJWT(authToken)
     localStorage.setItem('authToken', authToken)
     localStorage.setItem('payload', JSON.stringify(payload))
-    authToken && setPayload(payload)
-    authToken && setAuthenticated(isUserAuthenticated(payload))
+    if (authToken.length) {
+      setPayload(payload)
+      setAuthenticated(isUserAuthenticated(payload))
+    }
   }, [setPayload, setAuthenticated, authToken])
 
   const logout = () => {
