@@ -9,6 +9,7 @@ export const useRequest = <T>(
 ) => {
   const [data, setData] = useState(initialData)
   const [isLoading, setIsLoading] = useState(false)
+  const [success, setSuccess] = useState(false)
   const [error, setError] = useState('')
   const doRequest = async (payload: {}, endpoint?: string) => {
     setError('')
@@ -18,6 +19,7 @@ export const useRequest = <T>(
     try {
       const result = await reqInstance(endpoint, payload)
       setData(result.data)
+      setSuccess(true)
     } catch (error) {
       setError(error)
     }
@@ -25,5 +27,5 @@ export const useRequest = <T>(
     setIsLoading(false)
   }
 
-  return {state: {data, isLoading, error}, doRequest}
+  return {state: {data, isLoading, error, success}, doRequest}
 }

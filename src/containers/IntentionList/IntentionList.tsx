@@ -22,7 +22,7 @@ const IntentionList: FC<IntentionListProps> = () => {
   const [deleteIntentionId, setDeleteIntentionId] = useState('')
   const classes = useStyles()
   const {intentions} = useIntentionList()
-  const {hasRole} = React.useContext(AuthContext)
+  const {hasRole, authToken} = React.useContext(AuthContext)
   const isAdmin = hasRole(IAuthRole.ROLE_ADMIN)
   const openDeleteIntentionDialog = isAdmin
     ? (intentionId: string) => {
@@ -30,7 +30,7 @@ const IntentionList: FC<IntentionListProps> = () => {
         setDeleteDialogOpen(true)
       }
     : undefined
-  const {deleteIntention, isLoading} = useDeleteIntention()
+  const {deleteIntention, isLoading} = useDeleteIntention(authToken)
   const handleDeleteIntention = () => {
     deleteIntention(deleteIntentionId)
   }

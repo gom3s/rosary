@@ -1,6 +1,6 @@
 export {useIntentionList} from './useRosaryApi'
 export {useIntention} from './useRosaryApi'
-export {useDeleteIntention} from './useRosaryApi'
+export {useDeleteIntention} from './useDeleteIntention'
 export {usePrayRosaryRequest} from './useRosaryApi'
 export {useSavePrayer} from './useRosaryApi'
 export {useAuthTokenRequest} from './useRosaryApi'
