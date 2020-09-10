@@ -50,6 +50,8 @@ export const authApi = (authToken: string) => {
   instance.interceptors.request.use(config => config, handleRequestError)
   instance.interceptors.response.use(response => response, handleResponseError)
 
+  // TODO #40 handle Expired JWT Token (401)
+
   return instance
 }
 
