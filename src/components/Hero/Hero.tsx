@@ -68,7 +68,11 @@ export const Hero = () => {
                 </Grid>
                 <Grid item={true}>
                   <Link to={`/how-it-works`}>
-                    <Button variant="outlined" color="primary">
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      data-testid="how-it-works"
+                    >
                       Jak to działa?
                     </Button>
                   </Link>

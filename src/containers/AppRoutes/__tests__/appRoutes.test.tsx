@@ -69,3 +69,18 @@ it('For logged user: should open add intention page on add intention button clic
 
   expect(container.innerHTML).toMatch('Add intention page')
 })
+
+it('should open "how it works" page ', () => {
+  const history = createMemoryHistory()
+  const {container, getByTestId} = render(
+    <LoginWrapper>
+      <Router history={history}>
+        <Hero />
+        <AppRoutes />
+      </Router>
+    </LoginWrapper>,
+  )
+  fireEvent.click(getByTestId('how-it-works'))
+
+  expect(container.innerHTML).toMatch('How it works')
+})
