@@ -50,7 +50,8 @@ export const RegisterCard = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const {email, password, password2} = e.target['elements']
-    const paswordMismatch = password.value != password2.value || !password.value
+    const paswordMismatch =
+      password.value !== password2.value || !password.value
     setPasswordMismatch(paswordMismatch)
 
     if (!isLoading && !paswordMismatch) {
