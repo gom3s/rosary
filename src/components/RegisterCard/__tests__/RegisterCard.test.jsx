@@ -49,5 +49,26 @@ it('should render progress bar', () => {
   expect(getByTestId('progressbar')).toBeTruthy()
 })
 
-// shows sucess page after register
 // shows error message
+
+test('shows error message', () => {
+  usePostUser.mockImplementation(() => ({
+    isLoading: false,
+    error: 'error message',
+    postUser: mockRequest,
+  }))
+  const {container, getByTestId, getByText, rerender, debug} = render(Component)
+  const form = container.querySelector('form')
+  const {email, password} = form.elements
+  const submit = new Event('submit')
+  email.value = 'test@test.pl'
+  password.value = 'secret'
+
+  fireEvent.submit(form)
+
+  rerender(Component)
+
+  expect(getByText('error message')).toBeTruthy()
+})
+
+// shows sucess page after register
