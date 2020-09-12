@@ -50,11 +50,7 @@ export const AddIntentionCard: FC<AddIntentionCardProps> = ({onSubmit}) => {
             <Typography component="h1" variant="h5">
               Dodaj intencję
             </Typography>
-            <form
-              className={classes.form}
-              noValidate={true}
-              onSubmit={onSubmit}
-            >
+            <form className={classes.form} onSubmit={onSubmit}>
               <TextField
                 variant="outlined"
                 margin="normal"

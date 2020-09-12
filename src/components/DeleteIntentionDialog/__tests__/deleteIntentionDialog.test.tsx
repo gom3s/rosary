@@ -3,7 +3,7 @@ import {render, fireEvent} from '@testing-library/react'
 import {DeleteIntentionDialog} from '../index'
 
 it('should show dialog', () => {
-  const {findByText} = render(
+  const {getByText} = render(
     <DeleteIntentionDialog
       open={true}
       handleClose={jest.fn()}
@@ -11,7 +11,7 @@ it('should show dialog', () => {
     />,
   )
 
-  expect(findByText('Delete intention?')).not.toBeNull()
+  expect(getByText('Delete intention?')).not.toBeNull()
 })
 
 it('should execute actions dialog', () => {

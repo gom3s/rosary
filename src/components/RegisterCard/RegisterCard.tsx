@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 import {Card, Typography, LinearProgress} from '@material-ui/core'
 import MuiAlert from '@material-ui/lab/Alert'
@@ -44,15 +44,22 @@ const useStyles = makeStyles(theme => ({
 export const RegisterCard = () => {
   const classes = useStyles()
   const {postUser, isLoading, error} = usePostUser()
+  const [paswordMismatch, setPasswordMismatch] = useState(false)
 
   // TODO: #30 move handleSubmit from LoginCard to container
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const {email, password} = e.target['elements']
-    if (!isLoading) {
+    const {email, password, password2} = e.target['elements']
+    const paswordMismatch =
+      password.value !== password2.value || !password.value
+    setPasswordMismatch(paswordMismatch)
+
+    if (!isLoading && !paswordMismatch) {
       postUser({email: email.value, password: password.value})
     }
   }
+
+  const passwordHelperText = paswordMismatch ? 'hasła się różnią' : ''
 
   return (
     <>
@@ -69,11 +76,7 @@ export const RegisterCard = () => {
             <Typography component="h1" variant="h5">
               Rejestracja:
             </Typography>
-            <form
-              className={classes.form}
-              noValidate={true}
-              onSubmit={handleSubmit}
-            >
+            <form className={classes.form} onSubmit={handleSubmit}>
               <TextField
                 variant="outlined"
                 margin="normal"
@@ -85,6 +88,9 @@ export const RegisterCard = () => {
                 autoComplete="email"
               />
               <TextField
+                error={paswordMismatch}
+                helperText={passwordHelperText}
+                onChange={() => setPasswordMismatch(false)}
                 variant="outlined"
                 margin="normal"
                 required
@@ -96,6 +102,9 @@ export const RegisterCard = () => {
                 autoComplete="Nowe hasło"
               />
               <TextField
+                error={paswordMismatch}
+                helperText={passwordHelperText}
+                onChange={() => setPasswordMismatch(false)}
                 variant="outlined"
                 margin="normal"
                 required

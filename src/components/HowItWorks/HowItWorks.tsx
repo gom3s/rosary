@@ -1,5 +1,6 @@
 import React, {FC} from 'react'
 import {
+  Box,
   Card,
   CardContent,
   CardMedia,
@@ -9,8 +10,15 @@ import {
 import {Bold} from '../Atoms/Bold'
 import {Title} from '../Atoms/Title'
 import {Paragraph} from '../Atoms/Paragraph'
+import Avatar from '@material-ui/core/Avatar'
 
 export const useStyles = makeStyles(theme => ({
+  root: {
+    display: 'flex',
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
   card: {
     display: 'flex',
     flexDirection: 'column',
@@ -22,6 +30,10 @@ export const useStyles = makeStyles(theme => ({
   },
   cardMedia: {
     paddingTop: '26.25%', // 16:9
+  },
+  avatar: {
+    width: theme.spacing(20),
+    height: theme.spacing(20),
   },
 }))
 
@@ -63,8 +75,12 @@ export const HowItWorks: FC = () => {
             osoby te odmówią cały różaniec. Jeśli modliła by się jedna osoba
             otrzymywała by kolejne tajemnice do rozważań na modlitwie.
             Ostatecznie nie jest istotne ile osób się modli, lecz że mogą na tą
-            krótką chwilę w tej konkretnej intencji stworzyć małą wspólnotę
-            modlitewną.
+            krótką chwilę{' '}
+            <Bold>
+              stworzyć małą wspólnotę i razem z przedstawić Panu Bogu tą
+              intencję
+            </Bold>
+            .
           </Paragraph>
           <Paragraph>
             <Bold>Nie musisz się logować aby rozpocząć modlitwę.</Bold> Choć
@@ -73,8 +89,16 @@ export const HowItWorks: FC = () => {
             o nowe funkcjonalności takie jak np. możliwość podzielenia się
             świadectwem, gdy np. modlitwa w Twojej intencji została wysłuchana.
           </Paragraph>
+          <Box display="flex" justifyContent="center">
+            <Avatar
+              alt="Remy Sharp"
+              src="/img/pray1.png"
+              className={classes.avatar}
+            />
+          </Box>
           <Title>
-            Mam kilka minut i chcę ofiarować swoją modlitwę w czyjejś intencji.
+            Mam kilka wolnych minut i <Bold>chcę ofiarować swoją modlitwę</Bold>{' '}
+            w czyjejś intencji.
           </Title>
           <Paragraph>
             1. Otwórz aplikację i odszukaj intencję, w której chcesz się modlić.
@@ -100,9 +124,25 @@ export const HowItWorks: FC = () => {
             (wkrótce będzie możliwość wyświetlenia statystyki odmówionych
             modlitw)
           </Paragraph>
+          <Box display="flex" justifyContent="center">
+            <Avatar
+              alt="Remy Sharp"
+              src="/img/pray2.png"
+              className={classes.avatar}
+            />
+          </Box>
           <Title>
-            Mam intencję, w której potrzebuję wsparcia modlitwy wspólnoty.
+            Mam intencję, w której <Bold>potrzebuję wsparcia modlitewnego</Bold>{' '}
+            wspólnoty.
           </Title>
+          <Paragraph>
+            <Bold>Pamiętaj że nie jesteś sam(a)</Bold> towarzyszy Ci{' '}
+            <Bold>Jezus Chrystus, Bóg</Bold>, który dla Ciebie stał się
+            człowiekiem, umarł na krzyżu i zmartwychwstał! Podziel się swoją
+            intencją i bądź pewny(a), że wraz z Tobą będziemy ją przedstawiać
+            Panu, prosząc by w Twoi życiu zawsze realizowała się Jego dobroć i
+            wola.{' '}
+          </Paragraph>
           <Paragraph>
             1. Kliknij "dodaj intencję" (na stronie głównej lub w menu bocznym)
           </Paragraph>
@@ -121,8 +161,8 @@ export const HowItWorks: FC = () => {
           <Paragraph>
             W przyszłości planujemy funkcję moderowania zgłaszanych intencji.
             Obecnie administrator przegląda okresowo nowe intencje. Wpisy
-            obraźliwe, ewidentne duplikaty lub inne intencje w ewidentny sposób
-            nie zgodne z duchem serwisu mogą zostać usunięte.{' '}
+            obraźliwe, ewidentne duplikaty lub inne intencje nie zgodne z duchem
+            serwisu mogą zostać usunięte.{' '}
           </Paragraph>
         </CardContent>
       </Card>
