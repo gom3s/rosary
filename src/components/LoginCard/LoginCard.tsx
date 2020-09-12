@@ -94,11 +94,7 @@ const LoginCard = (props: LoginCardProps) => {
             <Typography component="h1" variant="h5">
               Zaloguj się
             </Typography>
-            <form
-              className={classes.form}
-              noValidate={true}
-              onSubmit={handleSubmit}
-            >
+            <form className={classes.form} onSubmit={handleSubmit}>
               <TextField
                 variant="outlined"
                 margin="normal"
