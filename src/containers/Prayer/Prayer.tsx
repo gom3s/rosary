@@ -25,7 +25,7 @@ const Prayer: React.ComponentType<PrayerProps> = ({prayerId, intention}) => {
   const classes = useStyles()
   const {
     state: {
-      data: {type, rosary},
+      data: {type, rosary, prayer},
       isLoading: isPrayRequestLoading,
     },
     doRequest: doPrayRequest,
@@ -48,7 +48,7 @@ const Prayer: React.ComponentType<PrayerProps> = ({prayerId, intention}) => {
       date: dayjs().toJSON(),
       lockDate: null,
     }
-    savePrayerRequest(payload, `prayers/${prayerId}`)
+    savePrayerRequest(payload, prayer)
   }
 
   return (
