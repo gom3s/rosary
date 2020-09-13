@@ -43,8 +43,8 @@ const useStyles = makeStyles(theme => ({
 
 export const RegisterCard = () => {
   const classes = useStyles()
-  const {postUser, isLoading, error} = usePostUser()
   const [paswordMismatch, setPasswordMismatch] = useState(false)
+  const {postUser, isLoading, error, success} = usePostUser()
 
   // TODO: #30 move handleSubmit from LoginCard to container
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -115,6 +115,11 @@ export const RegisterCard = () => {
                 id="password2"
                 autoComplete="Powtórz hasło"
               />
+              {success ? (
+                <MuiAlert elevation={6} variant="filled" severity="success">
+                  "Dziękujemy! Teraz możesz się juz zalogować."
+                </MuiAlert>
+              ) : null}
               {error ? (
                 <MuiAlert elevation={6} variant="filled" severity="error">
                   {error}
