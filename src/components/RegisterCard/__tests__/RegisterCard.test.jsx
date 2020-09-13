@@ -24,10 +24,9 @@ test('calls submit with the username and password when submitted', () => {
   const {container, getByTestId, rerender} = render(Component)
   const form = container.querySelector('form')
   const {email, password, password2} = form.elements
-  const submit = new Event('submit')
-  email.value = 'test@test.pl'
-  password.value = 'secret'
-  password2.value = 'secret'
+  fireEvent.change(email, {target: {value: 'test@test.pl'}})
+  fireEvent.change(password, {target: {value: 'secret'}})
+  fireEvent.change(password2, {target: {value: 'secret'}})
 
   fireEvent.submit(form)
 
@@ -61,12 +60,8 @@ test('shows error message', () => {
   const {container, getByTestId, getByText, rerender, debug} = render(Component)
   const form = container.querySelector('form')
   const {email, password} = form.elements
-  const submit = new Event('submit')
-  email.value = 'test@test.pl'
-  password.value = 'secret'
 
   fireEvent.submit(form)
-
   rerender(Component)
 
   expect(getByText('error message')).toBeTruthy()

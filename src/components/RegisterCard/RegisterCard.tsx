@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 
 import {Card, Typography, LinearProgress} from '@material-ui/core'
 import MuiAlert from '@material-ui/lab/Alert'
@@ -45,19 +45,39 @@ export const RegisterCard = () => {
   const classes = useStyles()
   const [paswordMismatch, setPasswordMismatch] = useState(false)
   const {postUser, isLoading, error, success} = usePostUser()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [password2, setPassword2] = useState('')
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value)
+  }
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value)
+    setPasswordMismatch(false)
+  }
+  const handlePassword2Change = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword2(e.target.value)
+    setPasswordMismatch(false)
+  }
 
   // TODO: #30 move handleSubmit from LoginCard to container
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    const {email, password, password2} = e.target['elements']
-    const paswordMismatch =
-      password.value !== password2.value || !password.value
+    const paswordMismatch = password !== password2 || !password
     setPasswordMismatch(paswordMismatch)
 
     if (!isLoading && !paswordMismatch) {
-      postUser({email: email.value, password: password.value})
+      postUser({email, password})
     }
   }
+
+  useEffect(() => {
+    setEmail('')
+    setPassword('')
+    setPassword2('')
+  }, [success, setEmail, setPassword, setPassword2])
 
   const passwordHelperText = paswordMismatch ? 'hasła się różnią' : ''
 
@@ -85,12 +105,13 @@ export const RegisterCard = () => {
                 id="email"
                 label="Email Address"
                 name="email"
+                value={email}
+                onChange={handleEmailChange}
                 autoComplete="email"
               />
               <TextField
                 error={paswordMismatch}
                 helperText={passwordHelperText}
-                onChange={() => setPasswordMismatch(false)}
                 variant="outlined"
                 margin="normal"
                 required
@@ -100,11 +121,12 @@ export const RegisterCard = () => {
                 type="password"
                 id="password"
                 autoComplete="Nowe hasło"
+                value={password}
+                onChange={handlePasswordChange}
               />
               <TextField
                 error={paswordMismatch}
                 helperText={passwordHelperText}
-                onChange={() => setPasswordMismatch(false)}
                 variant="outlined"
                 margin="normal"
                 required
@@ -114,6 +136,8 @@ export const RegisterCard = () => {
                 type="password"
                 id="password2"
                 autoComplete="Powtórz hasło"
+                value={password2}
+                onChange={handlePassword2Change}
               />
               {success ? (
                 <MuiAlert elevation={6} variant="filled" severity="success">
