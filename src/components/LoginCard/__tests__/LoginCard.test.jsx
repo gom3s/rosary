@@ -9,6 +9,7 @@ jest.mock('../../../hooks/useRosaryApi', () => ({
   useAuthTokenRequest: () => ({
     state: {isLoading: false, data: {token: ''}},
     requestAuthToken: mockRequest,
+    error: {isError: false},
   }),
 }))
 

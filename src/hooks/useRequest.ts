@@ -1,18 +1,20 @@
 import {AxiosResponse} from 'axios'
 import {useState} from 'react'
-// import {handleErrors} from 'src/services/api'
+import {ApiError, isApiError} from 'src/services/api'
 
 export const useRequest = <T>(
   reqInstance: (url: string, data?: any) => Promise<AxiosResponse<T>>,
   defaultEndpoint: string,
   initialData: T,
 ) => {
+  const emptyError: ApiError = {isError: false}
   const [data, setData] = useState(initialData)
   const [isLoading, setIsLoading] = useState(false)
   const [success, setSuccess] = useState(false)
-  const [error, setError] = useState('')
+  // TODO #16: handle api error codes
+  const [error, setError] = useState(emptyError as ApiError)
   const doRequest = async (payload: {}, endpoint?: string) => {
-    setError('')
+    setError(emptyError)
     setIsLoading(true)
     endpoint = endpoint ? endpoint : defaultEndpoint
 
@@ -21,7 +23,9 @@ export const useRequest = <T>(
       setData(result.data)
       setSuccess(true)
     } catch (error) {
-      setError(error)
+      if (isApiError(error)) {
+        setError(error)
+      }
     }
 
     setIsLoading(false)

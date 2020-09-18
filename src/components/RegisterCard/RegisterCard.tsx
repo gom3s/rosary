@@ -44,6 +44,7 @@ const useStyles = makeStyles(theme => ({
 export const RegisterCard = () => {
   const classes = useStyles()
   const [paswordMismatch, setPasswordMismatch] = useState(false)
+  const [emailError, setEmailError] = useState(false)
   const {postUser, isLoading, error, success} = usePostUser()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -51,6 +52,7 @@ export const RegisterCard = () => {
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value)
+    setEmailError(false)
   }
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,7 +81,14 @@ export const RegisterCard = () => {
     setPassword2('')
   }, [success, setEmail, setPassword, setPassword2])
 
+  useEffect(() => {
+    setEmailError(error.isError && error.code === 400)
+  }, [error, setEmailError])
+
   const passwordHelperText = paswordMismatch ? 'hasła się różnią' : ''
+  const emailErrorText = emailError
+    ? 'takie konto już istnieje lub adres jest nie prawidłowy'
+    : ''
 
   return (
     <>
@@ -98,6 +107,8 @@ export const RegisterCard = () => {
             </Typography>
             <form className={classes.form} onSubmit={handleSubmit}>
               <TextField
+                error={emailError}
+                helperText={emailErrorText}
                 variant="outlined"
                 margin="normal"
                 required
@@ -144,9 +155,11 @@ export const RegisterCard = () => {
                   "Dziękujemy! Teraz możesz się juz zalogować."
                 </MuiAlert>
               ) : null}
-              {error ? (
+              {error.isError ? (
                 <MuiAlert elevation={6} variant="filled" severity="error">
-                  {error}
+                  {error.code === 400
+                    ? 'Popraw dane formularza'
+                    : error.message}
                 </MuiAlert>
               ) : null}
               {isLoading ? (

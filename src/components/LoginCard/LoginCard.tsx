@@ -121,9 +121,12 @@ const LoginCard = (props: LoginCardProps) => {
                 control={<Checkbox value="remember" color="primary" />}
                 label="Zapamiętaj mnie"
               />
-              {error ? (
+              {error.isError ? (
+                // TODO #16 : wyświetl błąd logowania
                 <MuiAlert elevation={6} variant="filled" severity="error">
-                  Nieprawidłowy email lub hasło.
+                  {error.code === 401
+                    ? 'Nieprawidłowy login lub hasło.'
+                    : error.message}
                 </MuiAlert>
               ) : null}
               <Button
