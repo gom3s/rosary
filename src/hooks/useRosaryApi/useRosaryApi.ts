@@ -28,8 +28,17 @@ export const useIntentionList = () => {
 export const useIntention = (id: string) =>
   useGetRequest<IIntention>(api, `intentions/${id}`, emptyIntention)
 
-export const usePrayRosaryRequest = () =>
-  useRequest(api.post, `pray_rosary_requests`, emptyPrayRequest)
+export const usePrayRosaryRequest = () => {
+  const {
+    state: {
+      data: {type, rosary, prayer},
+      isLoading: isPrayRequestLoading,
+    },
+    doRequest: requestPrayer,
+  } = useRequest(api.post, `pray_rosary_requests`, emptyPrayRequest)
+
+  return { type, rosary, prayer, isPrayRequestLoading, requestPrayer}
+}
 export const useSavePrayer = () => useRequest(api.put, `prayers`, {})
 export const useAuthTokenRequest = () => {
   const {state, doRequest: requestAuthToken} = useRequest(

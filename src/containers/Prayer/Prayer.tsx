@@ -24,11 +24,7 @@ interface PrayerProps {
 const Prayer: React.ComponentType<PrayerProps> = ({prayerId, intention}) => {
   const classes = useStyles()
   const {
-    state: {
-      data: {type, rosary, prayer},
-      isLoading: isPrayRequestLoading,
-    },
-    doRequest: doPrayRequest,
+    type, rosary, prayer, isPrayRequestLoading, requestPrayer
   } = usePrayRosaryRequest()
   const {
     state: {isLoading: isSavePrayerPending},
@@ -36,7 +32,7 @@ const Prayer: React.ComponentType<PrayerProps> = ({prayerId, intention}) => {
   } = useSavePrayer()
   const [isPraying, setIsPraying] = useState(Boolean(prayerId))
   const prayRequestAction = () => {
-    doPrayRequest({intention: `intentions/${intention.id}`}, '')
+    requestPrayer({intention: `intentions/${intention.id}`}, '')
     setIsPraying(true)
   }
   const prayAction = () => {
