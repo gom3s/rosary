@@ -20,6 +20,7 @@ import {useIntention} from '../../hooks/useRosaryApi'
 import IntentionCard from '../../components/IntentionCard'
 import PrayDisclaimerCard from '../../components/PrayDisclaimerCard'
 import {useIntentionStatisticRequest} from 'src/hooks/useRosaryApi/useInentionStatistic'
+import {IntentionStatistic} from 'src/components/IntentionStatistic'
 
 // tslint:disable-next-line: object-literal-sort-keys
 const useStyles = makeStyles((theme) => ({
@@ -55,6 +56,8 @@ interface IntentionPageProps {
 const IntentionPage: React.ComponentType<RouteComponentProps<
   IntentionPageProps
 >> = (props) => {
+  const [stats, setStats] = useState(0)
+  const updateStats = () => setStats(stats + 1)
   const {id, prayerId} = props.match.params
   const classes = useStyles()
   const {state} = useIntention(id)
@@ -94,21 +97,21 @@ const IntentionPage: React.ComponentType<RouteComponentProps<
     prayFinished,
     prayInProgress,
     requestIntentionStatistic,
-    isStatisticRequestLoading,
   } = useIntentionStatisticRequest()
 
   React.useEffect(() => {
-    requestIntentionStatistic({intention: `intentions/${id}`}, '')
-  }, [])
+    setTimeout(
+      () => requestIntentionStatistic({intention: `intentions/${id}`}, ''),
+      1000,
+    )
+  }, [stats])
 
   const statistics = (
-    <>
-      Ukończonych różańców: {rosaryCount > 0 ? rosaryCount - 1 : 0} <br />
-      Ukończonych dziesiątków: {prayFinished}
-      <br />
-      Modlitw w trakcie: {prayInProgress}
-      <br />
-    </>
+    <IntentionStatistic
+      rosaryCount={rosaryCount}
+      prayFinished={prayFinished}
+      prayInProgress={prayInProgress}
+    />
   )
 
   return (
@@ -154,9 +157,14 @@ const IntentionPage: React.ComponentType<RouteComponentProps<
                 <Typography className={classes.heading}>Modlitwa</Typography>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
-                <Prayer intention={intention} prayerId={prayerId} />
+                <Prayer
+                  intention={intention}
+                  prayerId={prayerId}
+                  updateStats={updateStats}
+                />
               </ExpansionPanelDetails>
             </ExpansionPanel>
+            <Paper className={classes.root}>{statistics}</Paper>
           </div>
         </Grid>
         <Grid item={true} key={2} xs={12} sm={6} md={6} lg={8}>
@@ -177,9 +185,6 @@ const IntentionPage: React.ComponentType<RouteComponentProps<
               <PrayDisclaimerCard />
             </ExpansionPanelDetails>
           </ExpansionPanel>
-          <Paper className={classes.root}>
-            {isStatisticRequestLoading ? null : statistics}
-          </Paper>
         </Grid>
       </Grid>
     </>
