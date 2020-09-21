@@ -17,12 +17,12 @@ import {RouteComponentProps} from 'react-router-dom'
 
 import Prayer from 'src/containers/Prayer'
 import {useIntention} from '../../hooks/useRosaryApi'
-import rosarySVG from '../../rosary2.svg'
 import IntentionCard from '../../components/IntentionCard'
 import PrayDisclaimerCard from '../../components/PrayDisclaimerCard'
+import {useIntentionStatisticRequest} from 'src/hooks/useRosaryApi/useInentionStatistic'
 
 // tslint:disable-next-line: object-literal-sort-keys
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   card: {
     display: 'flex',
     flexDirection: 'column',
@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const ExpansionPanelDetails = withStyles(theme => ({
+const ExpansionPanelDetails = withStyles((theme) => ({
   root: {
     padding: theme.spacing(1),
   },
@@ -52,9 +52,9 @@ interface IntentionPageProps {
   prayerId: string
 }
 
-const IntentionPage: React.ComponentType<
-  RouteComponentProps<IntentionPageProps>
-> = props => {
+const IntentionPage: React.ComponentType<RouteComponentProps<
+  IntentionPageProps
+>> = (props) => {
   const {id, prayerId} = props.match.params
   const classes = useStyles()
   const {state} = useIntention(id)
@@ -89,6 +89,27 @@ const IntentionPage: React.ComponentType<
     closeIntentionPanel()
     openPrayPanel()
   }
+  const {
+    rosaryCount,
+    prayFinished,
+    prayInProgress,
+    requestIntentionStatistic,
+    isStatisticRequestLoading,
+  } = useIntentionStatisticRequest()
+
+  React.useEffect(() => {
+    requestIntentionStatistic({intention: `intentions/${id}`}, '')
+  }, [])
+
+  const statistics = (
+    <>
+      Ukończonych różańców: {rosaryCount > 0 ? rosaryCount - 1 : 0} <br />
+      Ukończonych dziesiątków: {prayFinished}
+      <br />
+      Modlitw w trakcie: {prayInProgress}
+      <br />
+    </>
+  )
 
   return (
     <>
@@ -157,8 +178,7 @@ const IntentionPage: React.ComponentType<
             </ExpansionPanelDetails>
           </ExpansionPanel>
           <Paper className={classes.root}>
-            {/* TODO add statistics and current rosary progress indicator */}
-            <img src={rosarySVG} className={classes.icon} alt="rosary" />
+            {isStatisticRequestLoading ? null : statistics}
           </Paper>
         </Grid>
       </Grid>
