@@ -56,8 +56,11 @@ interface IntentionPageProps {
 const IntentionPage: React.ComponentType<RouteComponentProps<
   IntentionPageProps
 >> = (props) => {
-  const [stats, setStats] = useState(0)
-  const updateStats = () => setStats(stats + 1)
+  const updateStats = () =>
+    setTimeout(
+      () => requestIntentionStatistic({intention: `intentions/${id}`}, ''),
+      1000,
+    )
   const {id, prayerId} = props.match.params
   const classes = useStyles()
   const {state} = useIntention(id)
@@ -98,13 +101,6 @@ const IntentionPage: React.ComponentType<RouteComponentProps<
     prayInProgress,
     requestIntentionStatistic,
   } = useIntentionStatisticRequest()
-
-  React.useEffect(() => {
-    setTimeout(
-      () => requestIntentionStatistic({intention: `intentions/${id}`}, ''),
-      1000,
-    )
-  }, [stats, id, requestIntentionStatistic])
 
   const statistics = (
     <IntentionStatistic
