@@ -3,13 +3,13 @@
   "name": "Orare pro me",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "src": "./rosary2.svg",
+      "sizes": "72x72 64x64 32x32 24x24 16x16",
       "type": "image/x-icon"
     }
   ],
-  "start_url": "./index.html",
+  "start_url": "https://orareprome.com",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#880e4f",
+  "background_color": "#880e4f"
 }
