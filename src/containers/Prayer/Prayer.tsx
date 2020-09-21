@@ -10,7 +10,7 @@ import {IIntention} from '../../components/IntentionCard/Interface'
 import {getMystery} from '../../consts/rosary'
 import {usePrayRosaryRequest, useSavePrayer} from '../../hooks/useRosaryApi'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   progress: {
     marginLeft: theme.spacing(2),
   },
@@ -19,16 +19,21 @@ const useStyles = makeStyles(theme => ({
 interface PrayerProps {
   intention: IIntention
   prayerId: string
+  updateStats: () => void
 }
 
-const Prayer: React.ComponentType<PrayerProps> = ({prayerId, intention}) => {
+const Prayer: React.ComponentType<PrayerProps> = ({
+  prayerId,
+  intention,
+  updateStats,
+}) => {
   const classes = useStyles()
   const {
-    state: {
-      data: {type, rosary, prayer},
-      isLoading: isPrayRequestLoading,
-    },
-    doRequest: doPrayRequest,
+    type,
+    rosary,
+    prayer,
+    isPrayRequestLoading,
+    requestPrayer,
   } = usePrayRosaryRequest()
   const {
     state: {isLoading: isSavePrayerPending},
@@ -36,8 +41,9 @@ const Prayer: React.ComponentType<PrayerProps> = ({prayerId, intention}) => {
   } = useSavePrayer()
   const [isPraying, setIsPraying] = useState(Boolean(prayerId))
   const prayRequestAction = () => {
-    doPrayRequest({intention: `intentions/${intention.id}`}, '')
+    requestPrayer({intention: `intentions/${intention.id}`}, '')
     setIsPraying(true)
+    updateStats()
   }
   const prayAction = () => {
     setIsPraying(false)
@@ -49,6 +55,7 @@ const Prayer: React.ComponentType<PrayerProps> = ({prayerId, intention}) => {
       lockDate: null,
     }
     savePrayerRequest(payload, prayer)
+    updateStats()
   }
 
   return (

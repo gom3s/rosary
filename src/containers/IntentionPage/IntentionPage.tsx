@@ -17,12 +17,13 @@ import {RouteComponentProps} from 'react-router-dom'
 
 import Prayer from 'src/containers/Prayer'
 import {useIntention} from '../../hooks/useRosaryApi'
-import rosarySVG from '../../rosary2.svg'
 import IntentionCard from '../../components/IntentionCard'
 import PrayDisclaimerCard from '../../components/PrayDisclaimerCard'
+import {useIntentionStatisticRequest} from 'src/hooks/useRosaryApi/useInentionStatistic'
+import {IntentionStatistic} from 'src/components/IntentionStatistic'
 
 // tslint:disable-next-line: object-literal-sort-keys
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   card: {
     display: 'flex',
     flexDirection: 'column',
@@ -41,7 +42,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const ExpansionPanelDetails = withStyles(theme => ({
+const ExpansionPanelDetails = withStyles((theme) => ({
   root: {
     padding: theme.spacing(1),
   },
@@ -52,9 +53,11 @@ interface IntentionPageProps {
   prayerId: string
 }
 
-const IntentionPage: React.ComponentType<
-  RouteComponentProps<IntentionPageProps>
-> = props => {
+const IntentionPage: React.ComponentType<RouteComponentProps<
+  IntentionPageProps
+>> = (props) => {
+  const [stats, setStats] = useState(0)
+  const updateStats = () => setStats(stats + 1)
   const {id, prayerId} = props.match.params
   const classes = useStyles()
   const {state} = useIntention(id)
@@ -89,6 +92,27 @@ const IntentionPage: React.ComponentType<
     closeIntentionPanel()
     openPrayPanel()
   }
+  const {
+    rosaryCount,
+    prayFinished,
+    prayInProgress,
+    requestIntentionStatistic,
+  } = useIntentionStatisticRequest()
+
+  React.useEffect(() => {
+    setTimeout(
+      () => requestIntentionStatistic({intention: `intentions/${id}`}, ''),
+      1000,
+    )
+  }, [stats, id, requestIntentionStatistic])
+
+  const statistics = (
+    <IntentionStatistic
+      rosaryCount={rosaryCount}
+      prayFinished={prayFinished}
+      prayInProgress={prayInProgress}
+    />
+  )
 
   return (
     <>
@@ -133,9 +157,14 @@ const IntentionPage: React.ComponentType<
                 <Typography className={classes.heading}>Modlitwa</Typography>
               </ExpansionPanelSummary>
               <ExpansionPanelDetails>
-                <Prayer intention={intention} prayerId={prayerId} />
+                <Prayer
+                  intention={intention}
+                  prayerId={prayerId}
+                  updateStats={updateStats}
+                />
               </ExpansionPanelDetails>
             </ExpansionPanel>
+            <Paper className={classes.root}>{statistics}</Paper>
           </div>
         </Grid>
         <Grid item={true} key={2} xs={12} sm={6} md={6} lg={8}>
@@ -156,10 +185,6 @@ const IntentionPage: React.ComponentType<
               <PrayDisclaimerCard />
             </ExpansionPanelDetails>
           </ExpansionPanel>
-          <Paper className={classes.root}>
-            {/* TODO add statistics and current rosary progress indicator */}
-            <img src={rosarySVG} className={classes.icon} alt="rosary" />
-          </Paper>
         </Grid>
       </Grid>
     </>
