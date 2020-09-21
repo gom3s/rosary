@@ -104,7 +104,7 @@ const IntentionPage: React.ComponentType<RouteComponentProps<
       () => requestIntentionStatistic({intention: `intentions/${id}`}, ''),
       1000,
     )
-  }, [stats])
+  }, [stats, id, requestIntentionStatistic])
 
   const statistics = (
     <IntentionStatistic
