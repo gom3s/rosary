@@ -1,7 +1,13 @@
 import React from 'react'
 import {render, wait} from '@testing-library/react'
-
 import AuthProvider, {AuthContext, IAuthRole} from '../AuthProvider'
+
+jest.mock('../../tools/storage', () => ({
+  getItem: jest.fn(),
+  setItem: jest.fn(),
+}))
+
+import storage from '../../tools/storage'
 
 let isAuthenticatedProbe = false
 let payloadProbe = {
@@ -9,7 +15,7 @@ let payloadProbe = {
   roles: [IAuthRole.ROLE_UNAUTHORIZED],
   username: '',
 }
-let hasRoleSpy
+let hasRoleSpy: any
 const token =
   'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjEyMzQsImV4cCI6MTU4OTUyODUyOCwicm9sZXMiOlsiUk9MRV9BRE1JTiIsIlJPTEVfVVNFUiJdLCJ1c2VybmFtZSI6InRlc3RAb3JhcmVwcm9tZS5jb20iLCJpZCI6IjExYWFhMWExLTIzNDUtNjc4OS05OWFhLWEwZWUwMGQwMGFhMCIsImp0aSI6IjI4NzY0NWI3LTU1YmUtNDI3ZS1hMzhkLTQ4MGM3MmE4MzIyMCJ9.VUFJdGqdLvY5Xl-u9dRVggmGAOgm2EnSmIMVwobJpG8'
 
@@ -33,21 +39,33 @@ const Wrapper = (
   </AuthProvider>
 )
 
-it('should decode token and set payload on seAuthToken', () => {
-  const payload = {
-    iat: 1234,
-    exp: 1589528528,
-    roles: [IAuthRole.ROLE_ADMIN, IAuthRole.ROLE_USER],
-    username: 'test@orareprome.com',
-    id: '11aaa1a1-2345-6789-99aa-a0ee00d00aa0',
-  }
+beforeEach(() => {
+  jest.resetAllMocks()
+})
 
-  render(Wrapper)
+describe('AuthProvider', () => {
+  it('should decode token and set payload on seAuthToken', () => {
+    const payload = {
+      iat: 1234,
+      exp: 1589528528,
+      roles: [IAuthRole.ROLE_ADMIN, IAuthRole.ROLE_USER],
+      username: 'test@orareprome.com',
+      id: '11aaa1a1-2345-6789-99aa-a0ee00d00aa0',
+    }
 
-  expect(payloadProbe.id).toEqual(payload.id)
-  expect(payloadProbe.roles).toEqual(payload.roles)
-  expect(payloadProbe.username).toEqual(payload.username)
-  // should chek if user has role
-  expect(hasRoleSpy(IAuthRole.ROLE_ADMIN)).toBeTruthy()
-  expect(hasRoleSpy(IAuthRole.ROLE_UNAUTHORIZED)).toBeFalsy()
+    render(Wrapper)
+
+    expect(payloadProbe.id).toEqual(payload.id)
+    expect(payloadProbe.roles).toEqual(payload.roles)
+    expect(payloadProbe.username).toEqual(payload.username)
+    // should chek if user has role
+    expect(hasRoleSpy(IAuthRole.ROLE_ADMIN)).toBeTruthy()
+    expect(hasRoleSpy(IAuthRole.ROLE_UNAUTHORIZED)).toBeFalsy()
+  })
+
+  it('should use storage', () => {
+    render(Wrapper)
+    expect(storage.getItem).toBeCalled()
+    expect(storage.setItem).toBeCalledWith('authToken', token)
+  })
 })
