@@ -19,7 +19,7 @@ it('should decode JWT', () => {
 it('should determine if user is logged in based on payload', () => {
   const payloadTrue = {
     iat: 1234,
-    exp: 1589528528,
+    exp: Date.now(),
     roles: [IAuthRole.ROLE_ADMIN, IAuthRole.ROLE_USER],
     username: 'test@orareprome.com',
     id: '11aaa1a1-2345-6789-99aa-a0ee00d00aa0',

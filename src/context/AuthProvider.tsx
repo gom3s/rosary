@@ -1,5 +1,6 @@
 import React, {createContext, useState, useEffect} from 'react'
 import {decodeJWT, isUserAuthenticated} from '../tools/auth'
+import storage from '../tools/storage'
 
 export interface IAuthContext {
   isAuthenticated: boolean
@@ -11,6 +12,7 @@ export interface IAuthContext {
 }
 
 export interface IAuthPayload {
+  exp: number
   id: string
   username: string
   roles: IAuthRole[]
@@ -31,6 +33,7 @@ export const defaultValue = {
   isAuthenticated: false,
   authToken: '',
   payload: {
+    exp: 0,
     id: '',
     username: '',
     roles: [IAuthRole.ROLE_UNAUTHORIZED],
@@ -46,20 +49,18 @@ export const defaultValue = {
 export const AuthContext = createContext<IAuthContext>(defaultValue)
 
 const AuthProvider: React.FunctionComponent = ({children}) => {
-  const savedPayload = localStorage.getItem('payload')
+  const savedPayload = storage.getItem('payload')
   const initialPayload = savedPayload
     ? JSON.parse(savedPayload)
     : defaultValue.payload
-  const [authToken, setAuthToken] = useState(
-    localStorage.getItem('authToken') || '',
-  )
+  const [authToken, setAuthToken] = useState(storage.getItem('authToken') || '')
   const [payload, setPayload] = useState<IAuthPayload>(initialPayload)
   const [isAuthenticated, setAuthenticated] = useState(false)
 
   useEffect(() => {
     const payload = decodeJWT(authToken)
-    localStorage.setItem('authToken', authToken)
-    localStorage.setItem('payload', JSON.stringify(payload))
+    storage.setItem('authToken', authToken)
+    storage.setItem('payload', JSON.stringify(payload))
     if (authToken.length) {
       setPayload(payload)
       setAuthenticated(isUserAuthenticated(payload))
@@ -67,8 +68,8 @@ const AuthProvider: React.FunctionComponent = ({children}) => {
   }, [setPayload, setAuthenticated, authToken])
 
   const logout = () => {
-    localStorage.removeItem('authToken')
-    localStorage.removeItem('payload')
+    storage.removeItem('authToken')
+    storage.removeItem('payload')
     setAuthToken('')
     setPayload(initialPayload)
     setAuthenticated(false)

@@ -4,15 +4,17 @@ import {AuthContext, IAuthRole} from '../context/AuthProvider'
 interface AuthProviderStubProps {
   isAuthenticated: boolean
 }
-export const AuthProviderStub: React.FunctionComponent<
-  AuthProviderStubProps
-> = ({isAuthenticated, children}) => {
+export const AuthProviderStub: React.FunctionComponent<AuthProviderStubProps> = ({
+  isAuthenticated,
+  children,
+}) => {
   const logout = () => {}
   const setAuthToken = () => {}
   const hasRole = (role: IAuthRole) => isAuthenticated
 
   const value = {
     payload: {
+      exp: 0,
       id: '',
       username: '',
       roles: [],
