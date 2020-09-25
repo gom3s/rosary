@@ -3,10 +3,11 @@ import dayjs from 'dayjs'
 import * as React from 'react'
 import {useState} from 'react'
 
-import PrayCard from 'src/components/PrayCard'
+import {PrayCard} from 'src/components/PrayCard'
 import {IIntention} from 'src/components/IntentionCard/Interface'
 import {getMystery} from 'src/consts/rosary'
 import {usePrayRosaryRequest, useSavePrayer} from 'src/hooks/useRosaryApi'
+import {UIContext} from 'src/context/UIStateProvider'
 
 interface PrayerProps {
   intention: IIntention
@@ -17,6 +18,8 @@ export const Prayer: React.ComponentType<PrayerProps> = ({
   prayerId,
   intention,
 }) => {
+  const {startedPrayer} = React.useContext(UIContext)
+
   const {
     state: {
       data: {type, rosary, prayer},
@@ -28,7 +31,7 @@ export const Prayer: React.ComponentType<PrayerProps> = ({
     state: {isLoading: isSavePrayerPending},
     doRequest: savePrayerRequest,
   } = useSavePrayer()
-  const [isPraying, setIsPraying] = useState(false)
+  const [isPraying, setIsPraying] = useState(startedPrayer.isPraying)
   const prayRequestAction = () => {
     doPrayRequest({intention: `intentions/${intention.id}`}, '')
     setIsPraying(true)
@@ -44,7 +47,6 @@ export const Prayer: React.ComponentType<PrayerProps> = ({
     }
     savePrayerRequest(payload, prayer)
   }
-  //  const {isPraying, setLoginRedirect} = React.useContext(UIContext)
 
   return (
     <Grid container={true} spacing={2}>

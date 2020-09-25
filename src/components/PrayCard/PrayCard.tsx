@@ -35,7 +35,7 @@ interface PrayCardProps {
   onPrayAction: () => void
 }
 
-const PrayCard: React.ComponentType<PrayCardProps> = (props) => {
+export const PrayCard: React.ComponentType<PrayCardProps> = (props) => {
   const {getPrayerButtonDisabled, savePrayerButtonDisabled, mystery} = props
 
   const classes = useStyles()
@@ -81,5 +81,3 @@ const PrayCard: React.ComponentType<PrayCardProps> = (props) => {
     </Card>
   )
 }
-
-export default PrayCard
