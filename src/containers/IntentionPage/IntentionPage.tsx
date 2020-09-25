@@ -15,7 +15,7 @@ import * as React from 'react'
 import {useState} from 'react'
 import {RouteComponentProps} from 'react-router-dom'
 
-import Prayer from 'src/containers/Prayer'
+import {Prayer} from 'src/containers/Prayer'
 import {useIntention} from 'src/hooks/useRosaryApi'
 import rosarySVG from 'src/rosary2.svg'
 import IntentionCard from 'src/components/IntentionCard'

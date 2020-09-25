@@ -13,7 +13,10 @@ interface PrayerProps {
   prayerId: string
 }
 
-const Prayer: React.ComponentType<PrayerProps> = ({prayerId, intention}) => {
+export const Prayer: React.ComponentType<PrayerProps> = ({
+  prayerId,
+  intention,
+}) => {
   const {
     state: {
       data: {type, rosary, prayer},
@@ -25,7 +28,7 @@ const Prayer: React.ComponentType<PrayerProps> = ({prayerId, intention}) => {
     state: {isLoading: isSavePrayerPending},
     doRequest: savePrayerRequest,
   } = useSavePrayer()
-  const [isPraying, setIsPraying] = useState(Boolean(prayerId))
+  const [isPraying, setIsPraying] = useState(false)
   const prayRequestAction = () => {
     doPrayRequest({intention: `intentions/${intention.id}`}, '')
     setIsPraying(true)
@@ -41,6 +44,7 @@ const Prayer: React.ComponentType<PrayerProps> = ({prayerId, intention}) => {
     }
     savePrayerRequest(payload, prayer)
   }
+  //  const {isPraying, setLoginRedirect} = React.useContext(UIContext)
 
   return (
     <Grid container={true} spacing={2}>
@@ -55,5 +59,3 @@ const Prayer: React.ComponentType<PrayerProps> = ({prayerId, intention}) => {
     </Grid>
   )
 }
-
-export default Prayer
