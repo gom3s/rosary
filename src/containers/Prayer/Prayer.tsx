@@ -1,6 +1,4 @@
 import {Grid} from '@material-ui/core'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import {makeStyles} from '@material-ui/core/styles'
 import dayjs from 'dayjs'
 import * as React from 'react'
 import {useState} from 'react'
@@ -10,19 +8,12 @@ import {IIntention} from 'src/components/IntentionCard/Interface'
 import {getMystery} from 'src/consts/rosary'
 import {usePrayRosaryRequest, useSavePrayer} from 'src/hooks/useRosaryApi'
 
-const useStyles = makeStyles((theme) => ({
-  progress: {
-    marginLeft: theme.spacing(2),
-  },
-}))
-
 interface PrayerProps {
   intention: IIntention
   prayerId: string
 }
 
 const Prayer: React.ComponentType<PrayerProps> = ({prayerId, intention}) => {
-  const classes = useStyles()
   const {
     state: {
       data: {type, rosary, prayer},
@@ -59,10 +50,8 @@ const Prayer: React.ComponentType<PrayerProps> = ({prayerId, intention}) => {
         savePrayerButtonDisabled={!isPraying || isPrayRequestLoading}
         onPrayAction={prayAction}
         onPrayRequestAction={prayRequestAction}
+        isLoading={isPrayRequestLoading}
       />
-      {isPrayRequestLoading ? (
-        <CircularProgress className={classes.progress} size={18} />
-      ) : null}
     </Grid>
   )
 }
