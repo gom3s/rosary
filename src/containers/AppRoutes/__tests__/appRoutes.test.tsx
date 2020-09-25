@@ -1,7 +1,7 @@
 import React from 'react'
 import {Router} from 'react-router-dom'
 import {createMemoryHistory} from 'history'
-import {render, fireEvent, act} from '@testing-library/react'
+import {render, fireEvent} from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 
 import {AppRoutes} from 'src/containers/AppRoutes'

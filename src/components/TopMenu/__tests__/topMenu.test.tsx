@@ -1,6 +1,5 @@
 import React from 'react'
 import {TopMenu} from '../index'
-import {render} from '@testing-library/react'
 
 import {renderWithRouter} from 'src/tools/renderWithRouter'
 
