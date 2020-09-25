@@ -1,9 +1,9 @@
 import React, {FC} from 'react'
 import {Avatar, makeStyles} from '@material-ui/core'
-import rosary from '../../rosary.svg'
+import rosary from 'src/rosary.svg'
 import {IconProps} from './index'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   avatar: {
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,

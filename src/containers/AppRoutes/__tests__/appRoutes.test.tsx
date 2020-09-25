@@ -4,8 +4,8 @@ import {createMemoryHistory} from 'history'
 import {render, fireEvent, act} from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 
-import {AppRoutes} from '../AppRoutes'
-import Hero from '../../../components/Hero'
+import {AppRoutes} from 'src/containers/AppRoutes'
+import Hero from 'src/components/Hero'
 import {LoginWrapper} from 'src/tools/LoginWrapper'
 
 jest.mock('../../IntentionList', () => () => <div>Intention list</div>)

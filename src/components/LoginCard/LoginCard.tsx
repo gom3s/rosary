@@ -14,10 +14,10 @@ import Container from '@material-ui/core/Container'
 import {useHistory, useLocation} from 'react-router-dom'
 import {Redirect} from 'react-router'
 
-import {AuthContext} from '../../context/AuthProvider'
-import {useAuthTokenRequest} from '../../hooks/useRosaryApi'
+import {AuthContext} from 'src/context/AuthProvider'
+import {useAuthTokenRequest} from 'src/hooks/useRosaryApi'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',

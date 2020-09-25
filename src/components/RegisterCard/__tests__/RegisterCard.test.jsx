@@ -4,7 +4,7 @@ import {RegisterCard} from '../RegisterCard'
 import {MemoryRouter as Router} from 'react-router-dom'
 import {render, fireEvent, act} from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
-import {usePostUser} from '../../../hooks/useRosaryApi/usePostUser'
+import {usePostUser} from 'src/hooks/useRosaryApi/usePostUser'
 
 const mockRequest = jest.fn()
 jest.mock('../../../hooks/useRosaryApi/usePostUser', () => ({

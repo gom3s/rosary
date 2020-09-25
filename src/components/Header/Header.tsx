@@ -8,12 +8,12 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import useScrollTrigger from '@material-ui/core/useScrollTrigger'
 
-import DrawerMenu from '../DrawerMenu'
-import Link from '../Link'
+import DrawerMenu from 'src/components/DrawerMenu'
+import Link from 'src/components/Link'
 import {AuthContext} from 'src/context/AuthProvider'
-import {TopMenu} from '../TopMenu'
+import {TopMenu} from 'src/components/TopMenu'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
   },

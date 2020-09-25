@@ -1,4 +1,4 @@
-import {authApi} from '../../services/api'
+import {authApi} from 'src/services/api'
 import {useRequest} from '../useRequest'
 
 export const useDeleteIntention = (authToken: string) => {

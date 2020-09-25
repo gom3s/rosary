@@ -2,7 +2,7 @@ import React from 'react'
 import {TopMenu} from '../index'
 import {render} from '@testing-library/react'
 
-import {renderWithRouter} from '../../../tools/renderWithRouter'
+import {renderWithRouter} from 'src/tools/renderWithRouter'
 
 it('should render login button', () => {
   const {getByText} = renderWithRouter(<TopMenu />)

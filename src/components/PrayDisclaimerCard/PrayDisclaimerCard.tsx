@@ -3,10 +3,9 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import CardMedia from '@material-ui/core/CardMedia'
 import {makeStyles} from '@material-ui/core/styles'
-import {Paragraph} from '../Atoms/Paragraph'
-import {Title} from '../Atoms/Title'
+import {Paragraph, Title} from 'src/components/UI/Atoms'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   card: {
     display: 'flex',
     flexDirection: 'column',

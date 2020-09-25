@@ -7,12 +7,11 @@ import {
   Container,
   makeStyles,
 } from '@material-ui/core'
-import {Bold} from '../Atoms/Bold'
-import {Title} from '../Atoms/Title'
-import {Paragraph} from '../Atoms/Paragraph'
 import Avatar from '@material-ui/core/Avatar'
 
-export const useStyles = makeStyles(theme => ({
+import {Bold, Title, Paragraph} from 'src/components/UI/Atoms'
+
+export const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     '& > *': {

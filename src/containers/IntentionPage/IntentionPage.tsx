@@ -16,13 +16,13 @@ import {useState} from 'react'
 import {RouteComponentProps} from 'react-router-dom'
 
 import Prayer from 'src/containers/Prayer'
-import {useIntention} from '../../hooks/useRosaryApi'
-import rosarySVG from '../../rosary2.svg'
-import IntentionCard from '../../components/IntentionCard'
-import PrayDisclaimerCard from '../../components/PrayDisclaimerCard'
+import {useIntention} from 'src/hooks/useRosaryApi'
+import rosarySVG from 'src/rosary2.svg'
+import IntentionCard from 'src/components/IntentionCard'
+import PrayDisclaimerCard from 'src/components/PrayDisclaimerCard'
 
 // tslint:disable-next-line: object-literal-sort-keys
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   card: {
     display: 'flex',
     flexDirection: 'column',
@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-const ExpansionPanelDetails = withStyles(theme => ({
+const ExpansionPanelDetails = withStyles((theme) => ({
   root: {
     padding: theme.spacing(1),
   },
@@ -52,9 +52,9 @@ interface IntentionPageProps {
   prayerId: string
 }
 
-const IntentionPage: React.ComponentType<
-  RouteComponentProps<IntentionPageProps>
-> = props => {
+const IntentionPage: React.ComponentType<RouteComponentProps<
+  IntentionPageProps
+>> = (props) => {
   const {id, prayerId} = props.match.params
   const classes = useStyles()
   const {state} = useIntention(id)

@@ -6,11 +6,11 @@ import * as React from 'react'
 import {useState} from 'react'
 
 import PrayCard from 'src/components/PrayCard'
-import {IIntention} from '../../components/IntentionCard/Interface'
-import {getMystery} from '../../consts/rosary'
-import {usePrayRosaryRequest, useSavePrayer} from '../../hooks/useRosaryApi'
+import {IIntention} from 'src/components/IntentionCard/Interface'
+import {getMystery} from 'src/consts/rosary'
+import {usePrayRosaryRequest, useSavePrayer} from 'src/hooks/useRosaryApi'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   progress: {
     marginLeft: theme.spacing(2),
   },
