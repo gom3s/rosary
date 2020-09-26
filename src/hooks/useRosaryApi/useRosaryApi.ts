@@ -1,5 +1,5 @@
 import {IIntention} from 'src/components/IntentionCard/Interface'
-import {emptyPrayer, Prayer} from 'src/types/Prayer'
+import {emptyPrayer, IPrayer} from 'src/types/Prayer'
 import api from 'src/services/api'
 import {useGetRequest} from '../useGetRequest'
 import {useRequest} from '../useRequest'
@@ -38,5 +38,5 @@ export const useAuthTokenRequest = () => {
 
 export const usePrayer = (id: string | undefined) => {
   const url = id ? `prayers/${id}` : ''
-  return useGetRequest<Prayer>(api, url, emptyPrayer)
+  return useGetRequest<IPrayer>(api, url, emptyPrayer)
 }

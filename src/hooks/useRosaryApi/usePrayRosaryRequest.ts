@@ -2,14 +2,23 @@ import {MysteryTypes} from 'src/consts/MysteryTypes'
 import api from 'src/services/api'
 import {useRequest} from '../useRequest'
 
-const emptyPrayRequest = {
-  id: null,
-  intention: null,
-  prayer: null,
+const emptyPrayRequest: IPrayRequest = {
   type: MysteryTypes.none,
+  rosary: '',
+  prayer: '',
 }
 
-export const usePrayRosaryRequest = () => {
+export interface IPrayRequest {
+  type: MysteryTypes
+  rosary: string
+  prayer: string
+}
+type TUsePrayRequest = IPrayRequest & {
+  isPrayRequestLoading: boolean
+  doPrayRequest: (payload: {}, endpoint?: string) => void
+}
+
+export const usePrayRosaryRequest = (): TUsePrayRequest => {
   const {
     state: {
       data: {type, rosary, prayer},
