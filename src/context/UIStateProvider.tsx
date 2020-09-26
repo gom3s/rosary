@@ -10,6 +10,7 @@ type TActivePrayer = {
   setIspraying: (value: boolean) => void
   setPrayerId: (value: string) => void
   setPrayerStart: (value: Date) => void
+  setActivePrayerData: (value: IPrayRequest) => void
 }
 interface IUIContext {
   loginRedirect: string
@@ -24,6 +25,7 @@ const emptyActivePrayer: TActivePrayer = {
   setIspraying: (value: boolean) => console.error(MISSUSE_MESSAGE),
   setPrayerId: (value: string) => console.error(MISSUSE_MESSAGE),
   setPrayerStart: (value: Date) => console.error(MISSUSE_MESSAGE),
+  setActivePrayerData: (value: IPrayRequest) => console.error(MISSUSE_MESSAGE),
 }
 const MISSUSE_MESSAGE =
   'You attempt to use UIContext but forgot to wrap component in UIStateProvider!'
@@ -40,6 +42,11 @@ export const UIStateProvider: React.FunctionComponent = ({children}) => {
   const [isPraying, setIspraying] = useState(false)
   const [prayerId, setPrayerId] = useState('')
   const [prayerStart, setPrayerStart] = useState(new Date())
+  const [activePrayerData, setActivePrayerData] = useState({
+    prayer: '',
+    rosary: '',
+    type: MysteryTypes.none,
+  })
 
   const activePrayer: TActivePrayer = {
     isPraying,
@@ -47,7 +54,8 @@ export const UIStateProvider: React.FunctionComponent = ({children}) => {
     start: prayerStart,
     setIspraying,
     setPrayerStart,
-    data: {prayer: '', rosary: '', type: MysteryTypes.none},
+    data: activePrayerData,
+    setActivePrayerData,
     setPrayerId,
   }
 
