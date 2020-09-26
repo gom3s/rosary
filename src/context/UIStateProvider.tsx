@@ -1,15 +1,15 @@
 import React, {createContext, useState} from 'react'
 
 type TPrayer =
-  | {isPraying: false; setIspraying: (value: boolean) => void}
-  | {
-      isPraying: true
-      prayerId: string
-      start: Date
-      setIspraying: (value: boolean) => void
-      setPrayerId: (value: string) => void
-      setPrayerStart: (value: Date) => void
-    }
+  // | {isPraying: false; setIspraying: (value: boolean) => void}
+  {
+    isPraying: boolean
+    prayerId: string
+    start?: Date
+    setIspraying: (value: boolean) => void
+    setPrayerId: (value: string) => void
+    setPrayerStart: (value: Date) => void
+  }
 interface IUIContext {
   loginRedirect: string
   setLoginRedirect: (value: string) => void
@@ -18,7 +18,10 @@ interface IUIContext {
 
 const startedPrayer: TPrayer = {
   isPraying: false,
+  prayerId: '',
   setIspraying: (value: boolean) => console.error(MISSUSE_MESSAGE),
+  setPrayerId: (value: string) => console.error(MISSUSE_MESSAGE),
+  setPrayerStart: (value: Date) => console.error(MISSUSE_MESSAGE),
 }
 const MISSUSE_MESSAGE =
   'You attempt to use UIContext but forgot to wrap component in UIStateProvider!'
@@ -41,8 +44,9 @@ export const UIStateProvider: React.FunctionComponent = ({children}) => {
     prayerId,
     start: prayerStart,
     setIspraying,
-    setPrayerId,
     setPrayerStart,
+    // data: {type, rosary, prayer},
+    setPrayerId,
   }
 
   const value = {

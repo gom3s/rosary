@@ -19,7 +19,8 @@ export const Prayer: React.ComponentType<PrayerProps> = ({
   intention,
 }) => {
   const {startedPrayer} = React.useContext(UIContext)
-
+  const isInContextPrayer =
+    startedPrayer.isPraying && startedPrayer.prayerId === prayerId
   const {
     state: {
       data: {type, rosary, prayer},
@@ -31,7 +32,7 @@ export const Prayer: React.ComponentType<PrayerProps> = ({
     state: {isLoading: isSavePrayerPending},
     doRequest: savePrayerRequest,
   } = useSavePrayer()
-  const [isPraying, setIsPraying] = useState(startedPrayer.isPraying)
+  const [isPraying, setIsPraying] = useState(isInContextPrayer)
   const prayRequestAction = () => {
     doPrayRequest({intention: `intentions/${intention.id}`}, '')
     setIsPraying(true)
