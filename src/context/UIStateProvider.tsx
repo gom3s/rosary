@@ -1,9 +1,12 @@
 import React, {createContext, useState} from 'react'
+import {MysteryTypes} from 'src/consts/MysteryTypes'
+import {IPrayRequest} from 'src/hooks/useRosaryApi/usePrayRosaryRequest'
 
 type TActivePrayer = {
   isPraying: boolean
   prayerId: string
   start?: Date
+  data: IPrayRequest
   setIspraying: (value: boolean) => void
   setPrayerId: (value: string) => void
   setPrayerStart: (value: Date) => void
@@ -14,9 +17,10 @@ interface IUIContext {
   activePrayer: TActivePrayer
 }
 
-const activePrayer: TActivePrayer = {
+const emptyActivePrayer: TActivePrayer = {
   isPraying: false,
   prayerId: '',
+  data: {prayer: '', rosary: '', type: MysteryTypes.none},
   setIspraying: (value: boolean) => console.error(MISSUSE_MESSAGE),
   setPrayerId: (value: string) => console.error(MISSUSE_MESSAGE),
   setPrayerStart: (value: Date) => console.error(MISSUSE_MESSAGE),
@@ -26,7 +30,7 @@ const MISSUSE_MESSAGE =
 export const defaultValue = {
   loginRedirect: '/',
   setLoginRedirect: (value: string) => console.error(MISSUSE_MESSAGE),
-  activePrayer,
+  activePrayer: emptyActivePrayer,
 }
 
 export const UIContext = createContext<IUIContext>(defaultValue)
@@ -43,7 +47,7 @@ export const UIStateProvider: React.FunctionComponent = ({children}) => {
     start: prayerStart,
     setIspraying,
     setPrayerStart,
-    // data: {type, rosary, prayer},
+    data: {prayer: '', rosary: '', type: MysteryTypes.none},
     setPrayerId,
   }
 
