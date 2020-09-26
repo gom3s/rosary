@@ -13,11 +13,11 @@ const intention = {
 
 jest.mock('src/hooks/useRosaryApi/usePrayRosaryRequest', () => ({
   usePrayRosaryRequest: () => ({
-    state: {
-      data: {type: 1, rosary: '2', prayer: '3'},
-      isLoading: false,
-    },
-    doRequest: jest.fn(),
+    type: 1,
+    rosary: '2',
+    prayer: '3',
+    isPrayRequestLoading: false,
+    doPrayRequest: jest.fn(),
   }),
 }))
 

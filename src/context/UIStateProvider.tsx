@@ -1,15 +1,13 @@
 import React, {createContext, useState} from 'react'
 
-type TActivePrayer =
-  // | {isPraying: false; setIspraying: (value: boolean) => void}
-  {
-    isPraying: boolean
-    prayerId: string
-    start?: Date
-    setIspraying: (value: boolean) => void
-    setPrayerId: (value: string) => void
-    setPrayerStart: (value: Date) => void
-  }
+type TActivePrayer = {
+  isPraying: boolean
+  prayerId: string
+  start?: Date
+  setIspraying: (value: boolean) => void
+  setPrayerId: (value: string) => void
+  setPrayerStart: (value: Date) => void
+}
 interface IUIContext {
   loginRedirect: string
   setLoginRedirect: (value: string) => void

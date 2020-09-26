@@ -22,11 +22,11 @@ export const Prayer: React.ComponentType<PrayerProps> = ({
   const isInContextPrayer =
     activePrayer.isPraying && activePrayer.prayerId === prayerId
   const {
-    state: {
-      data: {type, rosary, prayer},
-      isLoading: isPrayRequestLoading,
-    },
-    doRequest: doPrayRequest,
+    type,
+    rosary,
+    prayer,
+    isPrayRequestLoading,
+    doPrayRequest,
   } = usePrayRosaryRequest()
   const {
     state: {isLoading: isSavePrayerPending},

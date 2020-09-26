@@ -9,5 +9,14 @@ const emptyPrayRequest = {
   type: MysteryTypes.none,
 }
 
-export const usePrayRosaryRequest = () =>
-  useRequest(api.post, `pray_rosary_requests`, emptyPrayRequest)
+export const usePrayRosaryRequest = () => {
+  const {
+    state: {
+      data: {type, rosary, prayer},
+      isLoading: isPrayRequestLoading,
+    },
+    doRequest: doPrayRequest,
+  } = useRequest(api.post, `pray_rosary_requests`, emptyPrayRequest)
+
+  return {type, rosary, prayer, isPrayRequestLoading, doPrayRequest}
+}
