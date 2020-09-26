@@ -46,6 +46,7 @@ export const PrayCard: React.ComponentType<PrayCardProps> = (props) => {
         color="primary"
         onClick={props.onPrayRequestAction}
         disabled={getPrayerButtonDisabled}
+        data-testid="pray-get-button"
       >
         Pobierz tajemnicę
       </Button>
@@ -54,6 +55,7 @@ export const PrayCard: React.ComponentType<PrayCardProps> = (props) => {
         color="primary"
         onClick={props.onPrayAction}
         disabled={savePrayerButtonDisabled}
+        data-testid="pray-save-button"
       >
         Gotowe (zapisz)
       </Button>
