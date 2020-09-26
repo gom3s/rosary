@@ -1,6 +1,6 @@
 import React, {createContext, useState} from 'react'
 
-type TPrayer =
+type TActivePrayer =
   // | {isPraying: false; setIspraying: (value: boolean) => void}
   {
     isPraying: boolean
@@ -13,10 +13,10 @@ type TPrayer =
 interface IUIContext {
   loginRedirect: string
   setLoginRedirect: (value: string) => void
-  startedPrayer: TPrayer
+  activePrayer: TActivePrayer
 }
 
-const startedPrayer: TPrayer = {
+const activePrayer: TActivePrayer = {
   isPraying: false,
   prayerId: '',
   setIspraying: (value: boolean) => console.error(MISSUSE_MESSAGE),
@@ -28,7 +28,7 @@ const MISSUSE_MESSAGE =
 export const defaultValue = {
   loginRedirect: '/',
   setLoginRedirect: (value: string) => console.error(MISSUSE_MESSAGE),
-  startedPrayer,
+  activePrayer,
 }
 
 export const UIContext = createContext<IUIContext>(defaultValue)
@@ -39,7 +39,7 @@ export const UIStateProvider: React.FunctionComponent = ({children}) => {
   const [prayerId, setPrayerId] = useState('')
   const [prayerStart, setPrayerStart] = useState(new Date())
 
-  const startedPrayer: TPrayer = {
+  const activePrayer: TActivePrayer = {
     isPraying,
     prayerId,
     start: prayerStart,
@@ -52,7 +52,7 @@ export const UIStateProvider: React.FunctionComponent = ({children}) => {
   const value = {
     loginRedirect,
     setLoginRedirect,
-    startedPrayer,
+    activePrayer,
   }
   return <UIContext.Provider value={value}>{children}</UIContext.Provider>
 }

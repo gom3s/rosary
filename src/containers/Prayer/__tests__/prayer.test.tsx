@@ -22,27 +22,27 @@ jest.mock('src/hooks/useRosaryApi/usePrayRosaryRequest', () => ({
 }))
 
 const Container = () => {
-  const {startedPrayer} = React.useContext(UIContext)
+  const {activePrayer} = React.useContext(UIContext)
   const prayerId = '123456'
   return (
     <div>
-      {startedPrayer.isPraying ? (
+      {activePrayer.isPraying ? (
         <Prayer prayerId={prayerId} intention={intention} />
       ) : null}
       <button
         data-testid="start-pray-context"
         onClick={() => {
-          startedPrayer.setIspraying(true)
-          startedPrayer.setPrayerId(prayerId)
-          startedPrayer.setPrayerStart(new Date())
+          activePrayer.setIspraying(true)
+          activePrayer.setPrayerId(prayerId)
+          activePrayer.setPrayerStart(new Date())
         }}
       />
       <button
         data-testid="start-pray-other-context"
         onClick={() => {
-          startedPrayer.setIspraying(true)
-          startedPrayer.setPrayerId('7890')
-          startedPrayer.setPrayerStart(new Date())
+          activePrayer.setIspraying(true)
+          activePrayer.setPrayerId('7890')
+          activePrayer.setPrayerStart(new Date())
         }}
       />
     </div>

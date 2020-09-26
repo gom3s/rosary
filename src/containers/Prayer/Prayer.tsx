@@ -18,9 +18,9 @@ export const Prayer: React.ComponentType<PrayerProps> = ({
   prayerId,
   intention,
 }) => {
-  const {startedPrayer} = React.useContext(UIContext)
+  const {activePrayer} = React.useContext(UIContext)
   const isInContextPrayer =
-    startedPrayer.isPraying && startedPrayer.prayerId === prayerId
+    activePrayer.isPraying && activePrayer.prayerId === prayerId
   const {
     state: {
       data: {type, rosary, prayer},
