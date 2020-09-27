@@ -3,6 +3,7 @@ import {Prayer} from '../Prayer'
 import {render, fireEvent} from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 import {UIContext, UIStateProvider} from 'src/context/UIStateProvider'
+import {MysteryTypes} from 'src/consts/MysteryTypes'
 
 const intention = {
   id: '2',
@@ -33,7 +34,11 @@ const Container = () => {
         data-testid="start-pray-context"
         onClick={() => {
           activePrayer.setIspraying(true)
-          activePrayer.setPrayerId(prayerId)
+          activePrayer.setActivePrayerData({
+            prayer: prayerId,
+            rosary: '999',
+            type: MysteryTypes.Luminous1,
+          })
           activePrayer.setPrayerStart(new Date())
         }}
       />
@@ -41,7 +46,11 @@ const Container = () => {
         data-testid="start-pray-other-context"
         onClick={() => {
           activePrayer.setIspraying(true)
-          activePrayer.setPrayerId('7890')
+          activePrayer.setActivePrayerData({
+            prayer: '789',
+            rosary: '999',
+            type: MysteryTypes.Luminous1,
+          })
           activePrayer.setPrayerStart(new Date())
         }}
       />

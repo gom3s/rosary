@@ -4,11 +4,9 @@ import {IPrayRequest} from 'src/hooks/useRosaryApi/usePrayRosaryRequest'
 
 type TActivePrayer = {
   isPraying: boolean
-  prayerId: string
   start?: Date
   data: IPrayRequest
   setIspraying: (value: boolean) => void
-  setPrayerId: (value: string) => void
   setPrayerStart: (value: Date) => void
   setActivePrayerData: (value: IPrayRequest) => void
 }
@@ -20,10 +18,8 @@ interface IUIContext {
 
 const emptyActivePrayer: TActivePrayer = {
   isPraying: false,
-  prayerId: '',
   data: {prayer: '', rosary: '', type: MysteryTypes.none},
   setIspraying: (value: boolean) => console.error(MISSUSE_MESSAGE),
-  setPrayerId: (value: string) => console.error(MISSUSE_MESSAGE),
   setPrayerStart: (value: Date) => console.error(MISSUSE_MESSAGE),
   setActivePrayerData: (value: IPrayRequest) => console.error(MISSUSE_MESSAGE),
 }
@@ -40,7 +36,6 @@ export const UIContext = createContext<IUIContext>(defaultValue)
 export const UIStateProvider: React.FunctionComponent = ({children}) => {
   const [loginRedirect, setLoginRedirect] = useState(defaultValue.loginRedirect)
   const [isPraying, setIspraying] = useState(false)
-  const [prayerId, setPrayerId] = useState('')
   const [prayerStart, setPrayerStart] = useState(new Date())
   const [activePrayerData, setActivePrayerData] = useState({
     prayer: '',
@@ -50,13 +45,11 @@ export const UIStateProvider: React.FunctionComponent = ({children}) => {
 
   const activePrayer: TActivePrayer = {
     isPraying,
-    prayerId,
     start: prayerStart,
     setIspraying,
     setPrayerStart,
     data: activePrayerData,
     setActivePrayerData,
-    setPrayerId,
   }
 
   const value = {

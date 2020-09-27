@@ -20,7 +20,7 @@ export const Prayer: React.ComponentType<PrayerProps> = ({
 }) => {
   const {activePrayer} = React.useContext(UIContext)
   const isInContextPrayer =
-    activePrayer.isPraying && activePrayer.prayerId === prayerId
+    activePrayer.isPraying && activePrayer.data.prayer === prayerId
   const {
     type,
     rosary,
