@@ -15,6 +15,7 @@ export interface IPrayRequest {
 }
 type TUsePrayRequest = IPrayRequest & {
   isPrayRequestLoading: boolean
+  prayRequestSuccess: boolean
   doPrayRequest: (payload: {}, endpoint?: string) => void
 }
 
@@ -23,9 +24,17 @@ export const usePrayRosaryRequest = (): TUsePrayRequest => {
     state: {
       data: {type, rosary, prayer},
       isLoading: isPrayRequestLoading,
+      success: prayRequestSuccess,
     },
     doRequest: doPrayRequest,
   } = useRequest(api.post, `pray_rosary_requests`, emptyPrayRequest)
 
-  return {type, rosary, prayer, isPrayRequestLoading, doPrayRequest}
+  return {
+    type,
+    rosary,
+    prayer,
+    isPrayRequestLoading,
+    prayRequestSuccess,
+    doPrayRequest,
+  }
 }

@@ -2,13 +2,15 @@ import React, {createContext, useState} from 'react'
 import {MysteryTypes} from 'src/consts/MysteryTypes'
 import {IPrayRequest} from 'src/hooks/useRosaryApi/usePrayRosaryRequest'
 
+type TActivePrayerData = IPrayRequest & {intentionId: string}
+
 type TActivePrayer = {
   isPraying: boolean
   start?: Date
-  data: IPrayRequest
+  data: TActivePrayerData
   setIspraying: (value: boolean) => void
   setPrayerStart: (value: Date) => void
-  setActivePrayerData: (value: IPrayRequest) => void
+  setActivePrayerData: (value: TActivePrayerData) => void
 }
 interface IUIContext {
   loginRedirect: string
@@ -18,10 +20,11 @@ interface IUIContext {
 
 const emptyActivePrayer: TActivePrayer = {
   isPraying: false,
-  data: {prayer: '', rosary: '', type: MysteryTypes.none},
+  data: {prayer: '', rosary: '', type: MysteryTypes.none, intentionId: ''},
   setIspraying: (value: boolean) => console.error(MISSUSE_MESSAGE),
   setPrayerStart: (value: Date) => console.error(MISSUSE_MESSAGE),
-  setActivePrayerData: (value: IPrayRequest) => console.error(MISSUSE_MESSAGE),
+  setActivePrayerData: (value: TActivePrayerData) =>
+    console.error(MISSUSE_MESSAGE),
 }
 const MISSUSE_MESSAGE =
   'You attempt to use UIContext but forgot to wrap component in UIStateProvider!'
@@ -40,6 +43,7 @@ export const UIStateProvider: React.FunctionComponent = ({children}) => {
   const [activePrayerData, setActivePrayerData] = useState({
     prayer: '',
     rosary: '',
+    intentionId: '',
     type: MysteryTypes.none,
   })
 

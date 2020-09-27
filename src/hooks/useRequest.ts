@@ -14,6 +14,7 @@ export const useRequest = <T>(
   const doRequest = async (payload: {}, endpoint?: string) => {
     setError('')
     setIsLoading(true)
+    setSuccess(false)
     endpoint = endpoint ? endpoint : defaultEndpoint
 
     try {

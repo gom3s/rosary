@@ -18,14 +18,23 @@ export const Prayer: React.ComponentType<PrayerProps> = ({
   prayerId,
   intention,
 }) => {
-  const {activePrayer} = React.useContext(UIContext)
+  const {
+    activePrayer: {
+      isPraying: activePrayerisPraying,
+      setIspraying: setActivePrayerIsPraying,
+      setActivePrayerData,
+      data: activePrayerData,
+    },
+  } = React.useContext(UIContext)
   const isInContextPrayer =
-    activePrayer.isPraying && activePrayer.data.prayer === prayerId
+    activePrayerisPraying && activePrayerData.intentionId === intention.id
+
   const {
     type,
     rosary,
     prayer,
     isPrayRequestLoading,
+    prayRequestSuccess,
     doPrayRequest,
   } = usePrayRosaryRequest()
   const {
@@ -36,22 +45,46 @@ export const Prayer: React.ComponentType<PrayerProps> = ({
   const prayRequestAction = () => {
     doPrayRequest({intention: `intentions/${intention.id}`}, '')
     setIsPraying(true)
+    setActivePrayerIsPraying(true)
   }
   const prayAction = () => {
     setIsPraying(false)
+    setActivePrayerIsPraying(false)
     const payload = {
       id: prayerId,
-      rosary,
-      type,
+      rosary: isInContextPrayer ? activePrayerData.rosary : rosary,
+      type: isInContextPrayer ? activePrayerData.type : type,
       date: dayjs().toJSON(),
       lockDate: null,
     }
-    savePrayerRequest(payload, prayer)
+    savePrayerRequest(
+      payload,
+      isInContextPrayer ? activePrayerData.prayer : prayer,
+    )
   }
+  React.useEffect(() => {
+    if (prayRequestSuccess) {
+      setActivePrayerData({
+        prayer,
+        rosary,
+        type,
+        intentionId: intention.id,
+      })
+      setActivePrayerIsPraying(true)
+    }
+  }, [
+    prayRequestSuccess,
+    isPrayRequestLoading,
+    setActivePrayerData,
+    setActivePrayerIsPraying,
+    prayer,
+    rosary,
+    type,
+  ])
 
   const mystery = isPrayRequestLoading
     ? getMystery(0)
-    : getMystery(isInContextPrayer ? activePrayer.data.type : type)
+    : getMystery(isInContextPrayer ? activePrayerData.type : type)
 
   return (
     <Grid container={true} spacing={2}>

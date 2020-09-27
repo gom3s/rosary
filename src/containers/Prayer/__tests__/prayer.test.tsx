@@ -6,8 +6,9 @@ import {UIContext, UIStateProvider} from 'src/context/UIStateProvider'
 import {MysteryTypes} from 'src/consts/MysteryTypes'
 import {getMystery} from 'src/consts/rosary'
 
+const intentionId = '34567'
 const intention = {
-  id: '2',
+  id: intentionId,
   userId: '3',
   title: 'title',
   description: 'desc',
@@ -26,6 +27,7 @@ jest.mock('src/hooks/useRosaryApi/usePrayRosaryRequest', () => ({
 const Container = () => {
   const {activePrayer} = React.useContext(UIContext)
   const prayerId = '123456'
+
   return (
     <div>
       {activePrayer.isPraying ? (
@@ -36,6 +38,7 @@ const Container = () => {
         onClick={() => {
           activePrayer.setIspraying(true)
           activePrayer.setActivePrayerData({
+            intentionId,
             prayer: prayerId,
             rosary: '999',
             type: MysteryTypes.Luminous1,
@@ -48,6 +51,7 @@ const Container = () => {
         onClick={() => {
           activePrayer.setIspraying(true)
           activePrayer.setActivePrayerData({
+            intentionId: '7654',
             prayer: '789',
             rosary: '999',
             type: MysteryTypes.Luminous1,
