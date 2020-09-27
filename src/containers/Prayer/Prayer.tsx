@@ -49,10 +49,14 @@ export const Prayer: React.ComponentType<PrayerProps> = ({
     savePrayerRequest(payload, prayer)
   }
 
+  const mystery = isPrayRequestLoading
+    ? getMystery(0)
+    : getMystery(isInContextPrayer ? activePrayer.data.type : type)
+
   return (
     <Grid container={true} spacing={2}>
       <PrayCard
-        mystery={isPrayRequestLoading ? getMystery(0) : getMystery(type)}
+        mystery={mystery}
         getPrayerButtonDisabled={isPraying || isSavePrayerPending}
         savePrayerButtonDisabled={!isPraying || isPrayRequestLoading}
         onPrayAction={prayAction}
