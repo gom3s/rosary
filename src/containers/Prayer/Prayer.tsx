@@ -23,27 +23,21 @@ export const Prayer: React.ComponentType<PrayerProps> = ({
       isPraying: activePrayerisPraying,
       setIspraying: setActivePrayerIsPraying,
       setActivePrayerData,
-      data: activePrayerData,
+      data: {type, intentionId, rosary, prayer},
     },
   } = React.useContext(UIContext)
   const isInContextPrayer =
-    activePrayerisPraying && activePrayerData.intentionId === intention.id
+    activePrayerisPraying && intentionId === intention.id
 
-  const {
-    type,
-    rosary,
-    prayer,
-    isPrayRequestLoading,
-    prayRequestSuccess,
-    doPrayRequest,
-  } = usePrayRosaryRequest()
+  const prayRequest = usePrayRosaryRequest()
+  const {prayRequestSuccess, isPrayRequestLoading} = prayRequest
   const {
     state: {isLoading: isSavePrayerPending},
     doRequest: savePrayerRequest,
   } = useSavePrayer()
   const [isPraying, setIsPraying] = useState(isInContextPrayer)
   const prayRequestAction = () => {
-    doPrayRequest({intention: `intentions/${intention.id}`}, '')
+    prayRequest.doPrayRequest({intention: `intentions/${intention.id}`}, '')
     setIsPraying(true)
     setActivePrayerIsPraying(true)
   }
@@ -52,22 +46,19 @@ export const Prayer: React.ComponentType<PrayerProps> = ({
     setActivePrayerIsPraying(false)
     const payload = {
       id: prayerId,
-      rosary: isInContextPrayer ? activePrayerData.rosary : rosary,
-      type: isInContextPrayer ? activePrayerData.type : type,
+      rosary,
+      type,
       date: dayjs().toJSON(),
       lockDate: null,
     }
-    savePrayerRequest(
-      payload,
-      isInContextPrayer ? activePrayerData.prayer : prayer,
-    )
+    savePrayerRequest(payload, prayer)
   }
   React.useEffect(() => {
     if (prayRequestSuccess) {
       setActivePrayerData({
-        prayer,
-        rosary,
-        type,
+        prayer: prayRequest.prayer,
+        rosary: prayRequest.rosary,
+        type: prayRequest.type,
         intentionId: intention.id,
       })
       setActivePrayerIsPraying(true)
@@ -77,14 +68,14 @@ export const Prayer: React.ComponentType<PrayerProps> = ({
     isPrayRequestLoading,
     setActivePrayerData,
     setActivePrayerIsPraying,
-    prayer,
-    rosary,
-    type,
+    prayRequest.prayer,
+    prayRequest.rosary,
+    prayRequest.type,
   ])
 
   const mystery = isPrayRequestLoading
     ? getMystery(0)
-    : getMystery(isInContextPrayer ? activePrayerData.type : type)
+    : getMystery(type ? type : prayRequest.type)
 
   return (
     <Grid container={true} spacing={2}>
