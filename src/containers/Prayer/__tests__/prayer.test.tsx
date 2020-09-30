@@ -30,13 +30,13 @@ const Container = () => {
 
   return (
     <div>
-      {activePrayer.isPraying ? (
+      {activePrayer.isPrayerActive() ? (
         <Prayer prayerId={prayerId} intention={intention} />
       ) : null}
       <button
         data-testid="start-pray-context"
         onClick={() => {
-          activePrayer.setIspraying(true)
+          activePrayer.setIsPrayerActive(true)
           activePrayer.setActivePrayerData({
             intentionId,
             prayer: prayerId,
@@ -48,7 +48,7 @@ const Container = () => {
       <button
         data-testid="start-pray-other-context"
         onClick={() => {
-          activePrayer.setIspraying(true)
+          activePrayer.setIsPrayerActive(true)
           activePrayer.setActivePrayerData({
             intentionId: '7654',
             prayer: '789',

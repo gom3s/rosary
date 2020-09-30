@@ -1,3 +1,4 @@
+import dayjs, {Dayjs} from 'dayjs'
 import React, {createContext, useState} from 'react'
 import {MysteryTypes} from 'src/consts/MysteryTypes'
 import {IPrayRequest} from 'src/hooks/useRosaryApi/usePrayRosaryRequest'
@@ -5,10 +6,10 @@ import {IPrayRequest} from 'src/hooks/useRosaryApi/usePrayRosaryRequest'
 type TActivePrayerData = IPrayRequest & {intentionId: string}
 
 type TActivePrayer = {
-  isPraying: boolean
-  start?: Date
+  isPrayerActive: () => boolean
+  start?: Dayjs
   data: TActivePrayerData
-  setIspraying: (value: boolean) => void
+  setIsPrayerActive: (value: boolean) => void
   setActivePrayerData: (value: TActivePrayerData) => void
 }
 interface IUIContext {
@@ -18,9 +19,9 @@ interface IUIContext {
 }
 
 const emptyActivePrayer: TActivePrayer = {
-  isPraying: false,
+  isPrayerActive: () => false,
   data: {prayer: '', rosary: '', type: MysteryTypes.none, intentionId: ''},
-  setIspraying: (value: boolean) => console.error(MISSUSE_MESSAGE),
+  setIsPrayerActive: (value: boolean) => console.error(MISSUSE_MESSAGE),
   setActivePrayerData: (value: TActivePrayerData) =>
     console.error(MISSUSE_MESSAGE),
 }
@@ -36,8 +37,7 @@ export const UIContext = createContext<IUIContext>(defaultValue)
 
 export const UIStateProvider: React.FunctionComponent = ({children}) => {
   const [loginRedirect, setLoginRedirect] = useState(defaultValue.loginRedirect)
-  const [isPraying, setIspraying] = useState(false)
-  const [prayerStart, setPrayerStart] = useState(new Date())
+  const [prayerStart, setPrayerStart] = useState(dayjs('1979-07-15'))
   const [activePrayerData, setActivePrayerData] = useState({
     prayer: '',
     rosary: '',
@@ -45,10 +45,24 @@ export const UIStateProvider: React.FunctionComponent = ({children}) => {
     type: MysteryTypes.none,
   })
 
+  const setIsActive = (active: boolean) => {
+    if (active) {
+      setPrayerStart(dayjs())
+    } else {
+      setPrayerStart(dayjs('1979-07-15'))
+    }
+  }
+
+  const isActive = () => {
+    const minutes = dayjs().diff(prayerStart, 'minute')
+
+    return minutes <= 10
+  }
+
   const activePrayer: TActivePrayer = {
-    isPraying,
+    isPrayerActive: isActive,
     start: prayerStart,
-    setIspraying,
+    setIsPrayerActive: setIsActive,
     data: activePrayerData,
     setActivePrayerData,
   }

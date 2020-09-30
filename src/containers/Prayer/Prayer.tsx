@@ -20,14 +20,13 @@ export const Prayer: React.ComponentType<PrayerProps> = ({
 }) => {
   const {
     activePrayer: {
-      isPraying: activePrayerisPraying,
-      setIspraying: setActivePrayerIsPraying,
+      isPrayerActive,
+      setIsPrayerActive,
       setActivePrayerData,
       data: {type, intentionId, rosary, prayer},
     },
   } = React.useContext(UIContext)
-  const isInContextPrayer =
-    activePrayerisPraying && intentionId === intention.id
+  const isInContextPrayer = isPrayerActive() && intentionId === intention.id
 
   const prayRequest = usePrayRosaryRequest()
   const {prayRequestSuccess, isPrayRequestLoading} = prayRequest
@@ -39,11 +38,11 @@ export const Prayer: React.ComponentType<PrayerProps> = ({
   const prayRequestAction = () => {
     prayRequest.doPrayRequest({intention: `intentions/${intention.id}`}, '')
     setIsPraying(true)
-    setActivePrayerIsPraying(true)
+    setIsPrayerActive(true)
   }
   const prayAction = () => {
     setIsPraying(false)
-    setActivePrayerIsPraying(false)
+    setIsPrayerActive(false)
     const payload = {
       id: prayerId,
       rosary,
@@ -61,17 +60,22 @@ export const Prayer: React.ComponentType<PrayerProps> = ({
         type: prayRequest.type,
         intentionId: intention.id,
       })
-      setActivePrayerIsPraying(true)
     }
   }, [
     prayRequestSuccess,
-    isPrayRequestLoading,
+    intention.id,
     setActivePrayerData,
-    setActivePrayerIsPraying,
     prayRequest.prayer,
     prayRequest.rosary,
     prayRequest.type,
   ])
+
+  React.useEffect(() => {
+    if (prayRequestSuccess) {
+      setIsPrayerActive(true)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [prayRequestSuccess])
 
   const mystery = isPrayRequestLoading
     ? getMystery(0)
