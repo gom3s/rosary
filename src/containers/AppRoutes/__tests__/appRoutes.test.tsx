@@ -7,6 +7,7 @@ import '@testing-library/jest-dom/extend-expect'
 import {AppRoutes} from 'src/containers/AppRoutes'
 import Hero from 'src/components/Hero'
 import {LoginWrapper} from 'src/tools/LoginWrapper'
+import {AuthProviderStub} from 'src/tools/AuthProviderStub'
 
 jest.mock('../../IntentionList', () => () => <div>Intention list</div>)
 jest.mock('../../LoginPage', () => () => <div>Login page</div>)
@@ -34,12 +35,12 @@ it('should open login form on login link click', () => {
 it('For not logged user: should open login form on add intention button click', () => {
   const history = createMemoryHistory()
   const {container, getByTestId} = render(
-    <LoginWrapper>
+    <AuthProviderStub isAuthenticated={false}>
       <Router history={history}>
         <Hero />
         <AppRoutes />
       </Router>
-    </LoginWrapper>,
+    </AuthProviderStub>,
   )
 
   expect(container.innerHTML).toMatch('Intention list')
@@ -52,16 +53,14 @@ it('For not logged user: should open login form on add intention button click', 
 it('For logged user: should open add intention page on add intention button click', () => {
   const history = createMemoryHistory()
   const Component = (
-    <LoginWrapper>
+    <AuthProviderStub isAuthenticated={true}>
       <Router history={history}>
         <Hero />
         <AppRoutes />
       </Router>
-    </LoginWrapper>
+    </AuthProviderStub>
   )
   const {container, getByTestId} = render(Component)
-
-  fireEvent.click(getByTestId('login'))
 
   expect(container.innerHTML).toMatch('Intention list')
 
@@ -73,12 +72,12 @@ it('For logged user: should open add intention page on add intention button clic
 it('should open "how it works" page ', () => {
   const history = createMemoryHistory()
   const {container, getByTestId} = render(
-    <LoginWrapper>
+    <AuthProviderStub isAuthenticated={false}>
       <Router history={history}>
         <Hero />
         <AppRoutes />
       </Router>
-    </LoginWrapper>,
+    </AuthProviderStub>,
   )
   fireEvent.click(getByTestId('how-it-works'))
 

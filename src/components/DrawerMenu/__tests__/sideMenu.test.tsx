@@ -1,16 +1,15 @@
 import React from 'react'
-import {fireEvent} from '@testing-library/react'
 
-import {LoginWrapper} from 'src/tools/LoginWrapper'
 import {renderWithRouter} from 'src/tools/renderWithRouter'
 import {SideMenu} from '../SideMenu'
+import {AuthProviderStub} from 'src/tools/AuthProviderStub'
 
 describe('sideMenu', () => {
   it('render login option for unauthenticated user ', () => {
     const {getByText, queryByText} = renderWithRouter(
-      <LoginWrapper>
+      <AuthProviderStub isAuthenticated={false}>
         <SideMenu setOpen={jest.fn()} />
-      </LoginWrapper>,
+      </AuthProviderStub>,
     )
 
     expect(getByText('Zaloguj')).toBeTruthy()
@@ -18,13 +17,11 @@ describe('sideMenu', () => {
   })
 
   it('render logout option for authenticated user ', () => {
-    const {getByTestId, getByText, queryByText} = renderWithRouter(
-      <LoginWrapper>
+    const {getByText, queryByText} = renderWithRouter(
+      <AuthProviderStub isAuthenticated={true}>
         <SideMenu setOpen={jest.fn()} />
-      </LoginWrapper>,
+      </AuthProviderStub>,
     )
-
-    fireEvent.click(getByTestId('login'))
 
     expect(getByText('Wyloguj')).toBeTruthy()
     expect(queryByText('Zaloguj')).toBeNull()
@@ -32,9 +29,9 @@ describe('sideMenu', () => {
 
   it('should render add intention link', () => {
     const {getByText} = renderWithRouter(
-      <LoginWrapper>
+      <AuthProviderStub isAuthenticated={false}>
         <SideMenu setOpen={jest.fn()} />
-      </LoginWrapper>,
+      </AuthProviderStub>,
     )
     expect(getByText('Dodaj intencję')).toBeTruthy()
   })

@@ -4,19 +4,21 @@ import * as React from 'react'
 import {useState} from 'react'
 
 import {PrayCard} from 'src/components/PrayCard'
-import {IIntention} from 'src/components/IntentionCard/Interface'
-import {getMystery} from 'src/consts/rosary'
-import {usePrayRosaryRequest, useSavePrayer} from 'src/hooks/useRosaryApi'
+import {IIntention} from '../../components/IntentionCard/Interface'
+import {getMystery} from '../../consts/rosary'
+import {usePrayRosaryRequest, useSavePrayer} from '../../hooks/useRosaryApi'
 import {UIContext} from 'src/context/UIStateProvider'
 
 interface PrayerProps {
   intention: IIntention
   prayerId: string
+  updateStats: () => void
 }
 
 export const Prayer: React.ComponentType<PrayerProps> = ({
   prayerId,
   intention,
+  updateStats,
 }) => {
   const {
     activePrayer: {
@@ -39,6 +41,7 @@ export const Prayer: React.ComponentType<PrayerProps> = ({
     prayRequest.doPrayRequest({intention: `intentions/${intention.id}`}, '')
     setIsPraying(true)
     setIsPrayerActive(true)
+    updateStats()
   }
   const prayAction = () => {
     setIsPraying(false)
@@ -51,6 +54,7 @@ export const Prayer: React.ComponentType<PrayerProps> = ({
       lockDate: null,
     }
     savePrayerRequest(payload, prayer)
+    updateStats()
   }
   React.useEffect(() => {
     if (prayRequestSuccess) {

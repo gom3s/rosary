@@ -19,15 +19,15 @@ const Component = (
 test('calls submit with the username and password when submitted', () => {
   usePostUser.mockImplementation(() => ({
     isLoading: false,
+    error: {isError: false},
     postUser: mockRequest,
   }))
   const {container, getByTestId, rerender} = render(Component)
   const form = container.querySelector('form')
   const {email, password, password2} = form.elements
-  const submit = new Event('submit')
-  email.value = 'test@test.pl'
-  password.value = 'secret'
-  password2.value = 'secret'
+  fireEvent.change(email, {target: {value: 'test@test.pl'}})
+  fireEvent.change(password, {target: {value: 'secret'}})
+  fireEvent.change(password2, {target: {value: 'secret'}})
 
   fireEvent.submit(form)
 
@@ -42,6 +42,7 @@ test('calls submit with the username and password when submitted', () => {
 it('should render progress bar', () => {
   usePostUser.mockImplementation(() => ({
     isLoading: true,
+    error: {isError: false},
     postUser: jest.fn(),
   }))
 
@@ -55,21 +56,38 @@ it('should render progress bar', () => {
 test('shows error message', () => {
   usePostUser.mockImplementation(() => ({
     isLoading: false,
-    error: 'error message',
+    error: {isError: true, message: 'error message'},
     postUser: mockRequest,
   }))
   const {container, getByTestId, getByText, rerender, debug} = render(Component)
   const form = container.querySelector('form')
-  const {email, password} = form.elements
-  const submit = new Event('submit')
-  email.value = 'test@test.pl'
-  password.value = 'secret'
+  const {email, password, password2} = form.elements
+  fireEvent.change(email, {target: {value: 'test@test.pl'}})
+  fireEvent.change(password, {target: {value: 'secret'}})
+  fireEvent.change(password2, {target: {value: 'secret'}})
 
   fireEvent.submit(form)
-
   rerender(Component)
 
   expect(getByText('error message')).toBeTruthy()
+})
+
+test('shows checks if passords match', () => {
+  usePostUser.mockImplementation(() => ({
+    isLoading: false,
+    error: {isError: false},
+    postUser: mockRequest,
+  }))
+  const {container, getByTestId, queryAllByText, rerender, debug} = render(
+    Component,
+  )
+  const form = container.querySelector('form')
+  const {email, password, password2} = form.elements
+
+  fireEvent.submit(form)
+  rerender(Component)
+
+  expect(queryAllByText('hasła się różnią').length).toEqual(2)
 })
 
 // shows sucess page after register

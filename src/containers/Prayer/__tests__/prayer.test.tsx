@@ -31,7 +31,11 @@ const Container = () => {
   return (
     <div>
       {activePrayer.isPrayerActive() ? (
-        <Prayer prayerId={prayerId} intention={intention} />
+        <Prayer
+          prayerId={prayerId}
+          intention={intention}
+          updateStats={jest.fn()}
+        />
       ) : null}
       <button
         data-testid="start-pray-context"
@@ -67,7 +71,9 @@ beforeEach(() => {
 
 describe('Prayer', () => {
   it('should render', () => {
-    const {container} = render(<Prayer prayerId="1" intention={intention} />)
+    const {container} = render(
+      <Prayer prayerId="1" intention={intention} updateStats={jest.fn()} />,
+    )
 
     expect(container.innerHTML).toMatch('Pobierz tajemnicę')
     expect(container.innerHTML).toMatch('Gotowe')
@@ -76,7 +82,7 @@ describe('Prayer', () => {
   it('should render save action button disabled', () => {
     const mystery = getMystery(MysteryTypes.Glorious3).title
     const {getByTestId, container} = render(
-      <Prayer prayerId="1" intention={intention} />,
+      <Prayer prayerId="1" intention={intention} updateStats={jest.fn()} />,
     )
     const getButton = getByTestId('pray-get-button')
     const saveButton = getByTestId('pray-save-button')
