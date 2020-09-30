@@ -7,7 +7,7 @@ type TActivePrayerData = IPrayRequest & {intentionId: string}
 
 type TActivePrayer = {
   isPrayerActive: () => boolean
-  start?: Dayjs
+  start: Dayjs
   data: TActivePrayerData
   setIsPrayerActive: (value: boolean) => void
   setActivePrayerData: (value: TActivePrayerData) => void
@@ -20,6 +20,7 @@ interface IUIContext {
 
 const emptyActivePrayer: TActivePrayer = {
   isPrayerActive: () => false,
+  start: dayjs('1979-07-15'),
   data: {prayer: '', rosary: '', type: MysteryTypes.none, intentionId: ''},
   setIsPrayerActive: (value: boolean) => console.error(MISSUSE_MESSAGE),
   setActivePrayerData: (value: TActivePrayerData) =>

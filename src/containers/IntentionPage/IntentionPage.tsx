@@ -20,7 +20,7 @@ import {useIntention} from '../../hooks/useRosaryApi'
 import IntentionCard from '../../components/IntentionCard'
 import PrayDisclaimerCard from '../../components/PrayDisclaimerCard'
 import {useIntentionStatisticRequest} from 'src/hooks/useRosaryApi/useInentionStatistic'
-import {IntentionStatisticCard} from 'src/components/IntentionStatisticCard'
+import {IntentionStatistic} from './IntentionStatistics'
 
 // tslint:disable-next-line: object-literal-sort-keys
 const useStyles = makeStyles((theme) => ({
@@ -105,14 +105,6 @@ const IntentionPage: React.ComponentType<RouteComponentProps<
 
   React.useEffect(updateStats, [])
 
-  const statistics = (
-    <IntentionStatisticCard
-      rosaryCount={rosaryCount}
-      prayFinished={prayFinished}
-      prayInProgress={prayInProgress}
-    />
-  )
-
   return (
     <>
       <Grid container={true} spacing={2}>
@@ -163,7 +155,14 @@ const IntentionPage: React.ComponentType<RouteComponentProps<
                 />
               </ExpansionPanelDetails>
             </ExpansionPanel>
-            <Paper className={classes.root}>{statistics}</Paper>
+            <Paper className={classes.root}>
+              <IntentionStatistic
+                rosaryCount={rosaryCount}
+                prayFinished={prayFinished}
+                prayInProgress={prayInProgress}
+                updateStats={updateStats}
+              />
+            </Paper>
           </div>
         </Grid>
         <Grid item={true} key={2} xs={12} sm={6} md={6} lg={8}>

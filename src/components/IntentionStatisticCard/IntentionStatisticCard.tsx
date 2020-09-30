@@ -1,4 +1,11 @@
-import {Badge, Card, CardContent, makeStyles, Tooltip} from '@material-ui/core'
+import {
+  Badge,
+  Card,
+  CardContent,
+  LinearProgress,
+  makeStyles,
+  Tooltip,
+} from '@material-ui/core'
 import React, {FC} from 'react'
 import {CircularProgressWithLabel} from './CircularProgress'
 import AvTimerIcon from '@material-ui/icons/AvTimer'
@@ -9,6 +16,7 @@ interface IIntentionStatisticProps {
   rosaryCount: number
   prayFinished: number
   prayInProgress: number
+  timeLeft: number
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -18,10 +26,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
+const normalise = (value: number) => (value * 100) / 600
+
 export const IntentionStatisticCard: FC<IIntentionStatisticProps> = ({
   rosaryCount,
   prayFinished,
   prayInProgress,
+  timeLeft,
 }) => {
   const rosariesFinished = rosaryCount > 0 ? rosaryCount - 1 : 0
   const progress = (prayFinished - rosariesFinished * 20) * 5
@@ -55,6 +66,7 @@ export const IntentionStatisticCard: FC<IIntentionStatisticProps> = ({
             />
           </Badge>
         </Tooltip>
+        <LinearProgress variant="determinate" value={normalise(timeLeft)} />
       </CardContent>
     </Card>
   )
