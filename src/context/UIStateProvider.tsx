@@ -9,7 +9,6 @@ type TActivePrayer = {
   start?: Date
   data: TActivePrayerData
   setIspraying: (value: boolean) => void
-  setPrayerStart: (value: Date) => void
   setActivePrayerData: (value: TActivePrayerData) => void
 }
 interface IUIContext {
@@ -22,7 +21,6 @@ const emptyActivePrayer: TActivePrayer = {
   isPraying: false,
   data: {prayer: '', rosary: '', type: MysteryTypes.none, intentionId: ''},
   setIspraying: (value: boolean) => console.error(MISSUSE_MESSAGE),
-  setPrayerStart: (value: Date) => console.error(MISSUSE_MESSAGE),
   setActivePrayerData: (value: TActivePrayerData) =>
     console.error(MISSUSE_MESSAGE),
 }
@@ -51,7 +49,6 @@ export const UIStateProvider: React.FunctionComponent = ({children}) => {
     isPraying,
     start: prayerStart,
     setIspraying,
-    setPrayerStart,
     data: activePrayerData,
     setActivePrayerData,
   }

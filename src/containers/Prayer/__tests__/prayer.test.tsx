@@ -43,7 +43,6 @@ const Container = () => {
             rosary: '999',
             type: MysteryTypes.Luminous1,
           })
-          activePrayer.setPrayerStart(new Date())
         }}
       />
       <button
@@ -56,7 +55,6 @@ const Container = () => {
             rosary: '999',
             type: MysteryTypes.Luminous1,
           })
-          activePrayer.setPrayerStart(new Date())
         }}
       />
     </div>
