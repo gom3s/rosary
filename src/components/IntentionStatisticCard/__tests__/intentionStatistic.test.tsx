@@ -1,6 +1,6 @@
 import React from 'react'
 import {render} from '@testing-library/react'
-import {IntentionStatistic} from '../IntentionStatistic'
+import {IntentionStatisticCard} from '../IntentionStatisticCard'
 
 it.skip('should render rosary count', () => {
   const statisticProps = {
@@ -10,7 +10,7 @@ it.skip('should render rosary count', () => {
   }
 
   const {queryAllByText, debug} = render(
-    <IntentionStatistic {...statisticProps} />,
+    <IntentionStatisticCard {...statisticProps} />,
   )
 
   debug()

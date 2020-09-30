@@ -54,9 +54,8 @@ export const UIStateProvider: React.FunctionComponent = ({children}) => {
   }
 
   const isActive = () => {
-    const minutes = dayjs().diff(prayerStart, 'minute')
-
-    return minutes <= 10
+    const seconds = dayjs().diff(prayerStart, 'second')
+    return seconds <= 10 * 60
   }
 
   const activePrayer: TActivePrayer = {

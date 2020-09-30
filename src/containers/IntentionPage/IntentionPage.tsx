@@ -20,7 +20,7 @@ import {useIntention} from '../../hooks/useRosaryApi'
 import IntentionCard from '../../components/IntentionCard'
 import PrayDisclaimerCard from '../../components/PrayDisclaimerCard'
 import {useIntentionStatisticRequest} from 'src/hooks/useRosaryApi/useInentionStatistic'
-import {IntentionStatistic} from 'src/components/IntentionStatistic'
+import {IntentionStatisticCard} from 'src/components/IntentionStatisticCard'
 
 // tslint:disable-next-line: object-literal-sort-keys
 const useStyles = makeStyles((theme) => ({
@@ -106,7 +106,7 @@ const IntentionPage: React.ComponentType<RouteComponentProps<
   React.useEffect(updateStats, [])
 
   const statistics = (
-    <IntentionStatistic
+    <IntentionStatisticCard
       rosaryCount={rosaryCount}
       prayFinished={prayFinished}
       prayInProgress={prayInProgress}

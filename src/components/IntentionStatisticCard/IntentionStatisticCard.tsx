@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export const IntentionStatistic: FC<IIntentionStatisticProps> = ({
+export const IntentionStatisticCard: FC<IIntentionStatisticProps> = ({
   rosaryCount,
   prayFinished,
   prayInProgress,

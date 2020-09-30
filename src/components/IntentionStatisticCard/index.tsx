@@ -1,0 +1,1 @@
+export {IntentionStatisticCard} from './IntentionStatisticCard'
