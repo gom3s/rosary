@@ -1,6 +1,6 @@
 import {useRequest} from '../useRequest'
 import {IIntention} from 'src/components/IntentionCard/Interface'
-import {authApi} from '../../services/api'
+import {authApi} from 'src/services/api'
 
 export const emptyIntention: Partial<IIntention> = {
   title: '',

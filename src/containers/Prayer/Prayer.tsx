@@ -1,20 +1,13 @@
 import {Grid} from '@material-ui/core'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import {makeStyles} from '@material-ui/core/styles'
 import dayjs from 'dayjs'
 import * as React from 'react'
 import {useState} from 'react'
 
-import PrayCard from 'src/components/PrayCard'
+import {PrayCard} from 'src/components/PrayCard'
 import {IIntention} from '../../components/IntentionCard/Interface'
 import {getMystery} from '../../consts/rosary'
 import {usePrayRosaryRequest, useSavePrayer} from '../../hooks/useRosaryApi'
-
-const useStyles = makeStyles((theme) => ({
-  progress: {
-    marginLeft: theme.spacing(2),
-  },
-}))
+import {UIContext} from 'src/context/UIStateProvider'
 
 interface PrayerProps {
   intention: IIntention
@@ -22,31 +15,37 @@ interface PrayerProps {
   updateStats: () => void
 }
 
-const Prayer: React.ComponentType<PrayerProps> = ({
+export const Prayer: React.ComponentType<PrayerProps> = ({
   prayerId,
   intention,
   updateStats,
 }) => {
-  const classes = useStyles()
   const {
-    type,
-    rosary,
-    prayer,
-    isPrayRequestLoading,
-    requestPrayer,
-  } = usePrayRosaryRequest()
+    activePrayer: {
+      isPrayerActive,
+      setIsPrayerActive,
+      setActivePrayerData,
+      data: {type, intentionId, rosary, prayer},
+    },
+  } = React.useContext(UIContext)
+  const isInContextPrayer = isPrayerActive() && intentionId === intention.id
+
+  const prayRequest = usePrayRosaryRequest()
+  const {prayRequestSuccess, isPrayRequestLoading} = prayRequest
   const {
     state: {isLoading: isSavePrayerPending},
     doRequest: savePrayerRequest,
   } = useSavePrayer()
-  const [isPraying, setIsPraying] = useState(Boolean(prayerId))
+  const [isPraying, setIsPraying] = useState(isInContextPrayer)
   const prayRequestAction = () => {
-    requestPrayer({intention: `intentions/${intention.id}`}, '')
+    prayRequest.doPrayRequest({intention: `intentions/${intention.id}`}, '')
     setIsPraying(true)
+    setIsPrayerActive(true)
     updateStats()
   }
   const prayAction = () => {
     setIsPraying(false)
+    setIsPrayerActive(false)
     const payload = {
       id: prayerId,
       rosary,
@@ -57,21 +56,45 @@ const Prayer: React.ComponentType<PrayerProps> = ({
     savePrayerRequest(payload, prayer)
     updateStats()
   }
+  React.useEffect(() => {
+    if (prayRequestSuccess) {
+      setActivePrayerData({
+        prayer: prayRequest.prayer,
+        rosary: prayRequest.rosary,
+        type: prayRequest.type,
+        intentionId: intention.id,
+      })
+    }
+  }, [
+    prayRequestSuccess,
+    intention.id,
+    setActivePrayerData,
+    prayRequest.prayer,
+    prayRequest.rosary,
+    prayRequest.type,
+  ])
+
+  React.useEffect(() => {
+    if (prayRequestSuccess) {
+      setIsPrayerActive(true)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [prayRequestSuccess])
+
+  const mystery = isPrayRequestLoading
+    ? getMystery(0)
+    : getMystery(type ? type : prayRequest.type)
 
   return (
     <Grid container={true} spacing={2}>
       <PrayCard
-        mystery={isPrayRequestLoading ? getMystery(0) : getMystery(type)}
+        mystery={mystery}
         getPrayerButtonDisabled={isPraying || isSavePrayerPending}
         savePrayerButtonDisabled={!isPraying || isPrayRequestLoading}
         onPrayAction={prayAction}
         onPrayRequestAction={prayRequestAction}
+        isLoading={isPrayRequestLoading}
       />
-      {isPrayRequestLoading ? (
-        <CircularProgress className={classes.progress} size={18} />
-      ) : null}
     </Grid>
   )
 }
-
-export default Prayer

@@ -1,4 +1,4 @@
-import {Grid} from '@material-ui/core'
+import {CircularProgress, Grid} from '@material-ui/core'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
 import Card from '@material-ui/core/Card'
@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography'
 import * as React from 'react'
 import {Mystery} from 'src/consts/rosary'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   card: {
     display: 'flex',
     flexDirection: 'column',
@@ -29,12 +29,13 @@ const useStyles = makeStyles(theme => ({
 interface PrayCardProps {
   getPrayerButtonDisabled: boolean
   savePrayerButtonDisabled: boolean
+  isLoading?: boolean
   mystery: Mystery
   onPrayRequestAction: () => void
   onPrayAction: () => void
 }
 
-const PrayCard: React.ComponentType<PrayCardProps> = props => {
+export const PrayCard: React.ComponentType<PrayCardProps> = (props) => {
   const {getPrayerButtonDisabled, savePrayerButtonDisabled, mystery} = props
 
   const classes = useStyles()
@@ -45,6 +46,7 @@ const PrayCard: React.ComponentType<PrayCardProps> = props => {
         color="primary"
         onClick={props.onPrayRequestAction}
         disabled={getPrayerButtonDisabled}
+        data-testid="pray-get-button"
       >
         Pobierz tajemnicę
       </Button>
@@ -53,6 +55,7 @@ const PrayCard: React.ComponentType<PrayCardProps> = props => {
         color="primary"
         onClick={props.onPrayAction}
         disabled={savePrayerButtonDisabled}
+        data-testid="pray-save-button"
       >
         Gotowe (zapisz)
       </Button>
@@ -62,7 +65,11 @@ const PrayCard: React.ComponentType<PrayCardProps> = props => {
   return (
     <Card className={classes.card}>
       <Grid container={true} justify="center" alignItems="center">
-        <Avatar alt="..." src={mystery.image} className={classes.bigAvatar} />
+        {props.isLoading ? (
+          <CircularProgress size={42} />
+        ) : (
+          <Avatar alt="..." src={mystery.image} className={classes.bigAvatar} />
+        )}
       </Grid>
       <CardContent className={classes.cardContent}>
         <Typography gutterBottom={true} variant="h5" component="h2">
@@ -71,11 +78,8 @@ const PrayCard: React.ComponentType<PrayCardProps> = props => {
         <Typography>
           {getPrayerButtonDisabled ? mystery.description : null}
         </Typography>
-        {/* TODO display pondering of mystery */}
       </CardContent>
       {actions}
     </Card>
   )
 }
-
-export default PrayCard

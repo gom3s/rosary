@@ -1,12 +1,13 @@
 import * as React from 'react'
-import Footer from '../../components/Footer'
-import AppRoutes from '../AppRoutes'
 import {BrowserRouter as Router} from 'react-router-dom'
-import Header from 'src/components/Header'
 import {makeStyles} from '@material-ui/core/styles'
 import {Container} from '@material-ui/core'
 
-const useStyles = makeStyles(theme => ({
+import {AppRoutes} from 'src/containers/AppRoutes'
+import Footer from 'src/components/Footer'
+import Header from 'src/components/Header'
+
+const useStyles = makeStyles((theme) => ({
   mainContainer: {
     paddingBottom: theme.spacing(8),
     paddingTop: theme.spacing(6),
