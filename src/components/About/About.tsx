@@ -28,7 +28,11 @@ export const About: FC = () => {
     <React.Fragment>
       <footer className={classes.footer}>
         <Typography variant="h6" align="center" gutterBottom={true}>
-          <a href="https://github.com/gom3s/rosary" target="_blank">
+          <a
+            href="https://github.com/gom3s/rosary"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
             Projekt Open Source!
           </a>{' '}
           You are wolcome to contribute.
