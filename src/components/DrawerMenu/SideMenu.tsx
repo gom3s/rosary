@@ -4,6 +4,7 @@ import Divider from '@material-ui/core/Divider'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
+import InfoIcon from '@material-ui/icons/Info'
 import ListItemText from '@material-ui/core/ListItemText'
 import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import HomeIcon from '@material-ui/icons/Home'
@@ -12,7 +13,7 @@ import Link from '../Link'
 import {AuthContext} from 'src/context/AuthProvider'
 import {RosaryIcon} from '../Icons'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   list: {
     width: 250,
   },
@@ -58,13 +59,13 @@ export const SideMenu: React.FC<SideMenuProps> = ({setOpen}) => {
     <div
       className={classes.list}
       role="presentation"
-      onClick={e => setOpen(false)}
-      onKeyDown={e => setOpen(false)}
+      onClick={(e) => setOpen(false)}
+      onKeyDown={(e) => setOpen(false)}
     >
       {' '}
       <List>
         <Link to="/">
-          <ListItem button key={'home'} onClick={e => setOpen(false)}>
+          <ListItem button key={'home'} onClick={(e) => setOpen(false)}>
             <ListItemIcon>
               <HomeIcon />
             </ListItemIcon>
@@ -75,6 +76,14 @@ export const SideMenu: React.FC<SideMenuProps> = ({setOpen}) => {
           <ListItem button key={'add-intention'}>
             <RosaryIcon />
             <ListItemText primary={'Dodaj intencję'} />
+          </ListItem>
+        </Link>
+        <Link to="/about">
+          <ListItem button key={'about'}>
+            <ListItemIcon>
+              <InfoIcon />
+            </ListItemIcon>
+            <ListItemText primary={'O projekcie'} />
           </ListItem>
         </Link>
       </List>
