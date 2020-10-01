@@ -12,6 +12,7 @@ import DrawerMenu from 'src/components/DrawerMenu'
 import Link from 'src/components/Link'
 import {AuthContext} from 'src/context/AuthProvider'
 import {TopMenu} from 'src/components/TopMenu'
+import {Badge} from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -55,9 +56,11 @@ export const Header = () => {
           <Toolbar>
             <DrawerMenu></DrawerMenu>
             <Link to={`/`}>
-              <Typography variant="h6" color="inherit" noWrap={true}>
-                {title}
-              </Typography>
+              <Badge color="secondary" badgeContent="beta">
+                <Typography variant="h6" color="inherit" noWrap={true}>
+                  {title}
+                </Typography>
+              </Badge>
             </Link>
             <div className={classes.grow} />
             <TopMenu isAuthenticated={isAuthenticated} />

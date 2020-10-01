@@ -1,47 +1,48 @@
 import * as React from 'react'
 
-import Link from '@material-ui/core/Link'
-import {makeStyles} from '@material-ui/core/styles'
-import Typography from '@material-ui/core/Typography'
+import {
+  BottomNavigation,
+  BottomNavigationAction,
+  makeStyles,
+} from '@material-ui/core'
+import HomeIcon from '@material-ui/icons/Home'
+import InfoIcon from '@material-ui/icons/Info'
+import AddIcon from '@material-ui/icons/Add'
+import {Link} from 'react-router-dom'
 
-const Copyright = () => {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      {new Date().getFullYear()}
-      <Link color="inherit" href="https://twitter.com/gmotyl">
-        {' @gmotyl'}
-      </Link>{' '}
-    </Typography>
-  )
-}
-const useStyles = makeStyles(theme => ({
-  footer: {
-    backgroundColor: theme.palette.grey[100],
-    padding: theme.spacing(6),
+const useStyles = makeStyles({
+  stickToBottom: {
+    width: '100%',
+    position: 'fixed',
+    bottom: 0,
   },
-}))
+})
 
 const Footer = () => {
   const classes = useStyles()
+  const [value, setValue] = React.useState(0)
 
   return (
-    <React.Fragment>
-      <footer className={classes.footer}>
-        <Typography variant="h6" align="center" gutterBottom={true}>
-          Projekt Open Source!
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="textSecondary"
-          component="p"
-        >
-          GPLv3
-        </Typography>
-        <Copyright />
-      </footer>
-    </React.Fragment>
+    <BottomNavigation
+      value={value}
+      onChange={(event, newValue) => {
+        setValue(newValue)
+      }}
+      showLabels
+      className={classes.stickToBottom}
+    >
+      <BottomNavigationAction icon={<HomeIcon />} component={Link} to="/" />
+      <BottomNavigationAction
+        icon={<AddIcon />}
+        component={Link}
+        to="/add-intention"
+      />
+      <BottomNavigationAction
+        icon={<InfoIcon />}
+        component={Link}
+        to="/about"
+      />
+    </BottomNavigation>
   )
 }
 
