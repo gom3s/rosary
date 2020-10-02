@@ -1,6 +1,6 @@
 import React, {createContext, useState, useEffect} from 'react'
 import {decodeJWT, isUserAuthenticated} from '../tools/auth'
-import storage from '../tools/storage'
+import { storage } from '../tools/storage'
 
 export interface IAuthContext {
   isAuthenticated: boolean

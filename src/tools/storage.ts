@@ -1,3 +1,1 @@
-const storage = localStorage
-
-export default storage
+export const storage = localStorage
