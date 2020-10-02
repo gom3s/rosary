@@ -1,15 +1,9 @@
-import React from 'react'
-import {render, wait} from '@testing-library/react'
-import AuthProvider, {AuthContext, IAuthRole} from '../AuthProvider'
-
-jest.mock('../../tools/storage', () => ({
-  storage: {
-    getItem: jest.fn(),
-    setItem: jest.fn(),
-  },
-}))
-
+jest.mock('../../tools/storage')
 import {storage} from '../../tools/storage'
+
+import React from 'react'
+import {render} from '@testing-library/react'
+import AuthProvider, {AuthContext, IAuthRole} from '../AuthProvider'
 
 let isAuthenticatedProbe = false
 let payloadProbe = {
