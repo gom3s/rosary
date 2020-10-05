@@ -1,7 +1,6 @@
 import {storage} from './storage'
 
 export const PREFIX = 'orareprome-'
-
 export function getObject<T = unknown>(key: string, defaultValue: T) {
   const item = storage.getItem(PREFIX + key)
   // let value = item ? JSON.parse(item) : defaultValue

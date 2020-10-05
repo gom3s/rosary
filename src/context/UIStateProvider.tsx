@@ -2,6 +2,8 @@ import dayjs, {Dayjs} from 'dayjs'
 import React, {createContext, useState} from 'react'
 import {MysteryTypes} from 'src/consts/MysteryTypes'
 import {IPrayRequest} from 'src/hooks/useRosaryApi/usePrayRosaryRequest'
+import {getObject, setObject} from 'src/tools/repository'
+import {entities} from 'src/consts/entities'
 
 type TActivePrayerData = IPrayRequest & {intentionId: string}
 
@@ -46,7 +48,9 @@ export const UIContext = createContext<IUIContext>(defaultValue)
 export const UIStateProvider: React.FunctionComponent = ({children}) => {
   const [loginRedirect, setLoginRedirect] = useState(defaultValue.loginRedirect)
   const [prayerStart, setPrayerStart] = useState(dayjs('1979-07-15'))
-  const [activePrayerData, setActivePrayerData] = useState(emptyPrayerData)
+  const [activePrayerData, setActivePrayerData] = useState(
+    getDefaultPrayerData(),
+  )
 
   const setIsActive = (active: boolean) => {
     if (active) {
@@ -76,3 +80,5 @@ export const UIStateProvider: React.FunctionComponent = ({children}) => {
   }
   return <UIContext.Provider value={value}>{children}</UIContext.Provider>
 }
+
+const getDefaultPrayerData = () => getObject(entities.PRAYER, emptyPrayerData)
