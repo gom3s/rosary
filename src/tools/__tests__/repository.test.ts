@@ -1,5 +1,6 @@
 import {mockGetItem, mockSetItem} from '../storage'
-import {getObject, setObject, PREFIX} from '../repository'
+import {getObject, setObject} from '../repository'
+import {PREFIX} from '../../consts/prefix'
 
 jest.mock('../storage')
 
