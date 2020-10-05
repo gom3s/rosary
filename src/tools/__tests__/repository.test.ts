@@ -1,5 +1,5 @@
-import {mockGetItem} from '../storage'
-import {getObject, PREFIX} from '../repository'
+import {mockGetItem, mockSetItem} from '../storage'
+import {getObject, setObject, PREFIX} from '../repository'
 
 jest.mock('../storage')
 
@@ -8,6 +8,11 @@ beforeEach(() => {
 })
 
 describe('repository', () => {
+  const obj = {
+    foo: 'test',
+    bar: 123,
+  }
+
   it('getObject should use storage with prefix', () => {
     getObject('test-name', {})
 
@@ -16,10 +21,6 @@ describe('repository', () => {
   })
 
   it('should return object serialized in storage', () => {
-    const obj = {
-      foo: 'test',
-      bar: 123,
-    }
     mockGetItem.mockImplementation(() => JSON.stringify(obj))
 
     const returnedObject = getObject('test-name', {})
@@ -27,12 +28,22 @@ describe('repository', () => {
   })
 
   it('should return default value', () => {
-    const obj = {
+    const defaultObj = {
       foo: 'test default value',
       bar: 999,
     }
     mockGetItem.mockImplementation(() => null)
-    const returnedObject = getObject('test-name', obj)
-    expect(returnedObject).toEqual(obj)
+    const returnedObject = getObject('test-name', defaultObj)
+    expect(returnedObject).toEqual(defaultObj)
+  })
+
+  it('should save object in storage', () => {
+    setObject('test-name', obj)
+
+    expect(mockSetItem).toBeCalled()
+    expect(mockSetItem).toBeCalledWith(
+      PREFIX + 'test-name',
+      JSON.stringify(obj),
+    )
   })
 })
