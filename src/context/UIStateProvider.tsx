@@ -2,7 +2,6 @@ import dayjs, {Dayjs} from 'dayjs'
 import React, {createContext, useState} from 'react'
 import {MysteryTypes} from 'src/consts/MysteryTypes'
 import {IPrayRequest} from 'src/hooks/useRosaryApi/usePrayRosaryRequest'
-import {storage} from '../tools/storage'
 
 type TActivePrayerData = IPrayRequest & {intentionId: string}
 
@@ -19,10 +18,17 @@ interface IUIContext {
   activePrayer: TActivePrayer
 }
 
+const emptyPrayerData = {
+  prayer: '',
+  rosary: '',
+  intentionId: '',
+  type: MysteryTypes.none,
+}
+
 const emptyActivePrayer: TActivePrayer = {
   isPrayerActive: () => false,
   start: dayjs('1979-07-15'),
-  data: {prayer: '', rosary: '', type: MysteryTypes.none, intentionId: ''},
+  data: emptyPrayerData,
   setIsPrayerActive: (value: boolean) => console.error(MISSUSE_MESSAGE),
   setActivePrayerData: (value: TActivePrayerData) =>
     console.error(MISSUSE_MESSAGE),
@@ -40,12 +46,7 @@ export const UIContext = createContext<IUIContext>(defaultValue)
 export const UIStateProvider: React.FunctionComponent = ({children}) => {
   const [loginRedirect, setLoginRedirect] = useState(defaultValue.loginRedirect)
   const [prayerStart, setPrayerStart] = useState(dayjs('1979-07-15'))
-  const [activePrayerData, setActivePrayerData] = useState({
-    prayer: '',
-    rosary: '',
-    intentionId: '',
-    type: MysteryTypes.none,
-  })
+  const [activePrayerData, setActivePrayerData] = useState(emptyPrayerData)
 
   const setIsActive = (active: boolean) => {
     if (active) {
