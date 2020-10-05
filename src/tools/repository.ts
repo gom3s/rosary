@@ -1,9 +1,8 @@
 import {PREFIX} from 'src/consts/prefix'
 import {storage} from './storage'
 
-export function getObject<T = unknown>(key: string, defaultValue: T) {
+export function getObject<T = string>(key: string, defaultValue: T) {
   const item = storage.getItem(PREFIX + key)
-  // let value = item ? JSON.parse(item) : defaultValue
   let value: T | unknown
 
   if (item) {
@@ -22,5 +21,5 @@ export function setObject(key: string, obj: object) {
 }
 
 function isT<T>(value: T | unknown): value is T {
-  return typeof value === 'object'
+  return typeof value === 'object' || typeof value === 'string'
 }

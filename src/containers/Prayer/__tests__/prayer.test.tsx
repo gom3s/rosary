@@ -6,6 +6,8 @@ import {UIContext, UIStateProvider} from 'src/context/UIStateProvider'
 import {MysteryTypes} from 'src/consts/MysteryTypes'
 import {getMystery} from 'src/consts/rosary'
 
+jest.mock('src/tools/repository')
+
 const intentionId = '34567'
 const intention = {
   id: intentionId,
@@ -23,6 +25,10 @@ jest.mock('src/hooks/useRosaryApi/usePrayRosaryRequest', () => ({
     doPrayRequest: jest.fn(),
   }),
 }))
+
+beforeEach(() => {
+  jest.clearAllMocks()
+})
 
 const Container = () => {
   const {activePrayer} = React.useContext(UIContext)

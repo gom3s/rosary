@@ -20,7 +20,7 @@ interface IUIContext {
   activePrayer: TActivePrayer
 }
 
-const emptyPrayerData = {
+export const emptyPrayerData = {
   prayer: '',
   rosary: '',
   intentionId: '',
@@ -47,16 +47,19 @@ export const UIContext = createContext<IUIContext>(defaultValue)
 
 export const UIStateProvider: React.FunctionComponent = ({children}) => {
   const [loginRedirect, setLoginRedirect] = useState(defaultValue.loginRedirect)
-  const [prayerStart, setPrayerStart] = useState(dayjs('1979-07-15'))
+  const [prayerStart, setPrayerStart] = useState(getDefaultPrayerStartTime())
   const [activePrayerData, setActivePrayerData] = useState(
     getDefaultPrayerData(),
   )
 
   const setIsActive = (active: boolean) => {
+    console.log('setIsActive', Math.random(), active)
     if (active) {
       setPrayerStart(dayjs())
+      setObject(entities.PRAYER_START, dayjs())
     } else {
       setPrayerStart(dayjs('1979-07-15'))
+      setObject(entities.PRAYER_START, dayjs('1979-07-15'))
     }
   }
 
@@ -70,7 +73,10 @@ export const UIStateProvider: React.FunctionComponent = ({children}) => {
     start: prayerStart,
     setIsPrayerActive: setIsActive,
     data: activePrayerData,
-    setActivePrayerData,
+    setActivePrayerData: (value: TActivePrayerData) => {
+      setActivePrayerData(value)
+      setObject(entities.PRAYER, value)
+    },
   }
 
   const value = {
@@ -82,3 +88,5 @@ export const UIStateProvider: React.FunctionComponent = ({children}) => {
 }
 
 const getDefaultPrayerData = () => getObject(entities.PRAYER, emptyPrayerData)
+const getDefaultPrayerStartTime = () =>
+  getObject(entities.PRAYER_START, dayjs('1979-07-15'))

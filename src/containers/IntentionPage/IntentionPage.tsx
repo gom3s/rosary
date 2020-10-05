@@ -161,6 +161,7 @@ const IntentionPage: React.ComponentType<RouteComponentProps<
                 prayFinished={prayFinished}
                 prayInProgress={prayInProgress}
                 updateStats={updateStats}
+                intentionId={id}
               />
             </Paper>
           </div>

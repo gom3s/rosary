@@ -16,7 +16,17 @@ export const useIntentionStatisticRequest = () => {
       isLoading: isStatisticRequestLoading,
     },
     doRequest: requestIntentionStatistic,
-  } = useRequest(api.post, `intention_statistic_requests`, emptyStatisticRequest)
+  } = useRequest(
+    api.post,
+    `intention_statistic_requests`,
+    emptyStatisticRequest,
+  )
 
-  return { rosaryCount, prayFinished, prayInProgress, isStatisticRequestLoading, requestIntentionStatistic}
+  return {
+    rosaryCount,
+    prayFinished,
+    prayInProgress,
+    isStatisticRequestLoading,
+    requestIntentionStatistic,
+  }
 }
