@@ -58,25 +58,13 @@ export const Prayer: React.ComponentType<PrayerProps> = ({
   }
   React.useEffect(() => {
     if (prayRequestSuccess) {
+      setIsPrayerActive(true)
       setActivePrayerData({
         prayer: prayRequest.prayer,
         rosary: prayRequest.rosary,
         type: prayRequest.type,
         intentionId: intention.id,
       })
-    }
-  }, [
-    prayRequestSuccess,
-    intention.id,
-    setActivePrayerData,
-    prayRequest.prayer,
-    prayRequest.rosary,
-    prayRequest.type,
-  ])
-
-  React.useEffect(() => {
-    if (prayRequestSuccess) {
-      setIsPrayerActive(true)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prayRequestSuccess])

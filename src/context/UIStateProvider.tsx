@@ -2,6 +2,8 @@ import dayjs, {Dayjs} from 'dayjs'
 import React, {createContext, useState} from 'react'
 import {MysteryTypes} from 'src/consts/MysteryTypes'
 import {IPrayRequest} from 'src/hooks/useRosaryApi/usePrayRosaryRequest'
+import {getObject, setObject} from 'src/tools/repository'
+import {entities} from 'src/consts/entities'
 
 type TActivePrayerData = IPrayRequest & {intentionId: string}
 
@@ -18,10 +20,17 @@ interface IUIContext {
   activePrayer: TActivePrayer
 }
 
+export const emptyPrayerData = {
+  prayer: '',
+  rosary: '',
+  intentionId: '',
+  type: MysteryTypes.none,
+}
+
 const emptyActivePrayer: TActivePrayer = {
   isPrayerActive: () => false,
   start: dayjs('1979-07-15'),
-  data: {prayer: '', rosary: '', type: MysteryTypes.none, intentionId: ''},
+  data: emptyPrayerData,
   setIsPrayerActive: (value: boolean) => console.error(MISSUSE_MESSAGE),
   setActivePrayerData: (value: TActivePrayerData) =>
     console.error(MISSUSE_MESSAGE),
@@ -38,19 +47,19 @@ export const UIContext = createContext<IUIContext>(defaultValue)
 
 export const UIStateProvider: React.FunctionComponent = ({children}) => {
   const [loginRedirect, setLoginRedirect] = useState(defaultValue.loginRedirect)
-  const [prayerStart, setPrayerStart] = useState(dayjs('1979-07-15'))
-  const [activePrayerData, setActivePrayerData] = useState({
-    prayer: '',
-    rosary: '',
-    intentionId: '',
-    type: MysteryTypes.none,
-  })
+  const [prayerStart, setPrayerStart] = useState(getDefaultPrayerStartTime())
+  const [activePrayerData, setActivePrayerData] = useState(
+    getDefaultPrayerData(),
+  )
 
   const setIsActive = (active: boolean) => {
+    console.log('setIsActive', Math.random(), active)
     if (active) {
       setPrayerStart(dayjs())
+      setObject(entities.PRAYER_START, dayjs())
     } else {
       setPrayerStart(dayjs('1979-07-15'))
+      setObject(entities.PRAYER_START, dayjs('1979-07-15'))
     }
   }
 
@@ -64,7 +73,10 @@ export const UIStateProvider: React.FunctionComponent = ({children}) => {
     start: prayerStart,
     setIsPrayerActive: setIsActive,
     data: activePrayerData,
-    setActivePrayerData,
+    setActivePrayerData: (value: TActivePrayerData) => {
+      setActivePrayerData(value)
+      setObject(entities.PRAYER, value)
+    },
   }
 
   const value = {
@@ -74,3 +86,7 @@ export const UIStateProvider: React.FunctionComponent = ({children}) => {
   }
   return <UIContext.Provider value={value}>{children}</UIContext.Provider>
 }
+
+const getDefaultPrayerData = () => getObject(entities.PRAYER, emptyPrayerData)
+const getDefaultPrayerStartTime = () =>
+  getObject(entities.PRAYER_START, dayjs('1979-07-15'))

@@ -7,6 +7,7 @@ interface IntentionStatisticProps {
   rosaryCount: number
   prayFinished: number
   prayInProgress: number
+  intentionId: string
   updateStats: () => void
 }
 
@@ -19,10 +20,14 @@ export const IntentionStatistic: FC<IntentionStatisticProps> = ({
   rosaryCount,
   prayFinished,
   prayInProgress,
+  intentionId,
   updateStats,
 }) => {
   const {
-    activePrayer: {start},
+    activePrayer: {
+      start,
+      data: {intentionId: activeIntentionId},
+    },
   } = React.useContext(UIContext)
   const [timeLeft, setTimeLeft] = useState(0)
   useEffect(() => {
@@ -51,7 +56,7 @@ export const IntentionStatistic: FC<IntentionStatisticProps> = ({
       rosaryCount={rosaryCount}
       prayFinished={prayFinished}
       prayInProgress={prayInProgress}
-      timeLeft={timeLeft}
+      timeLeft={intentionId === activeIntentionId ? timeLeft : 0}
     />
   )
 }

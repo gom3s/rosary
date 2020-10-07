@@ -1,7 +1,16 @@
 import React from 'react'
 import {render, fireEvent} from '@testing-library/react'
 
-import {UIStateProvider, UIContext, defaultValue} from '../UIStateProvider'
+import {
+  UIStateProvider,
+  UIContext,
+  defaultValue,
+  emptyPrayerData,
+} from '../UIStateProvider'
+import {mockGetObject, mockSetObject} from 'src/tools/repository'
+import {entities} from 'src/consts/entities'
+
+jest.mock('src/tools/repository')
 
 let value = {
   loginRedirect: '',
@@ -11,11 +20,19 @@ const expected = {
   loginRedirect: '/123/aa/bb',
 }
 
+const testPrayerData = {...emptyPrayerData, prayer: 'test'}
+
 const TestComponent = () => {
-  const {loginRedirect, setLoginRedirect} = React.useContext(UIContext)
+  const {loginRedirect, setLoginRedirect, activePrayer} = React.useContext(
+    UIContext,
+  )
 
   const updateContex = () => {
     setLoginRedirect(expected.loginRedirect)
+  }
+
+  const updatePrayerContex = () => {
+    activePrayer.setActivePrayerData(testPrayerData)
   }
 
   React.useEffect(() => {
@@ -27,6 +44,9 @@ const TestComponent = () => {
       ala ma kota
       <div data-testid="button" onClick={updateContex}>
         test
+      </div>
+      <div data-testid="test-prayer-button" onClick={updatePrayerContex}>
+        test2
       </div>
     </>
   )
@@ -46,4 +66,16 @@ it('should change value', () => {
   fireEvent.click(getByTestId('button'))
 
   expect(value.loginRedirect).toEqual(expected.loginRedirect)
+})
+
+it('should use repository for prayer', () => {
+  const {getByTestId} = render(Wrapper)
+  mockGetObject.mockImplementation(() => jest.fn())
+  expect(mockGetObject).toBeCalled()
+  expect(mockGetObject).toBeCalledWith(entities.PRAYER, emptyPrayerData)
+
+  fireEvent.click(getByTestId('test-prayer-button'))
+
+  expect(mockSetObject).toBeCalled()
+  expect(mockSetObject).toBeCalledWith(entities.PRAYER, testPrayerData)
 })
