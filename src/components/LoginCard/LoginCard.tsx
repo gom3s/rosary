@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react'
+import React, {FC} from 'react'
 
 import {Card, Typography} from '@material-ui/core'
 import MuiAlert from '@material-ui/lab/Alert'
@@ -11,11 +11,8 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Container from '@material-ui/core/Container'
-import {useHistory, useLocation} from 'react-router-dom'
-import {Redirect} from 'react-router'
 
-import {AuthContext} from 'src/context/AuthProvider'
-import {useAuthTokenRequest} from 'src/hooks/useRosaryApi'
+import {ApiError} from 'src/services/api'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -46,41 +43,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-interface LoginCardProps {}
-type LocationState = {
-  from: Location
+interface LoginCardProps {
+  error: ApiError
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void
 }
 
-const LoginCard = (props: LoginCardProps) => {
-  let history = useHistory()
-  let location = useLocation<LocationState>()
-  const [redirectOnLogin, setRedirectOnLogin] = useState('')
+const LoginCard: FC<LoginCardProps> = ({handleSubmit, error}) => {
   const classes = useStyles()
-  const {setAuthToken} = useContext(AuthContext)
-  const {token, requestAuthToken, isLoading, error} = useAuthTokenRequest()
-
-  // TODO: #30 move handleSubmit from LoginCard to container
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    const {email, password} = e.target['elements']
-    if (!isLoading) {
-      requestAuthToken({email: email.value, password: password.value})
-    }
-  }
-
-  useEffect(() => {
-    if (token) {
-      setAuthToken(token)
-      const {from} = location.state || {from: null}
-      if (from) {
-        setRedirectOnLogin(from.pathname)
-      } else history.goBack()
-    }
-  }, [setAuthToken, token, setRedirectOnLogin, location, history])
-
-  if (redirectOnLogin) {
-    return <Redirect to={redirectOnLogin} />
-  }
 
   return (
     <>
@@ -122,7 +91,6 @@ const LoginCard = (props: LoginCardProps) => {
                 label="Zapamiętaj mnie"
               />
               {error.isError ? (
-                // TODO #16 : wyświetl błąd logowania
                 <MuiAlert elevation={6} variant="filled" severity="error">
                   {error.code === 401
                     ? 'Nieprawidłowy login lub hasło.'
