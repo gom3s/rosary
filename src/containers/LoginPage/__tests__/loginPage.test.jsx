@@ -2,16 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import LoginPage from '../LoginPage'
 import {renderWithRouter} from 'src/tools/renderWithRouter'
+import {mockRequest} from 'src/hooks/useRosaryApi/useAuthTokenRequest'
 
-const mockRequest = jest.fn()
-
-jest.mock('src/hooks/useRosaryApi', () => ({
-  useAuthTokenRequest: () => ({
-    state: {isLoading: false, data: {token: ''}},
-    requestAuthToken: mockRequest,
-    error: {isError: false},
-  }),
-}))
+jest.mock('src/hooks/useRosaryApi/useAuthTokenRequest')
 
 test('calls submit with the username and password when submitted', async () => {
   const mockSubmit = jest.fn()
