@@ -2,38 +2,45 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import LoginCard from '../LoginCard'
 import {MemoryRouter as Router} from 'react-router-dom'
+import {renderWithRouter} from 'src/tools/renderWithRouter'
 
-const mockRequest = jest.fn()
+describe('LoginCard component', () => {
+  test('calls submit action', async () => {
+    const mockSubmit = jest.fn()
+    const {container} = renderWithRouter(
+      <LoginCard error={{isError: false}} handleSubmit={mockSubmit} />,
+    )
+    const form = container.querySelector('form')
+    const {email, password} = form.elements
+    const submit = new Event('submit')
 
-jest.mock('../../../hooks/useRosaryApi', () => ({
-  useAuthTokenRequest: () => ({
-    state: {isLoading: false, data: {token: ''}},
-    requestAuthToken: mockRequest,
-    error: {isError: false},
-  }),
-}))
+    email.value = 'test@test.pl'
+    password.value = 'secret'
+    form.dispatchEvent(submit)
 
-test('calls submit with the username and password when submitted', async () => {
-  const container = document.createElement('div')
-  ReactDOM.render(
-    <Router>
-      <LoginCard />
-    </Router>,
-    container,
-  )
-  const form = container.querySelector('form')
-  const {email, password} = form.elements
-  const submit = new Event('submit')
+    expect(mockSubmit).toHaveBeenCalledTimes(1)
+  })
 
-  email.value = 'test@test.pl'
-  password.value = 'secret'
-  form.dispatchEvent(submit)
+  test('calls submit with the username and password when submitted', async () => {
+    let emailSpy
+    let passwordSpy
+    const mockSubmit = (e) => {
+      const {email, password} = e.target['elements']
+      emailSpy = email
+      passwordSpy = password
+    }
+    const {container} = renderWithRouter(
+      <LoginCard error={{isError: false}} handleSubmit={mockSubmit} />,
+    )
+    const form = container.querySelector('form')
+    const {email, password} = form.elements
+    const submit = new Event('submit')
 
-  expect(mockRequest).toHaveBeenCalledTimes(1)
-  expect(mockRequest).toHaveBeenCalledWith({
-    email: 'test@test.pl',
-    password: 'secret',
+    email.value = 'test@test.pl'
+    password.value = 'secret'
+    form.dispatchEvent(submit)
+
+    expect(emailSpy.value).toEqual(email.value)
+    expect(passwordSpy.value).toEqual(password.value)
   })
 })
-
-// shows error message
