@@ -15,7 +15,7 @@ const LoginPage = () => {
   let history = useHistory()
   let location = useLocation<LocationState>()
   const {token, requestAuthToken, isLoading, error} = useAuthTokenRequest()
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLoginSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const {email, password} = e.target['elements']
     if (!isLoading) {
@@ -44,7 +44,7 @@ const LoginPage = () => {
     <>
       <Grid container={true} spacing={2}>
         <Grid item={true} key="login" xs={12} sm={6} md={12} lg={5}>
-          <LoginCard handleSubmit={handleSubmit} error={error} />
+          <LoginCard handleSubmit={handleLoginSubmit} error={error} />
         </Grid>
         <Grid
           item={true}
