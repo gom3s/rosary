@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react'
+import React, {FC, useEffect, useState} from 'react'
 
 import {Card, Typography, LinearProgress} from '@material-ui/core'
 import MuiAlert from '@material-ui/lab/Alert'
@@ -10,9 +10,9 @@ import TextField from '@material-ui/core/TextField'
 import AccountCircle from '@material-ui/icons/AccountCircle'
 import Container from '@material-ui/core/Container'
 
-import {usePostUser} from 'src/hooks/useRosaryApi/usePostUser'
+import {ApiError} from 'src/services/api'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
     display: 'flex',
@@ -41,11 +41,22 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export const RegisterCard = () => {
+interface RegisterCardProps {
+  error: ApiError
+  handleSubmit: (email: string, password: string) => void
+  success: boolean
+  isLoading: boolean
+}
+
+export const RegisterCard: FC<RegisterCardProps> = ({
+  handleSubmit,
+  error,
+  success,
+  isLoading,
+}) => {
   const classes = useStyles()
   const [paswordMismatch, setPasswordMismatch] = useState(false)
   const [emailError, setEmailError] = useState(false)
-  const {postUser, isLoading, error, success} = usePostUser()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [password2, setPassword2] = useState('')
@@ -64,14 +75,12 @@ export const RegisterCard = () => {
     setPasswordMismatch(false)
   }
 
-  // TODO: #30 move handleSubmit from LoginCard to container
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleRegisterSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     const paswordMismatch = password !== password2 || !password
     setPasswordMismatch(paswordMismatch)
-
-    if (!isLoading && !paswordMismatch) {
-      postUser({email, password})
+    if (!paswordMismatch) {
+      handleSubmit(email, password)
     }
   }
 
@@ -105,7 +114,11 @@ export const RegisterCard = () => {
             <Typography component="h1" variant="h5">
               Rejestracja:
             </Typography>
-            <form className={classes.form} onSubmit={handleSubmit}>
+            <form
+              className={classes.form}
+              onSubmit={handleRegisterSubmit}
+              data-testid="register-form"
+            >
               <TextField
                 error={emailError}
                 helperText={emailErrorText}
