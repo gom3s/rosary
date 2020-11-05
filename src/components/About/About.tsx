@@ -1,16 +1,19 @@
 import React, {FC} from 'react'
-import Link from '@material-ui/core/Link'
+import {Link as MUILink} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
+import {Button} from '@material-ui/core'
+
+import Link from '../Link'
 
 const Copyright = () => {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
       {'Copyright © '}
       {new Date().getFullYear()}
-      <Link color="inherit" href="https://twitter.com/gmotyl">
+      <MUILink color="inherit" href="https://twitter.com/gmotyl">
         {' @gmotyl'}
-      </Link>{' '}
+      </MUILink>{' '}
     </Typography>
   )
 }
@@ -35,8 +38,20 @@ export const About: FC = () => {
           >
             Projekt Open Source!
           </a>{' '}
-          You are wolcome to contribute.
         </Typography>
+        <Typography
+          variant="body1"
+          align="center"
+          color="textSecondary"
+          component="p"
+        >
+          <Link to="/policy">
+            <Button size="small" color="secondary" data-testid="how-it-works">
+              Polityka prywatności
+            </Button>
+          </Link>
+        </Typography>
+
         <Typography
           variant="subtitle1"
           align="center"
