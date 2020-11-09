@@ -71,18 +71,19 @@ const handleRequestError = (error: any) => {
 
 export const api = axios.create(config)
 
-api.interceptors.request.use(config => config, handleRequestError)
-api.interceptors.response.use(response => response, handleResponseError)
+api.interceptors.request.use((config) => config, handleRequestError)
+api.interceptors.response.use((response) => response, handleResponseError)
 
 export const authApi = (authToken: string) => {
   const instance = axios.create({
     ...config,
     headers: {...config.headers, Authorization: `Bearer ${authToken}`},
   })
-  instance.interceptors.request.use(config => config, handleRequestError)
-  instance.interceptors.response.use(response => response, handleResponseError)
-
-  // TODO #40 handle Expired JWT Token (401)
+  instance.interceptors.request.use((config) => config, handleRequestError)
+  instance.interceptors.response.use(
+    (response) => response,
+    handleResponseError,
+  )
 
   return instance
 }

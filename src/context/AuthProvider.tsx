@@ -1,6 +1,6 @@
 import React, {createContext, useState, useEffect} from 'react'
 import {decodeJWT, isUserAuthenticated} from '../tools/auth'
-import { storage } from '../tools/storage'
+import {storage} from '../tools/storage'
 
 export interface IAuthContext {
   isAuthenticated: boolean
@@ -53,7 +53,7 @@ const AuthProvider: React.FunctionComponent = ({children}) => {
   const initialPayload = savedPayload
     ? JSON.parse(savedPayload)
     : defaultValue.payload
-  const [authToken, setAuthToken] = useState(storage.getItem('authToken') || '')
+  const [authToken, setAuthToken] = useState(getAuthTokenFromStorage())
   const [payload, setPayload] = useState<IAuthPayload>(initialPayload)
   const [isAuthenticated, setAuthenticated] = useState(false)
 
@@ -89,3 +89,11 @@ const AuthProvider: React.FunctionComponent = ({children}) => {
 }
 
 export default AuthProvider
+
+function getAuthTokenFromStorage(): string | (() => string) {
+  const token = storage.getItem('authToken')
+
+  // TODO #40 handle Expired JWT Token(401)
+
+  return token || ''
+}
