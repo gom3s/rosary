@@ -3,8 +3,8 @@ import {Layout} from '../Layout'
 import {render, fireEvent} from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 
-jest.mock('../../IntentionList', () => () => <div>Intention list</div>)
-jest.mock('../../LoginPage', () => () => <div>Login page</div>)
+jest.mock('src/pages/IntentionList', () => () => <div>Intention list</div>)
+jest.mock('src/pages/LoginPage', () => () => <div>Login page</div>)
 
 it('should open login form on login link click', () => {
   const {container, getByText} = render(<Layout />)

@@ -78,7 +78,7 @@ export const SideMenu: React.FC<SideMenuProps> = ({setOpen}) => {
             <ListItemText primary={'Dodaj intencję'} />
           </ListItem>
         </Link>
-        <Link to="/about">
+        <Link to="/policy">
           <ListItem button key={'about'}>
             <ListItemIcon>
               <InfoIcon />
