@@ -40,7 +40,7 @@ const Footer = () => {
       <BottomNavigationAction
         icon={<InfoIcon />}
         component={Link}
-        to="/about"
+        to="/policy"
       />
     </BottomNavigation>
   )

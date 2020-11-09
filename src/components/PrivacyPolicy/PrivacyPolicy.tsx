@@ -43,8 +43,11 @@ export const PrivacyPolicy: FC = () => {
         <CardMedia
           className={classes.cardMedia}
           image="/img/rosary2.jpeg"
-          title="How it works"
+          title="Privacy policy"
         />
+        <CardContent className={classes.cardContent}>
+          <Title>Polityka prywatności</Title>
+        </CardContent>
         <CardContent className={classes.cardContent}>
           <Title>A. Wprowadzenie</Title>
           <Paragraph>

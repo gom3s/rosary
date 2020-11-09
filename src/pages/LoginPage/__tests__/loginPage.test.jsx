@@ -4,7 +4,7 @@ jest.mock('src/hooks/useRosaryApi/usePostUser')
 import React from 'react'
 import ReactDOM from 'react-dom'
 import {fireEvent} from '@testing-library/react'
-import LoginPage from '../LoginPage'
+import LoginPage from 'src/pages/LoginPage'
 import {renderWithRouter} from 'src/tools/renderWithRouter'
 import {mockRequest} from 'src/hooks/useRosaryApi/useAuthTokenRequest'
 

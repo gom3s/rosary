@@ -9,9 +9,9 @@ import Hero from 'src/components/Hero'
 import {LoginWrapper} from 'src/tools/LoginWrapper'
 import {AuthProviderStub} from 'src/tools/AuthProviderStub'
 
-jest.mock('../../IntentionList', () => () => <div>Intention list</div>)
-jest.mock('../../LoginPage', () => () => <div>Login page</div>)
-jest.mock('../../AddIntentionPage', () => ({
+jest.mock('src/pages/IntentionList', () => () => <div>Intention list</div>)
+jest.mock('src/pages/LoginPage', () => () => <div>Login page</div>)
+jest.mock('src/pages/AddIntentionPage', () => ({
   AddIntentionPage: () => <div>Add intention page</div>,
 }))
 
