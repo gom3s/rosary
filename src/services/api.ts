@@ -1,7 +1,8 @@
 import axios, {AxiosResponse} from 'axios'
+import {appConfig} from 'src/app/config'
 
 const config = {
-  baseURL: process.env.REACT_APP_ROSARY_API,
+  baseURL: appConfig.rosaryApiUrl,
   headers: {accept: 'application/json'},
   timeout: 5000,
 }
