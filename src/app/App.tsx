@@ -2,9 +2,9 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 import {createMuiTheme} from '@material-ui/core/styles'
 import {ThemeProvider} from '@material-ui/styles'
 import * as React from 'react'
-import Layout from './containers/Layout'
-import AuthProvider from './context/AuthProvider'
-import {UIStateProvider} from './context/UIStateProvider'
+import Layout from '../containers/Layout'
+import AuthProvider from '../context/AuthProvider'
+import {UIStateProvider} from '../context/UIStateProvider'
 
 const theme = createMuiTheme({
   palette: {
@@ -16,6 +16,8 @@ const theme = createMuiTheme({
     },
   },
 })
+
+export type OrareTheme = typeof theme
 
 const App = () => {
   return (

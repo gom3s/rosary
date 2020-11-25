@@ -13,8 +13,8 @@ type LocationState = {
 }
 
 const LoginPage = () => {
-  let history = useHistory()
-  let location = useLocation<LocationState>()
+  const history = useHistory()
+  const location = useLocation<LocationState>()
   const {
     token,
     requestAuthToken,
@@ -38,17 +38,23 @@ const LoginPage = () => {
   }
 
   const [redirectOnLogin, setRedirectOnLogin] = useState('')
-  const {setAuthToken} = useContext(AuthContext)
+  const {setAuthToken, isAuthenticated} = useContext(AuthContext)
 
   useEffect(() => {
-    if (token) {
-      setAuthToken(token)
+    if (isAuthenticated) {
       const {from} = location.state || {from: null}
+
       if (from) {
         setRedirectOnLogin(from.pathname)
       } else history.goBack()
     }
-  }, [setAuthToken, token, setRedirectOnLogin, location, history])
+  }, [isAuthenticated, history, location.state, setRedirectOnLogin])
+
+  useEffect(() => {
+    if (token) {
+      setAuthToken(token)
+    }
+  }, [setAuthToken, token])
 
   if (redirectOnLogin) {
     return <Redirect to={redirectOnLogin} />

@@ -11,17 +11,19 @@ import FormControlLabel from '@material-ui/core/FormControlLabel'
 import Checkbox from '@material-ui/core/Checkbox'
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined'
 import Container from '@material-ui/core/Container'
+import {GoogleBtn} from './GoogleBtn'
 
 import {ApiError} from 'src/services/api'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
-    marginTop: theme.spacing(8),
+    marginTop: theme.spacing(3),
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
   },
   avatar: {
+    marginTop: theme.spacing(3),
     margin: theme.spacing(1),
     backgroundColor: theme.palette.secondary.main,
   },
@@ -57,11 +59,13 @@ const LoginCard: FC<LoginCardProps> = ({handleSubmit, error}) => {
         <Container component="main" maxWidth="xs">
           <CssBaseline />
           <div className={classes.paper}>
+            <GoogleBtn />
             <Avatar className={classes.avatar}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography component="h1" variant="h5">
-              Zaloguj się
+
+            <Typography component="h1" variant="h6">
+              lub przez e-mail:
             </Typography>
             <form className={classes.form} onSubmit={handleSubmit}>
               <TextField
@@ -101,11 +105,12 @@ const LoginCard: FC<LoginCardProps> = ({handleSubmit, error}) => {
                 type="submit"
                 fullWidth
                 variant="contained"
-                color="primary"
+                color="secondary"
                 className={classes.submit}
               >
                 Zaloguj
               </Button>
+
               {/* <Grid container> */}
               {/* <Grid item xs> */}
               {/* <Link href="#" variant="body2"> */}
