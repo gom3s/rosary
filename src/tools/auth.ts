@@ -1,14 +1,14 @@
 import jwt_decode from 'jwt-decode'
 
-import {IAuthPayload, IAuthRole} from '../context/AuthProvider'
+import {AuthPayload, EAuthRoles} from '../context/AuthProvider'
 import {defaultValue} from 'src/context/AuthProvider'
 
-export const decodeJWT = (token?: string): IAuthPayload =>
-  token ? (jwt_decode(token) as IAuthPayload) : defaultValue.payload
+export const decodeJWT = (token?: string): AuthPayload =>
+  token ? (jwt_decode(token) as AuthPayload) : defaultValue.payload
 
-export const isUserAuthenticated = (payload: IAuthPayload) => {
+export const isUserAuthenticated = (payload: AuthPayload) => {
   if (Date.now() >= payload.exp * 1000) {
     return false
   }
-  return payload.roles ? payload.roles.includes(IAuthRole.ROLE_USER) : false
+  return payload.roles ? payload.roles.includes(EAuthRoles.ROLE_USER) : false
 }
