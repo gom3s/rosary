@@ -1,6 +1,6 @@
 import React, {FC, useContext} from 'react'
 import {GoogleLogin} from 'react-google-login'
-import {appConfig} from 'src/app/config'
+import {appConfig} from 'src/app/config/appConfig'
 import {AuthContext} from 'src/context/AuthProvider'
 import {useGoogleSignIn} from 'src/hooks/useRosaryApi/useGoogleSignIn'
 
