@@ -1,28 +1,46 @@
-import HomeIcon from '@material-ui/icons/Home'
-import InfoIcon from '@material-ui/icons/Info'
-
 import {ERoutes} from './routes'
-import {RosaryIcon} from 'src/components/Icons'
+import {EAuthRoles} from 'src/context/AuthProvider'
 
-export const Navigation = [
+const roles = [EAuthRoles.ROLE_USER, EAuthRoles.ROLE_UNAUTHORIZED]
+
+export const navigation = [
   {
-    key: 'home',
+    key: 'nav.home',
     path: ERoutes.HOME,
-    Icon: HomeIcon,
+    icon: 'HomeIcon',
+    roles,
   },
   {
-    key: 'add-intention',
+    key: 'nav.add-intention',
     path: ERoutes.ADD_INTENTION,
-    Icon: RosaryIcon,
+    icon: 'RosaryIcon',
+    roles: [EAuthRoles.ROLE_USER],
   },
   {
-    key: 'policy',
+    key: 'nav.policy',
     path: ERoutes.POLICY,
-    Icon: InfoIcon,
+    icon: 'InfoIcon',
+    roles,
   },
   {
-    key: 'login',
+    key: 'nav.login',
     path: ERoutes.LOGIN,
-    Icon: HomeIcon,
+    icon: 'AccountCircleIcon',
+    roles: [EAuthRoles.ROLE_UNAUTHORIZED],
+  },
+  {
+    key: 'nav.logout',
+    path: ERoutes.LOGIN,
+    icon: 'AccountCircleIcon',
+    roles: [EAuthRoles.ROLE_USER],
   },
 ]
+
+export const navLabels = {
+  pl: {
+    'nav.home': 'ORARE PRO ME',
+    'nav.add-intention': 'Dodaj intencję',
+    'nav.policy': 'O projekcie',
+    'nav.login': 'Zaloguj',
+  },
+}
