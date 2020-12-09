@@ -1,6 +1,5 @@
 import React, {useContext} from 'react'
 import {makeStyles} from '@material-ui/core/styles'
-import Divider from '@material-ui/core/Divider'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
@@ -12,7 +11,13 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle'
 import Link from '../Link'
 import {AuthContext} from 'src/context/AuthProvider'
 import {RosaryIcon} from '../Icons'
-import {navigation, navLabels} from 'src/app/config/navigation'
+import {
+  navigationFactory,
+  navLabels,
+  NavLinkItem,
+  isNavLinkItem,
+  NavActionItem,
+} from 'src/app/config/navigation'
 
 const useStyles = makeStyles((theme) => ({
   list: {
@@ -28,38 +33,11 @@ interface SideMenuProps {
 
 export const SideMenu: React.FC<SideMenuProps> = ({setOpen}) => {
   const classes = useStyles()
-  const {isAuthenticated, logout, hasRole} = useContext(AuthContext)
-  const loginItem = (
-    <Link to="/login">
-      <ListItem button key={'login'}>
-        <ListItemIcon>
-          <AccountCircleIcon />
-        </ListItemIcon>
-        <ListItemText primary={'Zaloguj'} />
-      </ListItem>
-    </Link>
-  )
-  const logoutItem = (
-    <ListItem button key={'logout'} onClick={logout}>
-      <ListItemIcon>
-        <AccountCircleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Wyloguj" />
-    </ListItem>
-  )
-
+  const {hasRole, logout} = useContext(AuthContext)
+  const navigation = navigationFactory({logout})
   const menuItems = navigation
     .filter((n) => n.roles.some(hasRole))
-    .map((n) => (
-      <div key={n.key}>
-        <Link to={n.path}>
-          <ListItem button>
-            <ListItemIcon>{getIcon(n.icon)}</ListItemIcon>
-            <ListItemText primary={navLabels['pl'][n.key]} />
-          </ListItem>
-        </Link>
-      </div>
-    ))
+    .map((n) => (isNavLinkItem(n) ? renderLink(n) : renderAction(n)))
 
   return (
     <div
@@ -70,8 +48,6 @@ export const SideMenu: React.FC<SideMenuProps> = ({setOpen}) => {
     >
       {' '}
       <List>{menuItems}</List>
-      <Divider />
-      <List>{isAuthenticated ? logoutItem : loginItem}</List>
     </div>
   )
 }
@@ -90,3 +66,23 @@ const getIcon = (icon: string) => {
       return <HomeIcon />
   }
 }
+
+const renderLink = (item: NavLinkItem) => (
+  <div key={item.key}>
+    <Link to={item.path}>
+      <ListItem button>
+        <ListItemIcon>{getIcon(item.icon)}</ListItemIcon>
+        <ListItemText primary={navLabels['pl'][item.key]} />
+      </ListItem>
+    </Link>
+  </div>
+)
+
+const renderAction = (item: NavActionItem) => (
+  <div key={item.key}>
+    <ListItem button key={item.key} onClick={item.action}>
+      <ListItemIcon>{getIcon(item.icon)}</ListItemIcon>
+      <ListItemText primary={navLabels['pl'][item.key]} />
+    </ListItem>
+  </div>
+)

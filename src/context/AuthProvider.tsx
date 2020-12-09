@@ -71,7 +71,7 @@ const AuthProvider: React.FunctionComponent = ({children}) => {
     storage.removeItem('authToken')
     storage.removeItem('payload')
     setAuthToken('')
-    setPayload(initialPayload)
+    setPayload(defaultValue.payload)
     setAuthenticated(false)
   }
 
