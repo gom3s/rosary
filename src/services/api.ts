@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from 'axios'
-import {appConfig} from 'src/app/config'
+import {appConfig} from 'src/app/config/appConfig'
 
 const config = {
   baseURL: appConfig.rosaryApiUrl,

@@ -3,6 +3,7 @@ import {renderWithRouter} from 'src/tools/renderWithRouter'
 import IntentionList from '../IntentionList'
 import {fireEvent} from '@testing-library/react'
 import {AuthProviderStub} from 'src/tools/AuthProviderStub'
+import {EAuthRoles} from 'src/context/AuthProvider'
 
 jest.mock('../../../hooks/useRosaryApi', () => ({
   useIntentionList: () => ({
@@ -20,7 +21,7 @@ jest.mock('../../../hooks/useRosaryApi', () => ({
 
 const Component = () => {
   return (
-    <AuthProviderStub isAuthenticated={true}>
+    <AuthProviderStub isAuthenticated={true} roles={[EAuthRoles.ROLE_ADMIN]}>
       <IntentionList />
     </AuthProviderStub>
   )

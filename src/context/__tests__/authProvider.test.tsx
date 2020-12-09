@@ -3,12 +3,12 @@ import {storage} from '../../tools/storage'
 
 import React from 'react'
 import {render} from '@testing-library/react'
-import AuthProvider, {AuthContext, IAuthRole} from '../AuthProvider'
+import AuthProvider, {AuthContext, EAuthRoles} from '../AuthProvider'
 
 let isAuthenticatedProbe = false
 let payloadProbe = {
   id: '',
-  roles: [IAuthRole.ROLE_UNAUTHORIZED],
+  roles: [EAuthRoles.ROLE_UNAUTHORIZED],
   username: '',
 }
 let hasRoleSpy: any
@@ -44,7 +44,7 @@ describe('AuthProvider', () => {
     const payload = {
       iat: 1234,
       exp: 1589528528,
-      roles: [IAuthRole.ROLE_ADMIN, IAuthRole.ROLE_USER],
+      roles: [EAuthRoles.ROLE_ADMIN, EAuthRoles.ROLE_USER],
       username: 'test@orareprome.com',
       id: '11aaa1a1-2345-6789-99aa-a0ee00d00aa0',
     }
@@ -55,8 +55,8 @@ describe('AuthProvider', () => {
     expect(payloadProbe.roles).toEqual(payload.roles)
     expect(payloadProbe.username).toEqual(payload.username)
     // should chek if user has role
-    expect(hasRoleSpy(IAuthRole.ROLE_ADMIN)).toBeTruthy()
-    expect(hasRoleSpy(IAuthRole.ROLE_UNAUTHORIZED)).toBeFalsy()
+    expect(hasRoleSpy(EAuthRoles.ROLE_ADMIN)).toBeTruthy()
+    expect(hasRoleSpy(EAuthRoles.ROLE_UNAUTHORIZED)).toBeFalsy()
   })
 
   it('should use storage', () => {

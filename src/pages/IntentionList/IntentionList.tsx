@@ -5,7 +5,7 @@ import React, {FC, useState} from 'react'
 import Hero from 'src/components/Hero'
 import IntentionCard from 'src/components/IntentionCard'
 import {useIntentionList, useDeleteIntention} from 'src/hooks/useRosaryApi'
-import {IAuthRole, AuthContext} from 'src/context/AuthProvider'
+import {EAuthRoles, AuthContext} from 'src/context/AuthProvider'
 import {DeleteIntentionDialog} from 'src/components/DeleteIntentionDialog'
 
 const useStyles = makeStyles((theme) => ({
@@ -23,7 +23,7 @@ const IntentionList: FC<IntentionListProps> = () => {
   const classes = useStyles()
   const {intentions} = useIntentionList()
   const {hasRole, authToken} = React.useContext(AuthContext)
-  const isAdmin = hasRole(IAuthRole.ROLE_ADMIN)
+  const isAdmin = hasRole(EAuthRoles.ROLE_ADMIN)
   const openDeleteIntentionDialog = isAdmin
     ? (intentionId: string) => {
         setDeleteIntentionId(intentionId)

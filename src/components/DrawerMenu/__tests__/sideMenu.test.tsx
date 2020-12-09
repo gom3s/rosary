@@ -29,10 +29,18 @@ describe('sideMenu', () => {
 
   it('should render add intention link', () => {
     const {getByText} = renderWithRouter(
-      <AuthProviderStub isAuthenticated={false}>
+      <AuthProviderStub isAuthenticated={true}>
         <SideMenu setOpen={jest.fn()} />
       </AuthProviderStub>,
     )
     expect(getByText('Dodaj intencję')).toBeTruthy()
+  })
+  it('should not render add intention link for unathorised', () => {
+    const {queryByText} = renderWithRouter(
+      <AuthProviderStub isAuthenticated={false}>
+        <SideMenu setOpen={jest.fn()} />
+      </AuthProviderStub>,
+    )
+    expect(queryByText('Dodaj intencję')).toBeNull()
   })
 })

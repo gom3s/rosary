@@ -2,23 +2,23 @@ import React, {createContext, useState, useEffect} from 'react'
 import {decodeJWT, isUserAuthenticated} from '../tools/auth'
 import {storage} from '../tools/storage'
 
-export interface IAuthContext {
+export interface AuthContext {
   isAuthenticated: boolean
   authToken: string
-  payload: IAuthPayload
+  payload: AuthPayload
   setAuthToken: (authToken: string) => void
   logout: () => void
-  hasRole: (role: IAuthRole) => boolean
+  hasRole: (role: EAuthRoles) => boolean
 }
 
-export interface IAuthPayload {
+export interface AuthPayload {
   exp: number
   id: string
   username: string
-  roles: IAuthRole[]
+  roles: EAuthRoles[]
 }
 
-export enum IAuthRole {
+export enum EAuthRoles {
   ROLE_UNAUTHORIZED = 'ROLE_UNAUTHORIZED',
   ROLE_USER = 'ROLE_USER',
   ROLE_ADMIN = 'ROLE_ADMIN',
@@ -36,17 +36,17 @@ export const defaultValue = {
     exp: 0,
     id: '',
     username: '',
-    roles: [IAuthRole.ROLE_UNAUTHORIZED],
+    roles: [EAuthRoles.ROLE_UNAUTHORIZED],
   },
   setAuthToken: (authToken: string) => methodNotImplementedWarning,
   logout: () => methodNotImplementedWarning,
-  hasRole: (role: IAuthRole) => {
+  hasRole: (role: EAuthRoles) => {
     methodNotImplementedWarning()
     return false
   },
 }
 
-export const AuthContext = createContext<IAuthContext>(defaultValue)
+export const AuthContext = createContext<AuthContext>(defaultValue)
 
 const AuthProvider: React.FunctionComponent = ({children}) => {
   const savedPayload = storage.getItem('payload')
@@ -54,7 +54,7 @@ const AuthProvider: React.FunctionComponent = ({children}) => {
     ? JSON.parse(savedPayload)
     : defaultValue.payload
   const [authToken, setAuthToken] = useState(getAuthTokenFromStorage())
-  const [payload, setPayload] = useState<IAuthPayload>(initialPayload)
+  const [payload, setPayload] = useState<AuthPayload>(initialPayload)
   const [isAuthenticated, setAuthenticated] = useState(false)
 
   useEffect(() => {
@@ -71,11 +71,11 @@ const AuthProvider: React.FunctionComponent = ({children}) => {
     storage.removeItem('authToken')
     storage.removeItem('payload')
     setAuthToken('')
-    setPayload(initialPayload)
+    setPayload(defaultValue.payload)
     setAuthenticated(false)
   }
 
-  const hasRole = (role: IAuthRole) => payload.roles.includes(role)
+  const hasRole = (role: EAuthRoles) => payload.roles.includes(role)
 
   const value = {
     payload,
