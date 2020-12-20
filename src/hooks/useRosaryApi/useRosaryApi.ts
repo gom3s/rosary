@@ -11,7 +11,11 @@ const emptyIntention = {
 }
 
 export const useIntentionList = () => {
-  const {state} = useGetRequest<IIntention[]>(api, 'intentions', [])
+  const {state} = useGetRequest<IIntention[]>(
+    api,
+    'intentions?order[updated]=desc',
+    [],
+  )
   const {data: intentions} = state
 
   return {intentions}
