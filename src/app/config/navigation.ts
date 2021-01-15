@@ -40,9 +40,15 @@ export const navigationFactory = ({logout}: NavProps) => [
     roles: [EAuthRoles.ROLE_USER],
   },
   {
+    key: 'nav.about',
+    path: ERoutes.ABOUT,
+    icon: 'InfoIcon',
+    roles,
+  },
+  {
     key: 'nav.policy',
     path: ERoutes.POLICY,
-    icon: 'InfoIcon',
+    icon: 'PolicyIcon',
     roles,
   },
   {
@@ -63,7 +69,8 @@ export const navLabels = {
   pl: {
     'nav.home': 'ORARE PRO ME',
     'nav.add-intention': 'Dodaj intencję',
-    'nav.policy': 'O projekcie',
+    'nav.about': 'O projekcie',
+    'nav.policy': 'Polityka prywatności',
     'nav.login': 'Zaloguj',
     'nav.logout': 'Wyloguj',
   },

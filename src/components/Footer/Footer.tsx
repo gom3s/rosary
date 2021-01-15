@@ -9,6 +9,7 @@ import HomeIcon from '@material-ui/icons/Home'
 import InfoIcon from '@material-ui/icons/Info'
 import AddIcon from '@material-ui/icons/Add'
 import {Link} from 'react-router-dom'
+import {ERoutes} from 'src/app/config/routes'
 
 const useStyles = makeStyles({
   stickToBottom: {
@@ -35,12 +36,12 @@ const Footer = () => {
       <BottomNavigationAction
         icon={<AddIcon />}
         component={Link}
-        to="/add-intention"
+        to={ERoutes.ADD_INTENTION}
       />
       <BottomNavigationAction
         icon={<InfoIcon />}
         component={Link}
-        to="/policy"
+        to={ERoutes.ABOUT}
       />
     </BottomNavigation>
   )

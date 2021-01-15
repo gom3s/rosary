@@ -7,17 +7,18 @@ import IntentionList from 'src/pages/IntentionList'
 import LoginPage from 'src/pages/LoginPage'
 import {AddIntentionPage} from 'src/pages/AddIntentionPage'
 import {HowItWorks} from 'src/pages/HowItWorks'
-import {About} from 'src/pages/About'
+import {ERoutes} from 'src/app/config/routes'
+import {PrivacyPolicy} from 'src/components/PrivacyPolicy'
 
 export const AppRoutes = () => {
   // TODO: #37 Add "how it works" on homepage
   return (
     <>
-      <Route path="/" exact={true} component={IntentionList} />
-      <Route path="/policy" exact={true} component={About} />
-      <Route path="/login" exact={true} component={LoginPage} />
-      <Route path="/how-it-works" exact={true} component={HowItWorks} />
-      <PrivateRoute path="/add-intention">
+      <Route path={ERoutes.HOME} exact={true} component={IntentionList} />
+      <Route path={ERoutes.POLICY} exact={true} component={PrivacyPolicy} />
+      <Route path={ERoutes.LOGIN} exact={true} component={LoginPage} />
+      <Route path={ERoutes.ABOUT} exact={true} component={HowItWorks} />
+      <PrivateRoute path={ERoutes.ADD_INTENTION}>
         <AddIntentionPage />
       </PrivateRoute>
       <Route
