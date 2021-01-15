@@ -2,7 +2,6 @@ import React, {FC} from 'react'
 import {Link as MUILink} from '@material-ui/core'
 import {makeStyles} from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
-import {PrivacyPolicy} from 'src/components/PrivacyPolicy'
 
 const Copyright = () => {
   return (
@@ -54,7 +53,6 @@ export const About: FC = () => {
         </Typography>
         <Copyright />
       </footer>
-      <PrivacyPolicy />
     </React.Fragment>
   )
 }

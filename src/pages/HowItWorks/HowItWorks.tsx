@@ -10,6 +10,7 @@ import {
 import Avatar from '@material-ui/core/Avatar'
 
 import {Bold, Title, Paragraph} from 'src/components/UI/Atoms'
+import {About} from '../About'
 
 export const useStyles = makeStyles((theme) => ({
   root: {
@@ -165,6 +166,7 @@ export const HowItWorks: FC = () => {
           </Paragraph>
         </CardContent>
       </Card>
+      <About />
     </Container>
   )
 }
