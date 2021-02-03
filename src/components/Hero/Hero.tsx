@@ -7,8 +7,9 @@ import {makeStyles} from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 
 import Link from '../Link'
+import {useTranslation} from 'react-i18next'
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   heroButtons: {
     marginTop: theme.spacing(4),
   },
@@ -20,6 +21,7 @@ const useStyles = makeStyles(theme => ({
 
 export const Hero = () => {
   const classes = useStyles()
+  const {t} = useTranslation()
 
   return (
     <React.Fragment>
@@ -33,7 +35,7 @@ export const Hero = () => {
               color="textPrimary"
               gutterBottom={true}
             >
-              Pomódl się za mnie
+              {t('pray-for-me')}
             </Typography>
             <Box fontStyle="italic" color="textPrimary">
               <Typography
