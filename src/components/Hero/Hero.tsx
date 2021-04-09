@@ -35,7 +35,7 @@ export const Hero = () => {
               color="textPrimary"
               gutterBottom={true}
             >
-              {t('pray-for-me')}
+              {t('hero.title')}
             </Typography>
             <Box fontStyle="italic" color="textPrimary">
               <Typography
@@ -44,7 +44,7 @@ export const Hero = () => {
                 color="textSecondary"
                 paragraph={true}
               >
-                "O cokolwiek przez różaniec prosić będziesz - otrzymasz."
+                {t('hero.subtitle')}
               </Typography>
             </Box>
             <Typography
@@ -53,7 +53,7 @@ export const Hero = () => {
               color="textSecondary"
               paragraph={true}
             >
-              Nasza internetowa wspólnota modli się w Twojej intencji.
+              {t('hero.description')}
             </Typography>
             <span className={classes.heroButtons}>
               <Grid container={true} spacing={2} justify="center">

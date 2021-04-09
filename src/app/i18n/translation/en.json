@@ -1,3 +1,7 @@
 {
-  "pray-for-me": "Pray for me"
+  "hero": {
+    "title": "Pray for me",
+    "subtitle": "What you shall ask through my Rosary you shall obtain.",
+    "description": "Our online community prays for you."
+  }
 }

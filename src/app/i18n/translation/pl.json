@@ -1,3 +1,7 @@
 {
-  "pray-for-me": "Pomódl się za mnie"
+  "hero": {
+    "title": "Pomódl się za mnie",
+    "subtitle": "O cokolwiek przez różaniec prosić będziesz - otrzymasz.",
+    "description": "Nasza internetowa wspólnota modli się w Twojej intencji."
+  }
 }

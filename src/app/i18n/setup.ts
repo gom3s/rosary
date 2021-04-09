@@ -15,7 +15,7 @@ export const i18nSetup = () => {
   } as const
 
   i18n.use(initReactI18next).init({
-    lng: 'en',
+    lng: 'pl',
     fallbackLng: 'en',
     resources,
   })
